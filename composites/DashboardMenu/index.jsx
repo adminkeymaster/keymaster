@@ -84,20 +84,6 @@ const DashboardMenu = (props) => {
         </Link>
       </li>
       <li>
-        <Link href="/dashboard/video-request">
-          <a
-            className={
-              route == "/dashboard/video-request"
-                ? `${styles.isActive} ${styles.link}`
-                : styles.link
-            }
-            onClick={props.onClick}
-          >
-            Видео
-          </a>
-        </Link>
-      </li>
-      <li>
         <Link href="/dashboard/rules">
           <a
             className={
@@ -122,6 +108,20 @@ const DashboardMenu = (props) => {
             onClick={props.onClick}
           >
             Рекорд илгээх
+          </a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/dashboard/user">
+          <a
+            className={
+              route == "/dashboard/user"
+                ? `${styles.isActive} ${styles.link}`
+                : styles.link
+            }
+            onClick={props.onClick}
+          >
+            Хэрэглэгч
           </a>
         </Link>
       </li>

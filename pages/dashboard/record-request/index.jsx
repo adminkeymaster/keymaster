@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import styled from "styled-components";
-import { Sort } from "@styled-icons/boxicons-regular/Sort";
-import { AttachMoney } from "@styled-icons/material/AttachMoney";
-import { MoneyOff } from "@styled-icons/material/MoneyOff";
+import { Check } from "@styled-icons/entypo/Check";
+import { Cross } from "@styled-icons/entypo/Cross";
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -20,27 +19,19 @@ import DashboardLayout from "@/layouts/Dashboard";
 
 import styles from "./RecordRequest.module.scss";
 
-const StyledSortIcon = styled(Sort)`
+const StyledCheckIcon = styled(Check)`
   width: 1.6rem;
   height: 1.6rem;
-  margin-left: 0.5rem;
 `;
 
-const StyledStatusIcon = styled(AttachMoney)`
-  width: 3.2rem;
-  height: 3.2rem;
-  color: #ff6b00;
-`;
-
-const StyledNotStatusIcon = styled(MoneyOff)`
-  width: 3.2rem;
-  height: 3.2rem;
-  color: #ed1e42;
+const StyledCrossIcon = styled(Cross)`
+  width: 1.6rem;
+  height: 1.6rem;
 `;
 
 const RecordRequestPage = (props) => {
   const [isFetched, setIsFetched] = useState(false);
-  const [productRequests, setProductRequests] = useState([]);
+  const [recordRequests, setRecordRequests] = useState([]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -50,7 +41,7 @@ const RecordRequestPage = (props) => {
       .then(({ data }) => {
         console.log(data.data);
         // Reverse the array so the newest request is first
-        setProductRequests(data.data.reverse());
+        setRecordRequests(data.data.reverse());
         setIsFetched(true);
       })
       .catch((err) => {
@@ -59,6 +50,43 @@ const RecordRequestPage = (props) => {
 
     return () => controller.abort();
   }, []);
+
+  const handleApprove = (e) => {
+    axios
+      .post(`/api/record-request/${e.target.id}`, { approval: true })
+      .then((res) => {
+        const newRecordRequests = recordRequests.filter(
+          (request) => request._id !== e.target.id
+        );
+        setRecordRequests([...newRecordRequests]);
+      })
+      .catch((err) => console.log("/dashboard/record-request", err));
+  };
+
+  const handleDeny = (e) => {
+    axios
+      .post(`/api/record-request/${e.target.id}`, { approval: false })
+      .then((res) => {
+        if (res.data.success) {
+          const newRecordRequests = recordRequests.filter(
+            (request) => request._id !== e.target.id
+          );
+          setRecordRequests([...newRecordRequests]);
+        }
+      })
+      .catch((err) => console.log("/dashboard/record-request", err));
+  };
+
+  const calculateAgeByBirthday = (birthday) => {
+    const today = new Date();
+    const birthDate = new Date(birthday);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
 
   return (
     <main className={styles.container}>
@@ -75,125 +103,99 @@ const RecordRequestPage = (props) => {
             Овог
           </div>
 
-          <div className={`${styles.tableHeadCol} ${styles.tableEmail}`}>
-            Цахим шуудан
+          <div className={`${styles.tableHeadCol} ${styles.tableType}`}>
+            Төрөл
           </div>
 
-          <div className={`${styles.tableHeadCol} ${styles.tableTel}`}>
-            Утасны Дугаар
+          <div className={`${styles.tableHeadCol} ${styles.tableGender}`}>
+            Хүйс
           </div>
 
-          <div
-            className={`${styles.tableHeadCol} ${styles.tableStatus} ${styles.filter}`}
-          >
-            Төлөв <StyledSortIcon />
+          <div className={`${styles.tableHeadCol} ${styles.tableAge}`}>Нас</div>
+
+          <div className={`${styles.tableHeadCol} ${styles.tableTime}`}>
+            Цаг
           </div>
 
           <div className={`${styles.tableHeadCol} ${styles.tableAction}`}>
-            Баталгаажуулах
+            Зөвшөөрөх
+          </div>
+          <div className={`${styles.tableHeadCol} ${styles.tableAction}`}>
+            Устгах
           </div>
         </div>
 
         <div className={styles.tableBody}>
-          {/* {isFetched &&
-          productRequests.map((request) => {
-            return (
-              <div
-                className={
-                  request.status
-                    ? `${styles.tableRowContainer} ${styles.isVerified}`
-                    : `${styles.tableRowContainer}`
-                }
-                key={request._id}
-              >
-                <div className={styles.tableRow}>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
-                  >
-                    {request.firstName}
-                  </div>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableLastName}`}
-                  >
-                    {request.lastName}
-                  </div>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableEmail}`}
-                  >
-                    {request.email}
-                  </div>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableTel}`}
-                  >
-                    {request.phoneNumber}
-                  </div>
-
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableStatus}`}
-                  >
-                    {(request.status && <StyledStatusIcon />) || (
-                      <StyledNotStatusIcon />
-                    )}
-                  </div>
-
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableAction}`}
-                  >
-                    <button
-                      className={styles.tableButton}
-                      id={request._id}
+          {isFetched &&
+            recordRequests.map((request, index) => {
+              return (
+                <div className={styles.tableRowContainer} key={request._id}>
+                  <div className={styles.tableRow}>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
                     >
-                      {(request.status && "Буцаах") || "Баталгаажуулах"}
-                    </button>
-                  </div>
-                </div>
+                      {request.firstName}
+                    </div>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableLastName}`}
+                    >
+                      {request.lastName}
+                    </div>
 
-                <div className={styles.tableRowProduct}>
-                  <div className={styles.productNetPrice}>
-                    <span>Нийт үнэ:</span>
-                    <span>
-                      {request.productInfo.reduce((prev, current) => {
-                        return (
-                          prev.productPrice * prev.quantity +
-                          current.productPrice * current.quantity
-                        );
-                      })}
-                      ₮
-                    </span>
-                  </div>
-                  {request.productInfo.map((product) => {
-                    return (
-                      <div
-                        className={styles.productInfoContainer}
-                        key={product._id}
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableType}`}
+                    >
+                      {request.keymasterType}
+                    </div>
+
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableGender}`}
+                    >
+                      {request.gender === "male" ? "эр" : "эм"}
+                    </div>
+
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableAge}`}
+                    >
+                      {calculateAgeByBirthday(request.birthDate)}
+                    </div>
+
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableTime}`}
+                    >
+                      {request.time}с
+                    </div>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableAction}`}
+                    >
+                      <button
+                        id={request._id}
+                        className={styles.tableButton}
+                        onClick={handleApprove}
                       >
-                        <div className={styles.productInfo}>
-                          <span>Нэр:</span>
-                          <span>{product.productName}</span>
-                        </div>
-                        <div className={styles.productInfo}>
-                          <span>Төрөл:</span>
-                          <span>{product.type}</span>
-                        </div>
-                        <div className={styles.productInfo}>
-                          <span>Өнгө:</span>
-                          <span>{product.color}</span>
-                        </div>
-                        <div className={styles.productInfo}>
-                          <span>Тоо (ш):</span>
-                          <span>{product.quantity}</span>
-                        </div>
-                        <div className={styles.productInfo}>
-                          <span>Үнэ:</span>
-                          <span>{product.productPrice}₮</span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                        <StyledCheckIcon />
+                      </button>
+                    </div>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableAction}`}
+                    >
+                      <button
+                        id={request._id}
+                        className={styles.tableButton}
+                        onClick={handleDeny}
+                      >
+                        <StyledCrossIcon />
+                      </button>
+                    </div>
+                  </div>
+                  <div className={styles.videoContainer}>
+                    <video muted controls>
+                      <source src={request.videoLink} type="video/mp4" />
+                    </video>
+                  </div>
                 </div>
-              </div>
-            );
-          })} */}
+              );
+            })}
         </div>
       </div>
     </main>

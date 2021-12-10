@@ -114,19 +114,6 @@ const LeaderboardTable = (props) => {
       setFilteredLeaderBoard(searchFilteredLeaderBoard);
       return;
     }
-
-    // const ageGroupFilteredLeaderBoard = typeFilteredLeaderBoard.filter(
-    //   (user) => {
-    //     if (
-    //       user.age >= +selectedAgeGroup[0] &&
-    //       user.age <= +selectedAgeGroup[1]
-    //     ) {
-    //       return user;
-    //     }
-    //   }
-    // );
-
-    // setFilteredLeaderBoard(ageGroupFilteredLeaderBoard);
   }, [isFetched, selectedType, search, selectedAgeGroup]);
 
   const handleSearch = (e) => {

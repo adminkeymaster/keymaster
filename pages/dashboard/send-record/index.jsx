@@ -71,7 +71,7 @@ const SendRecordPage = (props) => {
       [e.target.name]: e.target.files[0],
     });
 
-    // e.target.value = null;
+    e.target.value = null;
 
     return () => {
       URL.revokeObjectURL(objectUrl);
@@ -139,7 +139,6 @@ const SendRecordPage = (props) => {
               id="videoUpload"
               accept="video/mp4, video/x-m4v, video/*"
               onChange={handleFileInput}
-              required
             />
           </div>
         </div>
