@@ -1,0 +1,64 @@
+@import "global";
+
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  @include respondMax(sm) {
+    flex-direction: column;
+  }
+}
+.coverImage {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.content {
+  display: flex;
+  max-width: has(lg);
+  width: 90%;
+  text-align: center;
+  margin: 8em 0;
+  .contentContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h2 {
+    margin: 2rem 0;
+    text-transform: uppercase;
+  }
+  p {
+    text-align: justify;
+    max-width: 60rem;
+    margin: 2em 0;
+    padding-right: 2rem;
+    @include respondMax(sm) {
+      padding-right: 0;
+    }
+  }
+  button {
+    margin-bottom: 2rem;
+  }
+}
+<<<<<<< HEAD
+=======
+.rectangle {
+  position: absolute;
+  left: 0;
+  z-index: -1;
+}
+.circle {
+  position: absolute;
+  right: 0;
+  z-index: -1;
+  @include respondMax(sm){
+    display: none;
+  }
+}
+>>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178

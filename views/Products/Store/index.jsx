@@ -1,0 +1,92 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable jsx-a11y/alt-text */
+//Next, React (core node_modules) imports must be placed here\
+import Image from "next/image";
+import {
+  useState,
+  useEffect,
+  // useContext
+} from "react";
+import axios from "axios";
+//import STORE from '@/store'
+
+//import COMPOSITES from '@/composites'
+import ProductCard from "@/composites/ProductCard";
+//import COMPONENT from '@/components'
+
+import styles from "./Store.module.scss";
+// import { CartContext } from "@/store/CartContext";
+
+const Store = (props) => {
+  const [isFetched, setIsFetched] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    axios
+      .get("/api/product", { signal: controller.signal })
+      .then(({ data }) => {
+        setProducts(data.data);
+        setIsFetched(true);
+      })
+
+      .catch((err) => {
+        console.log("/products fetch abort", err);
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.feature}>
+        <div className={styles.imageContainer}>
+<<<<<<< HEAD
+          <Image src="/product.jpg" layout="fill" objectFit="cover" />
+=======
+          <Image src="/keymasterPack.png" layout="fill" objectFit="cover" />
+>>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
+        </div>
+        <div className={styles.information}>
+          <div className={styles.featureHeading}>
+            <h2>Кимастер Багц</h2>
+<<<<<<< HEAD
+            <p>Өнгө: Гүн Хөх</p>
+            <p>Үнэ: 200'000₮</p>
+=======
+            <p>Өнгө: Олон төрөл</p>
+            <p>Үнэ: 60'000₮</p>
+>>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
+          </div>
+          <ul className={styles.featureList}>
+            <li>Металл хайрцаг</li>
+            <li>6 ширхэг төмөр иш</li>
+            <li>Хурд хэмжих цагтай дэвсгэр</li>
+            <li>Хайрцагт суурьлуулах суурь</li>
+            <li>
+              Хайрцаг нь өөрөө босгож тавиад тоглоомуудаа байршуулах шийдэлтэй
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className={styles.products}>
+        {isFetched &&
+          products.map((product) => {
+            return (
+              <ProductCard
+                _id={product._id}
+                photoLink={product.photoLink}
+                productName={product.productName}
+                productPrice={product.productPrice}
+                color={product.color}
+                hexColor={product.hexColor}
+              />
+            );
+          })}
+      </div>
+    </div>
+  );
+};
+
+export default Store;

@@ -1,0 +1,30 @@
+@import "global";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: $navbarHeight;
+  position: relative;
+}
+
+.withBackground {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -99;
+  user-select: none;
+}
+
+.heading {
+  padding: 1em;
+}

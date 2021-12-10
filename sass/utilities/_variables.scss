@@ -1,0 +1,63 @@
+$navbarHeight: 7rem;
+// TYPOGRAPHY VALUES
+$font-sans: "Nunito", sans-serif;
+$font-mono: "Pacifico", cursive;
+
+// BREAKPOINTS
+$breakpoints: (
+  xs: 30em,
+  //480px
+  sm: 48em,
+  //768px
+  md: 64em,
+  //1024px
+  lg: 90em,
+  //1440px
+);
+
+// COLORS
+$clr-primary: #ff6b00;
+$clr-secondary: #ed1e42;
+
+// GREYSCALE (Darkest to Lightest)
+$clr-neutral-0: #1f242c;
+$clr-neutral-1: #3d3d3d;
+$clr-neutral-2: #383e46;
+$clr-neutral-3: #4e535a;
+$clr-neutral-4: #64696f;
+$clr-neutral-5: #7a7e83;
+$clr-neutral-6: #919498;
+$clr-neutral-7: #d2d3d3;
+$clr-neutral-8: #ffffff;
+
+// THEMES
+$themes: (
+  dark: (
+    clr-select: #fff,
+    clr-bg: $clr-neutral-1,
+    clr-bg-inverse: $clr-neutral-8,
+    clr-h1: $clr-neutral-1,
+    clr-h2: $clr-neutral-7,
+    clr-h3: $clr-neutral-6,
+    clr-h3-inverse: $clr-neutral-4,
+    clr-h4: $clr-neutral-8,
+    clr-h4-inverse: $clr-neutral-1,
+    clr-text: $clr-neutral-7,
+    clr-text-inverse: $clr-neutral-3,
+    clr-text-lc: $clr-neutral-3,
+  ),
+  light: (
+    clr-select: #000,
+    clr-bg: $clr-neutral-8,
+    clr-bg-inverse: $clr-neutral-1,
+    clr-h1: $clr-neutral-1,
+    clr-h2: $clr-neutral-1,
+    clr-h3: $clr-neutral-4,
+    clr-h3-inverse: $clr-neutral-6,
+    clr-h4: $clr-neutral-1,
+    clr-h4-inverse: $clr-neutral-8,
+    clr-text: $clr-neutral-3,
+    clr-text-inverse: $clr-neutral-7,
+    clr-text-lc: $clr-neutral-7,
+  ),
+);

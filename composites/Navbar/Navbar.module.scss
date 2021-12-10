@@ -1,0 +1,23 @@
+@import "global";
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: $navbarHeight;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+
+  background-color: #fff;
+}
+
+.nav {
+  width: 90%;
+  max-width: has(lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

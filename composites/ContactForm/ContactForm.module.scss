@@ -1,0 +1,92 @@
+@import "global";
+
+.container {
+    width: 100%;
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0 2em;
+        @include respondMax(md){
+            padding: 0em;
+        }
+        label {
+            text-transform: uppercase;
+            margin-bottom: 1em;
+        }
+        input {
+            max-width: 25rem;
+        }
+        input,textarea {
+            background: none;
+            border: none;
+            border-bottom: solid 1px #121212;
+            color: #121212;
+            font-family: $font-sans;
+            font-size: 1em;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 2em;
+            padding: 0.8rem 0;
+            text-transform: none;
+            width: 100%;
+            &::placeholder {
+                color: #807e7e;
+                text-transform: none;
+                font-family: $font-sans;
+            }
+        }
+        .message {
+            max-width: 50rem;
+        }
+        button {
+            background: none;
+            border: solid 1px #121212;
+            color: #121212;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 0.875em;
+            font-weight: bold;
+            outline: none;
+            padding: 1rem 1.75rem;
+            text-transform: uppercase;
+            max-width: 20rem;
+        }
+    }
+}
+.firstLine {
+    display: flex;
+    justify-content: space-between;
+    div {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        &:not(:last-of-type){
+            margin-right: 1em;
+        }
+    }
+@include respondMax(sm){
+    flex-direction: column;
+    input {
+        min-width: 100%;
+    }};
+}
+.secondLine {
+    display: flex;
+    justify-content: space-between;
+    div {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        &:not(:last-of-type){
+            margin-right: 1em;
+        }
+    }
+    @include respondMax(sm){
+        flex-direction: column;
+        input {
+            min-width: 100%;
+        }};
+}

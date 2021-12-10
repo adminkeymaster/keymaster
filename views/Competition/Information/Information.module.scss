@@ -1,0 +1,83 @@
+@import "global";
+
+.container {
+  width: 100%;
+  max-width: has(lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 4em;
+}
+
+.content {
+  position: relative;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 2rem;
+
+  height: 42rem;
+
+  padding: 2em 6em;
+
+  @include respondMax(md) {
+    padding: 0;
+  }
+}
+
+.text {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 2em;
+  border-radius: 2rem;
+
+  z-index: 1;
+
+  @include respondMax(md) {
+    height: 100%;
+    margin-right: 0;
+    padding: 1em;
+    color: #ffffff;
+    background-color: rgba($color: #000000, $alpha: 0.3);
+  }
+}
+
+.listWrapper {
+  width: 100%;
+  max-width: 42rem;
+  display: flex;
+}
+
+.list {
+  width: 100%;
+}
+
+.information {
+  border-left: 0.2rem solid $clr-secondary;
+  padding: 1em;
+
+  &:not(:last-of-type) {
+    margin-bottom: 1em;
+  }
+}
+
+.image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  border-radius: 2rem;
+  overflow: hidden;
+
+  @include respondMax(md) {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

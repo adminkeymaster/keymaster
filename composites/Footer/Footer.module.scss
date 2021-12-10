@@ -1,0 +1,155 @@
+@import "global";
+
+.container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-top: 1em;
+  h1 {
+    padding: 1.5em 0;
+    text-transform: none;
+    color: $clr-neutral-8;
+    letter-spacing: 0;
+    font-size: 2em;
+    @include respondMax(md) {
+      font-size: 1.5em;
+    }
+  }
+}
+.content {
+  width: 90%;
+  max-width: has(lg);
+  display: flex;
+  flex-direction: column;
+  h4 {
+    letter-spacing: normal;
+    padding: 0.5em 0;
+    font-size: 1.2em;
+  }
+  hr{
+    width: 100%;
+  }
+}
+.contentTop{
+  display: flex;
+  padding: 2em 0;
+  p{
+    color: #807e7e;
+    padding: 0.2em 0;
+  }
+  @include respondMax(md) {
+    flex-direction: column;
+  }
+}
+.contentLeft {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  padding: 2em 0;
+  p{
+    display: flex;
+    flex-direction: column;
+  }
+  @include respondMax(sm) {
+    flex-direction: column;
+  }
+  @include respondMax(md){
+    justify-content: space-between;
+  }
+  .web {
+    min-width: 20rem;
+    width: 100%;
+    p {
+      text-transform: capitalize;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+      line-height: 2em;
+    }
+  }
+  .info {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .infoTop {
+      h4 {
+        text-transform: uppercase;
+        margin-bottom: 0.5em;
+      }
+    }
+    .infoBottom {
+      h4 {
+        text-transform: none;
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+}
+.contentRight {
+  display: flex;
+  width: 100%;
+  padding: 2em 0;
+  justify-content: space-evenly;
+  @include respondMax(sm) {
+    flex-direction: column;
+  }
+  .strategy {
+    @include respondMax(md) {
+      margin-left: 20%;
+    }
+    @include respondMax(sm) {
+      margin-left: 0;
+        }
+  }
+  p {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.socialContainer {
+  display: flex;
+  margin: 2em 0;
+}
+.design, .web, .strategy {
+  margin-right: 1em;
+}
+.legal {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1em;
+  align-items: center;
+  span {
+    cursor: pointer;
+    color: $clr-neutral-7;
+    &:not(:first-of-type) {
+      margin-left: 1em;
+    }
+    &:hover {
+      color: $clr-neutral-5;
+    }
+  }
+  p,span {
+    color: $clr-neutral-6;
+  }
+  @include respondMax(md) {
+    font-size: 0.8em;
+    flex-direction: column;
+    p {
+      margin-top: 1em;
+    }
+  }
+}
+.bluestar {
+  position: absolute;
+  width: 10rem;
+  height: 10rem;
+  right: 5%;
+  top: 0;
+  z-index: -1;
+}

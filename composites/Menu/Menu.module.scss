@@ -1,0 +1,35 @@
+@import "global";
+.container {
+  width: max-content;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+
+  @include respondMax(md){
+    display: none;
+  }
+
+  li {
+    width: max-content;
+    text-transform: capitalize;
+
+    &:not(:last-of-type) {
+      margin-right: 2em;
+    }
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: $clr-neutral-5;
+  font-weight: 400;
+  font-size: 1.6rem;
+
+  &:hover {
+    color: $clr-neutral-2;
+  }
+}

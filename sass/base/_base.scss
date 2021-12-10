@@ -1,0 +1,53 @@
+// NORMALIZATION
+html {
+  font-size: 62.5%; //1rem = 10px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  
+  transition: background-color .1s;
+}
+
+::selection {
+  color: $clr-primary;
+  background-color: #000;
+}
+
+:where(input, textarea) {
+  border: 0.1rem solid $clr-neutral-1;
+  @include baseThemify() {
+    color: has(clr-text);
+  }
+}
+
+:where(button) {
+  border: 0.1rem solid transparent;
+  cursor: pointer;
+
+  @include baseThemify() {
+    color: has(clr-text-inverse);
+    background-color: has(clr-bg-inverse);
+  }
+}
+
+:where(button:focus, a:focus) {
+  outline: 0 none;
+  @include baseThemify() {
+    border-color: has(clr-bg-inverse);
+  }
+}
+
+:where(textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus) {
+  border-color: $clr-primary;
+  outline: 0 none;
+}
+
+:where(input::-webkit-input-placeholder, textarea::-webkit-input-placeholder) {
+  text-transform: capitalize;
+  @include baseThemify() {
+    color: has(clr-text-lc);
+  }
+}

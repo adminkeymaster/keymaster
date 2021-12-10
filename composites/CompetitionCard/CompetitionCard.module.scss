@@ -1,0 +1,49 @@
+@import "global";
+
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5em 0;
+  border: 0.03em solid #e6e6e6;
+  border-radius: 2rem;
+  height: auto;
+  background-color: #fff;
+  padding: 1em 0;
+  margin-top: 1em;
+  cursor: pointer;
+  &:hover {
+    color: $clr-primary;
+  }
+  p {
+    font-size: 0.8em;
+    line-height: 1.5em;
+  }
+}
+.tableBodyCol {
+  width: 100%;
+
+  &:not(:last-of-type) {
+    margin-right: 1em;
+  }
+}
+.nameCol {
+  max-width: 20rem;
+  text-align: center;
+}
+.locationCol {
+  max-width: 20rem;
+  text-align: center;
+}
+
+.startCol {
+  max-width: 10rem;
+  text-align: center;
+}
+
+.endCol {
+  max-width: 10rem;
+  text-align: center;
+}

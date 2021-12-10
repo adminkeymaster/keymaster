@@ -1,0 +1,118 @@
+@import "global";
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  background-color: #fff;
+  margin: 1em;
+
+  border-radius: 2rem;
+  overflow: hidden;
+
+  box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.2);
+}
+
+.imageContainer {
+  user-select: none;
+  position: relative;
+  width: 100%;
+  height: 24rem;
+  border-radius: 1rem 1rem 0 0;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $clr-neutral-7;
+  color: $clr-neutral-8;
+}
+
+.information {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2em;
+
+  h2 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    text-transform: capitalize;
+    font-weight: 500;
+    &:not(:last-of-type) {
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+.colorContainer {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: inline-block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    margin-left: 0.5em;
+    box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.actions {
+  box-sizing: border-box;
+  padding: 1em;
+  padding-top: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+    background-color: $clr-neutral-3;
+    color: $clr-neutral-8;
+    font-size: 1.6rem;
+    padding: 0.5em 1em;
+    border-radius: 0.5rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  width: max-content;
+}
+
+.cardButton {
+  will-change: box-shadow, transform, background-color;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+  background-color: $clr-neutral-8;
+  color: $clr-neutral-3;
+
+  font-size: 1.6rem;
+  padding: 0.6em 0.7em;
+  border-radius: 0.5rem;
+  border: none;
+
+  &:not(:last-of-type) {
+    margin-right: 0.5em;
+  }
+
+  &:hover {
+    box-shadow: 0 0.1rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.2rem);
+  }
+
+  &:active {
+    box-shadow: 0 0rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    background-color: rgba($color: #000000, $alpha: 0.1);
+  }
+}

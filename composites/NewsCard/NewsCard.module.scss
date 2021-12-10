@@ -1,0 +1,85 @@
+@import "global";
+
+.container {
+  will-change: box-shadow, transform;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 32rem;
+  min-width: 30rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border-radius: 2rem;
+
+  text-decoration: none;
+
+  box-shadow: 0 0 0.5em rgba($color: #000000, $alpha: 0.2);
+
+  background-color: #fff;
+
+  &:hover {
+    transform: translateY(-0.2em);
+    box-shadow: 0 0 0.5em rgba($color: #000000, $alpha: 0.4);
+  }
+
+  margin: 1em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  @include respondMax(xs) {
+    margin: 0;
+    margin: 0 1rem;
+    min-width: 30rem;
+  }
+
+  p {
+    line-height: 1.6em;
+    height: 10rem;
+    min-height: 10rem;
+    max-height: 10rem;
+
+    color: $clr-neutral-4;
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 20rem;
+  min-height: 20rem;
+  max-height: 20rem;
+  margin-bottom: 1em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $clr-neutral-7;
+  color: #fff;
+
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.heading {
+  font-weight: 800;
+  text-align: center;
+
+  text-transform: none;
+
+  &::after {
+    content: attr(data-date);
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: $clr-neutral-6;
+  }
+}

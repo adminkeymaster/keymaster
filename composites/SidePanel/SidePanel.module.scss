@@ -1,0 +1,61 @@
+@import "global";
+
+.container {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 48rem;
+  height: 100vh;
+
+  background-color: #fff;
+  box-shadow: inset .2rem 0 0.5rem rgba(0, 0, 0, 0.2);
+
+  z-index: 30;
+
+  @include respondMax(md) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  background: none;
+  border: none;
+  padding: 0;
+
+  color: $clr-neutral-2;
+}
+
+.closed {
+  display: none;
+}
+
+.list {
+  width: 90%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  li {
+    &:not(:last-of-type) {
+      margin-bottom: 2em;
+    }
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: $clr-neutral-2;
+}

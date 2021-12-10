@@ -1,0 +1,90 @@
+@import "global";
+
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: has(lg);
+
+  background-color: #fff;
+  margin-bottom: 4em;
+  padding: 2em 6em;
+  border-radius: 2rem;
+  box-shadow: 0 0 0.5em rgba($color: #000000, $alpha: 0.2);
+  font-size: 1.6rem;
+
+  @include respondMax(sm) {
+    padding: 2em 0;
+    width: 90%;
+  }
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-collapse: collapse;
+
+  span {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    &:not(:last-of-type) {
+      margin-right: 1em;
+    }
+  }
+}
+
+.head {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  background-color: $clr-primary;
+  color: #fff;
+  padding: 1em;
+  border-radius: 1rem;
+  margin-bottom: 0.5em;
+  box-shadow: 0 0rem 0.5em rgba(0, 0, 0, 0.2);
+}
+
+.row {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 1em;
+  border-radius: 1rem;
+  box-shadow: 0 0rem 0.5em rgba(0, 0, 0, 0.2);
+
+  &:not(:last-of-type) {
+    margin-bottom: 0.5em;
+  }
+}
+
+.col1 {
+  max-width: 16rem;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.col2 {
+  max-width: 16rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.col3 {
+  text-align: left;
+}
+
+.col4 {
+  text-align: left;
+}

@@ -1,0 +1,29 @@
+@import "global";
+
+.container {
+  box-sizing: border-box;
+  font-size: 1.6rem;
+
+  border: transparent;
+
+  text-decoration: none;
+
+  padding: 0.8em 2em;
+  border-radius: 1rem;
+  background-color: $clr-primary;
+  color: #fff;
+
+  cursor: pointer;
+
+  font-weight: 400;
+
+  transition: transform 0.1s ease-in-out;
+
+  &:hover {
+    transform: translateY(-0.1em);
+  }
+
+  &:active {
+    transform: translateY(0.1em);
+  }
+}

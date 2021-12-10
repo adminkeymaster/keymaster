@@ -1,0 +1,62 @@
+@import "global";
+
+.container {
+  padding-top: $navbarHeight;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  margin-bottom: 3em;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(
+    to bottom,
+    rgba($color: $clr-primary, $alpha: 0.5) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.heading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+
+  letter-spacing: 0.1em;
+
+  color: $clr-neutral-8;
+  font-size: 4.8rem;
+
+  &::after {
+    content: attr(data-date);
+    display: block;
+    font-size: 1.6rem;
+    color: $clr-neutral-8;
+    margin-top: 0.5em;
+  }
+}
+
+.content {
+  width: 100%;
+  max-width: has(sm);
+
+  p {
+    line-height: 1.6em;
+  }
+}

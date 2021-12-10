@@ -1,0 +1,12 @@
+@import "global";
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  width: 90%;
+
+  max-width: map-get($map: $breakpoints, $key: xs);
+
+  font-size: 1em;
+}

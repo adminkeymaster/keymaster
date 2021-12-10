@@ -1,0 +1,17 @@
+@import 'global';
+
+.container {
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100vw;
+        padding: 5vh 0;
+        font-size: 2rem;
+
+        @include respondMax(sm){
+            font-size: 1.6rem;
+        }
+    }
+}

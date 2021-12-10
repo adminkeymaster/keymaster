@@ -1,0 +1,26 @@
+@import 'global';
+
+.container {
+    width: max-content;
+    font-size: 2rem;
+    padding: .5em 1em;
+    border-radius: 1em;
+    @include themify(){
+        color: has(clr-bg-inverse);
+        background-color: has(clr-bg);
+        border: .24rem solid has(clr-bg-inverse);
+    }
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+
+    &:hover {
+        @include themify(){
+            border: .24rem solid has(clr-bg);
+            color: has(clr-bg);
+            background-color: has(clr-bg-inverse);
+        }
+    }
+    @include respondMax(xs){
+        font-size: 1.5rem;
+      }
+}

@@ -1,0 +1,213 @@
+@import "global";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  padding: $navbarHeight 0;
+}
+
+.headingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.link {
+  will-change: box-shadow, transform, color;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  width: 100%;
+  max-width: max-content;
+  padding: 0.8em 1.2em;
+  color: $clr-neutral-3;
+  // background-color: $clr-primary;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 0 0.5em 0 rgba($color: #000000, $alpha: 0.2);
+
+  border-radius: 1rem;
+
+  &:hover {
+    transform: translateY(-0.2em);
+    box-shadow: 0 0.1em 0.5em 0 rgba($color: #000000, $alpha: 0.3);
+    color: $clr-primary;
+  }
+
+  &:active {
+    transform: translateY(0em);
+  }
+}
+
+.heading {
+  width: 100%;
+  margin-bottom: 1em;
+  color: $clr-neutral-2;
+  text-transform: capitalize;
+
+  &::before {
+    content: "/dashboard/news";
+    display: block;
+    text-transform: lowercase;
+    background-color: $clr-neutral-7;
+    width: min-content;
+    padding: 0 1em;
+    margin-bottom: 1em;
+    border-radius: 0.5rem;
+    font-size: 1.4rem;
+    color: #fff;
+  }
+}
+
+.table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tableHead {
+  box-sizing: border-box;
+  padding: 1em;
+  background-color: $clr-neutral-3;
+  color: $clr-neutral-8;
+
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  border-radius: 1rem;
+}
+
+.tableBody {
+  box-sizing: border-box;
+  padding: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tableRow {
+  width: 100%;
+  padding: 1em;
+  height: 5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+
+  &:not(:last-of-type) {
+    margin-bottom: 1em;
+  }
+}
+
+.tableHeadCol {
+  width: 100%;
+
+  &:not(:last-of-type) {
+    margin-right: 1em;
+  }
+}
+
+.tableBodyCol {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &:not(:last-of-type) {
+    margin-right: 1em;
+  }
+}
+
+.tableTitle {
+  max-width: 20em;
+}
+
+.tableDate {
+  max-width: 5em;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tableDescription {
+  max-width: 30em;
+}
+
+.tableLinkContainer {
+  max-width: 5em;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tableImage {
+  position: relative;
+  max-width: 5rem;
+  min-width: 5rem;
+  height: 100%;
+
+  border-radius: 1rem;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableAction {
+  box-sizing: border-box;
+  padding: 0.2em 0.4em;
+  max-width: 5em;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tableLink {
+  color: $clr-primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.tableButton {
+  will-change: transform, box-shadow, color;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  padding: 0.4em 0;
+  background-color: $clr-neutral-8;
+  color: $clr-neutral-3;
+  border-radius: 0.5rem;
+  border: none;
+
+  box-shadow: 0 0 0.5em 0 rgba($color: #000000, $alpha: 0.2);
+
+  &:hover {
+    color: $clr-secondary;
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.1rem 0.5rem 0 rgba($color: #000000, $alpha: 0.3);
+  }
+
+  &:active {
+    transform: translateY(0rem);
+    box-shadow: 0 0 0.5em 0 rgba($color: #000000, $alpha: 0.2);
+  }
+}

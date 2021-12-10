@@ -1,0 +1,16 @@
+{
+  "Create Solid Icon": {
+    "scope": "javascript,javascriptreact",
+    "prefix": "csi",
+    "body": [
+      "const IconWrapper = (Icon) => {",
+      "\tconst StyledIcon = styled(Icon)`",
+      "\t\t$0",
+      "\t`;",
+      "",
+      "\treturn <StyledIcon />;",
+      "};"
+    ],
+    "description": "Creates an Icon Wrapper"
+  }
+}
