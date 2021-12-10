@@ -6,17 +6,20 @@ import dbConnect from "@/utils/database";
 dbConnect();
 
 const requestModHandler = async (req, res) => {
-    const {
-        method,
-        query: { id },
-    } = req;
+  const {
+    method,
+    query: { id },
+  } = req;
 
-    switch (method) {
+  const docID = "61b1b1dbca5fa2498b203074";
 
-        case "POST":
-            try {
 
-                const form = new formidable.IncomingForm({ keepExtensions: true });
+  switch (method) {
+
+    case "POST":
+      try {
+
+        const form = new formidable.IncomingForm({ keepExtensions: true });
 
         const formParsePhotoSuccess = await new Promise((resolve, reject) => {
           form.parse(req, async (err, fields, files) => {
@@ -38,7 +41,7 @@ const requestModHandler = async (req, res) => {
               compInfo.newpath = `./public/assets/images/competition/${dateNow.getTime()}-${files.photoUpload.originalFilename
                 }`;
             } else {
-              await competition.updateOne({ _id: id },
+              await competition.updateOne({ _id: docID },
                 {
                   htmlText: fields.htmlText
                 })
@@ -58,7 +61,7 @@ const requestModHandler = async (req, res) => {
           }).then(async () => {
 
             isSuccess = true;
-            await competition.updateOne({ _id: id }, { htmlText: compInfo.fields.htmlText, photoLink: compInfo.link });
+            await competition.updateOne({ _id: docID }, { htmlText: compInfo.fields.htmlText, photoLink: compInfo.link });
           });
 
           return isSuccess;
@@ -72,22 +75,40 @@ const requestModHandler = async (req, res) => {
 
 
 
-            } catch (error) {
-                console.log(error);
-                res.status(400).json({ success: false });
-            }
-            break;
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false });
+      }
+      break;
 
-        default:
-            res.status(400).json({ success: false });
-            break;
-    }
+    default:
+      res.status(400).json({ success: false });
+      break;
+
+    case "DELETE":
+      try {
+        
+        await competition.updateOne(
+          { _id: docID },
+          { $pull: { competitions: { _id: id } } }
+        );
+        res.status(200).json({ success: true, msg: "Amjilttai ustgalaa" });
+
+
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false });
+      }
+    default:
+      res.status(400).json({ success: false });
+      break;
+  }
 };
 
 export const config = {
-    api: {
-        bodyParser: false,
-    },
+  api: {
+    bodyParser: false,
+  },
 };
 
 export default requestModHandler;
