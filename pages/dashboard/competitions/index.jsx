@@ -34,23 +34,13 @@ const CompetitionsPage = (props) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
-    axios
-      .delete(
-        "/api/competition",
-        {},
-        {
-          deleteID: e.target.id,
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          setCompetitions(
-            competitions.filter(
-              (competition) => competition._id !== e.target.id
-            )
-          );
-        }
-      });
+    axios.delete(`/api/competition/${e.target.id}}`).then((res) => {
+      if (res.status === 200) {
+        setCompetitions(
+          competitions.filter((competition) => competition._id !== e.target.id)
+        );
+      }
+    });
   };
 
   return (
