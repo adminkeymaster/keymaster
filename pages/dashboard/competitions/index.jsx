@@ -1,5 +1,4 @@
 //Next, React (core node_modules) imports must be placed here
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -25,29 +24,43 @@ const CompetitionsPage = (props) => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    axios.get("/api/competition", { signal: signal }).then(({ data }) => {
-      setCompetitions(data.data.competitions);
-      setIsFetched(true);
-    });
+    axios
+      .get("/api/competition", { signal: signal })
+      .then(({ data }) => {
+        setCompetitions(data.data.competitions);
+        setIsFetched(true);
+      })
+      .catch((err) => {
+        console.log("CompetitionsPage Fetch Aborted", err);
+      });
+
+    return () => controller.abort();
   }, []);
 
   const handleDelete = (e) => {
     e.preventDefault();
 
-    axios.delete(`/api/competition/${e.target.id}}`).then((res) => {
-      if (res.status === 200) {
-        setCompetitions(
-          competitions.filter((competition) => competition._id !== e.target.id)
-        );
-      }
-    });
+    axios
+      .delete(`/api/competition/${e.target.id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          setCompetitions(
+            competitions.filter(
+              (competition) => competition._id !== e.target.id
+            )
+          );
+        }
+      })
+      .catch((err) => {
+        console.log("CompetitionsPage handleDelete", err);
+      });
   };
 
   return (
     <main className={styles.container}>
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Тэмцээн</h1>
-        <Link href="/dashboard/create">
+        <Link href="/dashboard/competitions/create">
           <a className={styles.link}>Тэмцээн Нэмэх</a>
         </Link>
       </div>
@@ -101,7 +114,7 @@ const CompetitionsPage = (props) => {
                   <div
                     className={`${styles.tableBodyCol} ${styles.tableAction}`}
                   >
-                    <Link href={`/dashboard/competition/${competition._id}`}>
+                    <Link href={`/dashboard/competitions/${competition._id}`}>
                       <a className={styles.link}>Засах</a>
                     </Link>
                   </div>

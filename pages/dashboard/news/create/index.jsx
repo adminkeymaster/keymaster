@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { useState } from "react";
@@ -18,6 +19,7 @@ const StyledUploadIcon = styled(Upload)`
 `;
 
 const CreateArticle = () => {
+  const router = useRouter();
   const [description, setDescription] = useState("");
 
   const [formData, setFormData] = useState({
@@ -46,7 +48,16 @@ const CreateArticle = () => {
     form.append("description", description);
     form.append("photoUpload", formData.photoUpload);
 
-    axios.post("/api/news", form);
+    axios
+      .post("/api/news", form)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/dashboard/news");
+        }
+      })
+      .catch((err) => {
+        console.log("CreateArticle handleSubmit:", err);
+      });
   };
   return (
     <main className={styles.container}>

@@ -38,9 +38,14 @@ const ProductsPage = (props) => {
   }, []);
 
   const handleDelete = (e) => {
-    axios.delete(`/api/product/${e.target.id}`).then(() => {
-      setProducts(products.filter((product) => product._id !== e.target.id));
-    });
+    axios
+      .delete(`/api/product/${e.target.id}`)
+      .then(() => {
+        setProducts(products.filter((product) => product._id !== e.target.id));
+      })
+      .catch((err) => {
+        console.log("ProductsPage handleDelete:", err);
+      });
   };
 
   return (
@@ -122,7 +127,7 @@ const ProductsPage = (props) => {
                       <a className={styles.tableLink}>Засах</a>
                     </Link>
                   </div>
-                  
+
                   <div
                     className={`${styles.tableBodyCol} ${styles.tableAction}`}
                   >

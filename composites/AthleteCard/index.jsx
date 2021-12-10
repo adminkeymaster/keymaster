@@ -38,7 +38,7 @@ const AthleteCard = ({
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
-        {(src && <Image src={src} layout="fill" objectFit="cover" />) || (
+        {(src && <Image src={src} layout="fill" objectFit="cover" alt="athlete profile" />) || (
           <StyledUserIcon />
         )}
       </div>

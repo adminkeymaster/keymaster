@@ -47,7 +47,12 @@ const ProductCard = ({
   return (
     <div className={styles.container} key={_id}>
       <div className={styles.imageContainer}>
-        <Image src={photoLink} layout="fill" objectFit="cover" />
+        <Image
+          src={photoLink}
+          layout="fill"
+          objectFit="cover"
+          alt="product image"
+        />
         <StyledMediaIcon />
       </div>
 

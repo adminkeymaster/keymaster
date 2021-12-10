@@ -30,7 +30,6 @@ const Store = (props) => {
         setProducts(data.data);
         setIsFetched(true);
       })
-
       .catch((err) => {
         console.log("/products fetch abort", err);
       });
@@ -42,7 +41,13 @@ const Store = (props) => {
     <div className={styles.container}>
       <div className={styles.feature}>
         <div className={styles.imageContainer}>
-          <Image src="/keymasterPack.png" layout="fill" objectFit="cover" />
+          <Image
+            src="/keymasterPack.png"
+            layout="fill"
+            objectFit="cover"
+            alt="product image"
+            priority
+          />
         </div>
         <div className={styles.information}>
           <div className={styles.featureHeading}>
@@ -66,6 +71,7 @@ const Store = (props) => {
           products.map((product) => {
             return (
               <ProductCard
+                key={product._id}
                 _id={product._id}
                 photoLink={product.photoLink}
                 productName={product.productName}

@@ -67,7 +67,7 @@ const RecordRequestPage = (props) => {
     axios
       .post(`/api/record-request/${e.target.id}`, { approval: false })
       .then((res) => {
-        if (res.data.success) {
+        if (res.status === 200) {
           const newRecordRequests = recordRequests.filter(
             (request) => request._id !== e.target.id
           );

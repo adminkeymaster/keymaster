@@ -61,9 +61,14 @@ const DashboardNews = (props) => {
   };
 
   const handleDelete = (e) => {
-    axios.delete(`/api/news/${e.target.id}`).then(() => {
-      setNews(news.filter((article) => article._id !== e.target.id));
-    });
+    axios
+      .delete(`/api/news/${e.target.id}`)
+      .then(() => {
+        setNews(news.filter((article) => article._id !== e.target.id));
+      })
+      .catch((err) => {
+        console.log("/dashboard/news handleDelete:", err);
+      });
   };
 
   return (

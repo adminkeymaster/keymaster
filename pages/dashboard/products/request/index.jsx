@@ -76,11 +76,6 @@ const ProductRequestPage = (props) => {
         })
       );
     }
-
-    // const sorted = productRequests.sort((a, b) => {
-    //   return b.status - a.status;
-    // });
-    // setProductRequests([...sorted]);
   };
 
   const toggleStatus = (e) => {
@@ -97,7 +92,7 @@ const ProductRequestPage = (props) => {
             }
           })
           .catch((err) => {
-            console.log(err);
+            console.log("ProductRequestPage toggleStatus", err);
           });
       }
     });
@@ -222,7 +217,7 @@ const ProductRequestPage = (props) => {
                             <span>{product.color}</span>
                           </div>
                           <div className={styles.productInfo}>
-                            <span>Тоо (ш):</span>
+                            <span>Тоо:</span>
                             <span>{product.quantity}</span>
                           </div>
                           <div className={styles.productInfo}>

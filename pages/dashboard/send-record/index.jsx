@@ -30,6 +30,7 @@ const StyledUploadIcon = styled(Upload)`
 `;
 
 const SendRecordPage = (props) => {
+  const router = useRouter();
   const [isFetched, setIsFetched] = useState(false);
   const [preview, setPreview] = useState(null);
   const [types, setTypes] = useState([]);
@@ -88,7 +89,16 @@ const SendRecordPage = (props) => {
       form.append(key, formData[key]);
     }
 
-    axios.post("/api/record-request", form);
+    axios
+      .post("/api/record-request", form)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/");
+        }
+      })
+      .catch((err) => {
+        console.log("SendRecordPage handleSubmit:", err);
+      });
   };
   return (
     <main className={styles.container}>

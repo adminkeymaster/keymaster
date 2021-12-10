@@ -1,5 +1,4 @@
 //Next, React (core node_modules) imports must be placed here
-import Image from 'next/image';
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'

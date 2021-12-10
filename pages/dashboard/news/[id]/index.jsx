@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { motion, useViewportScroll, useTransform } from "framer-motion";
 import axios from "axios";
 
 import "react-quill/dist/quill.snow.css";
@@ -101,7 +100,16 @@ const EditArticle = () => {
     form.append("description", description);
     form.append("photoUpload", formData.photoUpload);
 
-    axios.post(`/api/news/${id}`, form);
+    axios
+      .post(`/api/news/${id}`, form)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/dashboard/news");
+        }
+      })
+      .catch((err) => {
+        console.log("Edit Article handleSubmit", err);
+      });
   };
 
   return (
@@ -126,11 +134,21 @@ const EditArticle = () => {
 
         <div className={styles.imageContainer}>
           {isFetched && formData.photolink && (
-            <Image src={formData.photolink} layout="fill" objectFit="cover" />
+            <Image
+              src={formData.photolink}
+              layout="fill"
+              objectFit="cover"
+              alt="article image"
+            />
           )}
 
           {formData.photoUpload && (
-            <Image src={preview} layout="fill" objectFit="cover" />
+            <Image
+              src={preview}
+              layout="fill"
+              objectFit="cover"
+              alt="uploaded image"
+            />
           )}
 
           {formData.photoUpload && (

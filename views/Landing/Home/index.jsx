@@ -55,6 +55,7 @@ const Home = (props) => {
         layout="fill"
         objectFit="cover"
         src="/HomeCover.png"
+        alt="Home Cover"
       />
       <motion.div
         initial="hidden"

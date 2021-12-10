@@ -1,5 +1,4 @@
 //Next, React (core node_modules) imports must be placed here
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -33,7 +32,7 @@ const StyledUploadIcon = styled(Upload)`
   height: 3.6rem;
 `;
 
-const EditArticle = () => {
+const EditProduct = () => {
   const [isFetched, setIsFetched] = useState(false);
   const router = useRouter();
   const { id } = router.query;
@@ -107,7 +106,16 @@ const EditArticle = () => {
       form.append(key, formData[key]);
     }
 
-    axios.post(`/api/product/${id}`, form);
+    axios
+      .post(`/api/product/${id}`, form)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/dashboard/products");
+        }
+      })
+      .catch((err) => {
+        console.log("Edit Product handleSubmit:", err);
+      });
   };
 
   return (
@@ -132,11 +140,21 @@ const EditArticle = () => {
 
         <div className={styles.imageContainer}>
           {isFetched && formData.photoLink && (
-            <Image src={formData.photoLink} layout="fill" objectFit="cover" />
+            <Image
+              src={formData.photoLink}
+              layout="fill"
+              objectFit="cover"
+              alt="product image"
+            />
           )}
 
           {formData.photoUpload && (
-            <Image src={preview} layout="fill" objectFit="cover" />
+            <Image
+              src={preview}
+              layout="fill"
+              objectFit="cover"
+              alt="uploaded image"
+            />
           )}
 
           {formData.photoUpload && (
@@ -255,6 +273,6 @@ const EditArticle = () => {
   );
 };
 
-EditArticle.Layout = DashboardLayout;
+EditProduct.Layout = DashboardLayout;
 
-export default EditArticle;
+export default EditProduct;

@@ -12,7 +12,13 @@ const Team = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.star}>
-        <Image width={180} height={300} src="/star.png" layout="fixed" />
+        <Image
+          width={180}
+          height={300}
+          src="/star.png"
+          layout="fixed"
+          alt="star"
+        />
       </div>
       <h1>Манай хамт олон</h1>
       <div className={styles.content}>
@@ -22,7 +28,7 @@ const Team = (props) => {
               className={styles.cover}
               layout="fill"
               src="/Khatanbaatar.png"
-              alt="image"
+              alt="profile"
             />
           </div>
           <h3>Х.Хатанбаатар</h3>
@@ -33,7 +39,7 @@ const Team = (props) => {
               className={styles.cover}
               layout="fill"
               src="/bayarkhuu.png"
-              alt="image"
+              alt="profile"
             />
           </div>
           <h3>Г. Баярхүү</h3>
@@ -44,7 +50,7 @@ const Team = (props) => {
               className={styles.cover}
               layout="fill"
               src="/enkhmunkh.png"
-              alt="image"
+              alt="profile"
             />
           </div>
           <h3>Г. Энхмөнх</h3>
@@ -53,7 +59,12 @@ const Team = (props) => {
       <h2>Хамтрагч Байгууллагууд</h2>
       <div className={styles.partnerships}>
         <div className={styles.logo}>
-          <Image layout="fill" objectFit="contain" src="/mastermind.png" />
+          <Image
+            layout="fill"
+            objectFit="contain"
+            src="/mastermind.png"
+            alt="logo"
+          />
         </div>
       </div>
     </div>

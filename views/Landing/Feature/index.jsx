@@ -58,7 +58,13 @@ const Feature = (props) => {
         <CompetitionTable />
       </div>
       <div className={styles.circle}>
-        <Image width={200} height={200} src="/circle.png" layout="fixed" />
+        <Image
+          width={200}
+          height={200}
+          src="/circle.png"
+          layout="fixed"
+          alt="circle"
+        />
       </div>
     </div>
   );

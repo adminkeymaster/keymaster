@@ -53,7 +53,7 @@
     display: block;
     text-transform: lowercase;
     background-color: $clr-neutral-7;
-    width: min-content;
+    width: max-content;
     padding: 0 1em;
     margin-bottom: 1em;
     border-radius: 0.5rem;
@@ -293,6 +293,7 @@
 .productInfo {
   display: flex;
   justify-content: space-between;
+  text-transform: capitalize;
 
   &:not(:last-of-type) {
     margin-bottom: 0.5rem;

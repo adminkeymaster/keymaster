@@ -26,7 +26,7 @@ const LeaderboardTable = (props) => {
         setIsFetched(true);
       })
       .catch((err) => {
-        console.log("/contacts fetch aborted", err);
+        console.log("Leaderboard Fetch Aborted", err);
       });
 
     return () => controller.abort();
@@ -210,6 +210,7 @@ const LeaderboardTable = (props) => {
                         src="/Profile.jpg"
                         layout="fill"
                         objectFit="cover"
+                        alt="profile"
                       />
                     </div>
                     <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>

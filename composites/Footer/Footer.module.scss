@@ -27,14 +27,14 @@
     padding: 0.5em 0;
     font-size: 1.2em;
   }
-  hr{
+  hr {
     width: 100%;
   }
 }
-.contentTop{
+.contentTop {
   display: flex;
   padding: 2em 0;
-  p{
+  p {
     color: #807e7e;
     padding: 0.2em 0;
   }
@@ -47,14 +47,14 @@
   width: 100%;
   justify-content: space-around;
   padding: 2em 0;
-  p{
+  p {
     display: flex;
     flex-direction: column;
   }
   @include respondMax(sm) {
     flex-direction: column;
   }
-  @include respondMax(md){
+  @include respondMax(md) {
     justify-content: space-between;
   }
   .web {
@@ -103,7 +103,7 @@
     }
     @include respondMax(sm) {
       margin-left: 0;
-        }
+    }
   }
   p {
     cursor: pointer;
@@ -116,7 +116,9 @@
   display: flex;
   margin: 2em 0;
 }
-.design, .web, .strategy {
+.design,
+.web,
+.strategy {
   margin-right: 1em;
 }
 .legal {
@@ -134,7 +136,8 @@
       color: $clr-neutral-5;
     }
   }
-  p,span {
+  p,
+  span {
     color: $clr-neutral-6;
   }
   @include respondMax(md) {
@@ -146,7 +149,7 @@
   }
 }
 .bluestar {
-  position: absolute;
+  position: relative;
   width: 10rem;
   height: 10rem;
   right: 5%;

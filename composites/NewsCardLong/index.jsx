@@ -83,6 +83,7 @@ const NewsSection = ({ title, src, description, date, link, ...props }) => {
             src={`${src}`}
             layout="fill"
             objectFit="cover"
+            alt="news image"
           />
         </div>
       </Link>
