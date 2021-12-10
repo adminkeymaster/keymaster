@@ -33,10 +33,15 @@ const EditCompetitionPage = (props) => {
 
     const controller = new AbortController();
     const signal = controller.signal;
-    axios.get(`/api/competition/${id}`, { signal: signal }).then(({ data }) => {
-      // console.log(data.data);
-      setForm(data.data);
-    });
+    axios
+      .get(`/api/competition/${id}`, { signal: signal })
+      .then(({ data }) => {
+        // console.log(data.data);
+        setForm(data.data);
+      })
+      .catch((err) => {
+        console.log("EditCompetitionPage Fetch Aborted", err);
+      });
 
     return () => controller.abort();
   }, [id]);
@@ -60,10 +65,12 @@ const EditCompetitionPage = (props) => {
         newsLink: form.newsLink,
       })
       .then((res) => {
-        router.push("/dashboard/competitions");
+        if (res.status === 200) {
+          router.push("/dashboard/competitions");
+        }
       })
       .catch((err) => {
-        console.log("/dashboard/competitions/[id]", err);
+        console.log("/dashboard/competitions/[id] Submit:", err);
       });
   };
 

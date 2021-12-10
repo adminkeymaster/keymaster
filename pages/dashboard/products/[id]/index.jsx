@@ -1,5 +1,4 @@
 //Next, React (core node_modules) imports must be placed here
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -107,7 +106,16 @@ const EditArticle = () => {
       form.append(key, formData[key]);
     }
 
-    axios.post(`/api/product/${id}`, form);
+    axios
+      .post(`/api/product/${id}`, form)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/dashboard/products");
+        }
+      })
+      .catch((err) => {
+        console.log("Edit Article handleSubmit:", err);
+      });
   };
 
   return (

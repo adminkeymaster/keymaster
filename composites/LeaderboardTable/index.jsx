@@ -26,7 +26,7 @@ const LeaderboardTable = (props) => {
         setIsFetched(true);
       })
       .catch((err) => {
-        console.log("/contacts fetch aborted", err);
+        console.log("Leaderboard Fetch Aborted", err);
       });
 
     return () => controller.abort();

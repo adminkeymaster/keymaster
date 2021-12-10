@@ -98,6 +98,20 @@ const DashboardMenu = (props) => {
         </Link>
       </li>
       <li>
+        <Link href="/dashboard/contact-request">
+          <a
+            className={
+              route == "/dashboard/contact-request"
+                ? `${styles.isActive} ${styles.link}`
+                : styles.link
+            }
+            onClick={props.onClick}
+          >
+            Хэрэглэгчийн хүсэлт
+          </a>
+        </Link>
+      </li>
+      <li>
         <Link href="/dashboard/send-record">
           <a
             className={

@@ -33,9 +33,16 @@ const CreateCompetitionPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/api/competition", form).then((res) => {
-      console.log(res);
-    });
+    axios
+      .post("/api/competition", form)
+      .then((res) => {
+        if (res.status === 200) {
+          props.history.push("/dashboard/competitions");
+        }
+      })
+      .catch((err) => {
+        console.log("CreateCompetitionPage Submit:", err);
+      });
   };
 
   return (

@@ -30,7 +30,6 @@ const Store = (props) => {
         setProducts(data.data);
         setIsFetched(true);
       })
-
       .catch((err) => {
         console.log("/products fetch abort", err);
       });

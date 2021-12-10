@@ -1,7 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
-import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 import styled from "styled-components";
@@ -33,6 +33,7 @@ const StyledUploadIcon = styled(Upload)`
 `;
 
 const CreateProductPage = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     productName: "",
     photoUpload: null,
@@ -73,7 +74,16 @@ const CreateProductPage = () => {
       form.append(key, formData[key]);
     }
 
-    axios.post("/api/product/", form);
+    axios
+      .post("/api/product/", form)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/dashboard/products");
+        }
+      })
+      .catch((err) => {
+        console.log("CreateProductPage handleSubmit", err);
+      });
   };
 
   return (

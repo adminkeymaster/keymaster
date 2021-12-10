@@ -32,7 +32,7 @@ const CompetitionsPage = (props) => {
         setIsFetched(true);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("CompetitionsPage Fetch Aborted", err);
       });
 
     return () => controller.abort();
@@ -41,13 +41,20 @@ const CompetitionsPage = (props) => {
   const handleDelete = (e) => {
     e.preventDefault();
 
-    axios.delete(`/api/competition/${e.target.id}`).then((res) => {
-      if (res.status === 200) {
-        setCompetitions(
-          competitions.filter((competition) => competition._id !== e.target.id)
-        );
-      }
-    });
+    axios
+      .delete(`/api/competition/${e.target.id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          setCompetitions(
+            competitions.filter(
+              (competition) => competition._id !== e.target.id
+            )
+          );
+        }
+      })
+      .catch((err) => {
+        console.log("CompetitionsPage handleDelete", err);
+      });
   };
 
   return (

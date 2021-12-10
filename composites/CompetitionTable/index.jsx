@@ -15,10 +15,15 @@ const CompetitionTable = (props) => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    axios.get("/api/competition", { signal: signal }).then(({ data }) => {
-      setCompetitions(data.data.competitions);
-      setIsFetched(true);
-    });
+    axios
+      .get("/api/competition", { signal: signal })
+      .then(({ data }) => {
+        setCompetitions(data.data.competitions);
+        setIsFetched(true);
+      })
+      .catch((err) => {
+        console.log("Competition Table Fetch Aborted", err);
+      });
 
     return () => controller.abort();
   }, []);
@@ -43,7 +48,6 @@ const CompetitionTable = (props) => {
         <div className={styles.tableBody}>
           {isFetched &&
             competitions.map((competition) => {
-              console.log(competition);
               return (
                 <CompetitionCard
                   key={competition._id}
@@ -51,7 +55,7 @@ const CompetitionTable = (props) => {
                   startDate={competition.startDate}
                   endDate={competition.endDate}
                   location={competition.location}
-				  newsLink={competition.newsLink}
+                  newsLink={competition.newsLink}
                 />
               );
             })}

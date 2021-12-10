@@ -40,9 +40,8 @@ const CheckoutPage = (props) => {
         setProducts(data.data);
         setIsFetched(true);
       })
-
       .catch((err) => {
-        console.log("/products fetch abort", err);
+        console.log("CheckoutPage Fetch Aborted", err);
       });
 
     return () => controller.abort();
@@ -77,7 +76,13 @@ const CheckoutPage = (props) => {
       }),
     };
 
-    axios.post("/api/productReq", productReq);
+    axios.post("/api/productReq", productReq).then((res) => {
+      if(res.status === 200) {
+        // addOrder(filteredProducts);
+        // deleteOrder();
+        router.push("/");
+      }
+    });
   };
 
   return (
