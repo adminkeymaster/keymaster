@@ -14,6 +14,24 @@ const requestModHandler = async (req, res) => {
   const docID = "61b1b1dbca5fa2498b203074";
 
   switch (method) {
+
+
+    case "GET":
+      try {
+
+        const data = await competition.findOne({ _id: docID }).select({ competitions: { $elemMatch: { _id: id } } })
+        const simpleData = data.competitions[0];
+
+        res.status(200).json({ success: true, data: simpleData })
+
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false })
+      }
+      break;
+
+
+
     case "POST":
       try {
         const form = new formidable.IncomingForm({ keepExtensions: true });
@@ -32,12 +50,10 @@ const requestModHandler = async (req, res) => {
 
             if (files.photoUpload) {
               compInfo.oldpath = files.photoUpload.filepath;
-              compInfo.link = `/assets/images/competition/${dateNow.getTime()}-${
-                files.photoUpload.originalFilename
-              }`;
-              compInfo.newpath = `./public/assets/images/competition/${dateNow.getTime()}-${
-                files.photoUpload.originalFilename
-              }`;
+              compInfo.link = `/assets/images/competition/${dateNow.getTime()}-${files.photoUpload.originalFilename
+                }`;
+              compInfo.newpath = `./public/assets/images/competition/${dateNow.getTime()}-${files.photoUpload.originalFilename
+                }`;
             } else {
               await competition.updateOne(
                 { _id: docID },
@@ -90,11 +106,13 @@ const requestModHandler = async (req, res) => {
 
     case "DELETE":
       try {
+
         await competition.updateOne(
           { _id: docID },
           { $pull: { competitions: { _id: id } } }
         );
         res.status(200).json({ success: true, msg: "Amjilttai ustgalaa" });
+
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });
