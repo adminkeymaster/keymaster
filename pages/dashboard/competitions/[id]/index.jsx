@@ -135,14 +135,14 @@ const EditCompetitionPage = (props) => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="link" className={styles.inputLabel}>
+          <label htmlFor="newsLink" className={styles.inputLabel}>
             Мэдээний Линк
           </label>
 
           <input
             type="text"
-            id="link"
-            name="link"
+            id="newsLink"
+            name="newsLink"
             className={styles.input}
             defaultValue={form.newsLink}
             onChange={handleChange}

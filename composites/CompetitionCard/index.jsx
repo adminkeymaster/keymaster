@@ -21,22 +21,31 @@ const StyledMediaIcon = styled(PermMedia)`
   height: 32%;
 `;
 
-const CompetitionCard = ({name, date, location, ...props }) => {
+const CompetitionCard = ({
+  name,
+  startDate,
+  endDate,
+  location,
+  newsLink,
+  ...props
+}) => {
   return (
-    <div className={styles.container}>
-        <p className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-          {(name && name) || "Competition Name"}
-        </p>
-        <p className={`${styles.tableBodyCol} ${styles.startCol}`}>
-          {(date && date) || "Эхлэх: 2022-01-15  Дуусах: 2022-01-30"}
-        </p>
-        <p className={`${styles.tableBodyCol} ${styles.endCol}`}>
-          {(date && date) || "Эхлэх: 2022-01-15  Дуусах: 2022-01-30"}
-        </p>
-        <p className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-          {(location && location) || "Байршил: ХУД, ЧӨЧ, 15р хороо 6а-17 тоот"}
-        </p>
-    </div>
+    <Link href={newsLink}>
+      <a className={styles.container}>
+        <span className={`${styles.tableBodyCol} ${styles.nameCol}`}>
+          {name}
+        </span>
+        <span className={`${styles.tableBodyCol} ${styles.startCol}`}>
+          {startDate}
+        </span>
+        <span className={`${styles.tableBodyCol} ${styles.endCol}`}>
+          {endDate}
+        </span>
+        <span className={`${styles.tableBodyCol} ${styles.locationCol}`}>
+          {location}
+        </span>
+      </a>
+    </Link>
   );
 };
 
