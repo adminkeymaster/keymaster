@@ -46,18 +46,27 @@ const requestModHandler = async (req, res) => {
           return res.status(200).json({ success: true, msg: "edit hiiv" })
 
         } else {
-          console.log("bti hii gesn ymudeo")
           await competition.updateOne(
             { _id: id },
             {
               $push: {
                 competitions: myComp
-
               }
             })
           return res.status(200).json({ success: true, msg: "amjilttai temtseen nemlee" })
-
         }
+
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false });
+      }
+      break;
+
+    case "DELETE":
+      try {
+        const { deleteID } = req.body;
+        await competition.updateOne({ _id: id }, { $pull: { competitions: { _id: deleteID } } });
+        res.status(200).json({ success: true, msg: some });
 
       } catch (error) {
         console.log(error);
