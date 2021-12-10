@@ -33,12 +33,15 @@ const CompetitionsPage = (props) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    console.log(e.target.id);
 
     axios
-      .delete("/api/competition", {
-        deleteID: e.target.id,
-      })
+      .delete(
+        "/api/competition",
+        {},
+        {
+          deleteID: e.target.id,
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           setCompetitions(
