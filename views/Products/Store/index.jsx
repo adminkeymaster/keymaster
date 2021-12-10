@@ -46,6 +46,7 @@ const Store = (props) => {
             layout="fill"
             objectFit="cover"
             alt="product image"
+            priority
           />
         </div>
         <div className={styles.information}>
@@ -70,6 +71,7 @@ const Store = (props) => {
           products.map((product) => {
             return (
               <ProductCard
+                key={product._id}
                 _id={product._id}
                 photoLink={product.photoLink}
                 productName={product.productName}

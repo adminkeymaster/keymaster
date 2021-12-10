@@ -115,8 +115,6 @@ const Footer = (props) => {
       </div>
       <div className={styles.bluestar}>
         <Image
-          width={"100%"}
-          height={"100%"}
           src="/bluestar.png"
           layout="fill"
           alt="bluestar"
