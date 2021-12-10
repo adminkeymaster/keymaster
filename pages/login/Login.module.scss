@@ -49,6 +49,12 @@
         color: $clr-neutral-8;
         border-radius: 0.5em;
         margin: 1.5em 0em;
+        transition: 0.3s;
+        &:hover {
+            color: $clr-primary;
+            background-color: $clr-neutral-8;
+            box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
+        }
     }
     a {
         background-color: $clr-neutral-8;
@@ -59,6 +65,11 @@
         border: 0.1em solid $clr-neutral-1;
         text-align: center;
         font-size: 0.8em;
+        transition: 0.3s;
+        &:hover {
+            background-color: $clr-neutral-1;
+            color: $clr-neutral-8;
+        }
     }
     @include respondMax(xs){
         padding: 1.5em;
