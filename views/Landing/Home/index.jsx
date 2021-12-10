@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useAnimation, motion } from "framer-motion";
@@ -67,7 +68,7 @@ const Home = (props) => {
           Монголын уламжлалт оньсон тоглоом
         </motion.p>
         <motion.div variants={children}>
-          <PrimaryButton>Урьдчилан Захиалах</PrimaryButton>
+          <Link href="/products"><a><PrimaryButton>Урьдчилан Захиалах</PrimaryButton></a></Link>
         </motion.div>
       </motion.div>
     </div>
