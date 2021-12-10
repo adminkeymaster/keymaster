@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import Link from 'next/link';
 import styled from "styled-components";
 import { Upload } from "@styled-icons/heroicons-outline/Upload";
 //import STORE from '@/store'
