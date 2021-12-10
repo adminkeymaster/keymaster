@@ -21,7 +21,7 @@ const CreateCompetitionPage = (props) => {
     location: "",
     startDate: "",
     endDate: "",
-    link: "",
+    newsLink: "",
   });
 
   const handleChange = (e) => {
@@ -100,14 +100,14 @@ const CreateCompetitionPage = (props) => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="link" className={styles.inputLabel}>
+          <label htmlFor="newsLink" className={styles.inputLabel}>
             Зургийн Линк
           </label>
 
           <input
             type="text"
-            id="link"
-            name="link"
+            id="newsLink"
+            name="newsLink"
             className={styles.input}
             onChange={handleChange}
           />

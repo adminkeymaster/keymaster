@@ -1,6 +1,8 @@
 @import "global";
 
 .container {
+  text-decoration: none;
+  color: inherit;
   box-sizing: border-box;
   width: 100%;
   display: flex;
