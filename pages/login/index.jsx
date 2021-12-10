@@ -1,18 +1,34 @@
 //Next, React (core node_modules) imports must be placed here
 
-//Fetchers must be imported here
-//import useFETCHER from 'tools/useFETCHER'
+//import STORE from '@/store'
 
-//Layout must be imported here
-//import LAYOUT from 'layouts/LAYOUT'
-import LoginLayout from "layouts/Login";
+//import LAYOUT from '@/layouts'
 
-//Component must be imported here
-//import COMPONENT from 'components/COMPONENT'
+//import VIEWS from '@/views'
+
+//import useFETCHER from '@/tools'
+
+//import COMPOSITES from '@/composites'
+
+//import COMPONENT from '@/components'
+
+import styles from './Login.module.scss'
 
 const LoginPage = (props) => {
-  return <div>This is the login page</div>;
+	 return (
+		 <main className={styles.container}>
+			<form action="POST">
+				<label htmlFor="email">И-Мейл</label>
+				<input type="email" placeholder="Таны и-мейл хаяг"/>
+				<label htmlFor="password">Нууц үг</label>
+				<input type="password" placeholder="Таны нууц үг"/>
+				<label htmlFor="checkbox">Хэрэглэгч сануулах</label>
+				<input type="checkbox" />
+				<button>Нэвтрэх</button>
+				<a href="">Бүртгүүлэх</a>
+			</form>
+		</main>
+	)
 };
 LoginPage.Layout = LoginLayout;
-
 export default LoginPage;

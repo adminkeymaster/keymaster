@@ -39,20 +39,6 @@ const SidePanel = ({ handler, isOpen, ...props }) => {
           </Link>
         </li>
         <li>
-          <Link href="/rules">
-            <a
-              className={
-                route == "/rules"
-                  ? `${styles.isActive} ${styles.link}`
-                  : styles.link
-              }
-              onClick={props.onClick}
-            >
-              Дүрэм
-            </a>
-          </Link>
-        </li>
-        <li>
           <Link href="/news">
             <a
               className={
