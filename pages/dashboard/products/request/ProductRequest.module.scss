@@ -145,13 +145,13 @@
 }
 
 .tableFirstName {
-  max-width: 20em;
+  max-width: 8em;
   display: flex;
   align-items: center;
 }
 
 .tableLastName {
-  max-width: 20em;
+  max-width: 8em;
 
   display: flex;
   align-items: center;
@@ -160,10 +160,7 @@
 .tableEmail {
   max-width: 20em;
 
-  text-align: center;
-
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 

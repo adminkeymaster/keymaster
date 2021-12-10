@@ -6,7 +6,7 @@ dbConnect();
 const requestModHandler = async (req, res) => {
   const { method } = req;
   const id = "61b1b1dbca5fa2498b203074";
-  const mongoose = require('mongoose');
+  const mongoose = require("mongoose");
 
   switch (method) {
     case "GET":
@@ -21,41 +21,46 @@ const requestModHandler = async (req, res) => {
 
     case "POST":
       try {
-        const { endDate, startDate, description, location, newsLink, compID } = req.body;
+        const { endDate, startDate, description, location, newsLink, compID } =
+          req.body;
         const myComp = {
-          endDate, startDate, description, location, newsLink
-        }
+          endDate,
+          startDate,
+          description,
+          location,
+          newsLink,
+        };
 
         if (compID) {
-
           const compID_object = mongoose.Types.ObjectId(compID);
-          await competition.update(
+          await competition.updateOne(
             {
-              'competitions._id': compID_object
+              "competitions._id": compID_object,
             },
             {
               $set: {
-                'competitions.$.endDate': endDate,
-                'competitions.$.startDate': startDate,
-                'competitions.$.description': description,
-                'competitions.$.location': location,
-                'competitions.$.newsLink': newsLink,
-              }
+                "competitions.$.endDate": endDate,
+                "competitions.$.startDate": startDate,
+                "competitions.$.description": description,
+                "competitions.$.location": location,
+                "competitions.$.newsLink": newsLink,
+              },
             }
-          )
-          return res.status(200).json({ success: true, msg: "edit hiiv" })
-
+          );
+          return res.status(200).json({ success: true, msg: "edit hiiv" });
         } else {
           await competition.updateOne(
             { _id: id },
             {
               $push: {
-                competitions: myComp
-              }
-            })
-          return res.status(200).json({ success: true, msg: "amjilttai temtseen nemlee" })
+                competitions: myComp,
+              },
+            }
+          );
+          return res
+            .status(200)
+            .json({ success: true, msg: "amjilttai temtseen nemlee" });
         }
-
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });
@@ -65,9 +70,14 @@ const requestModHandler = async (req, res) => {
     case "DELETE":
       try {
         const { deleteID } = req.body;
-        await competition.updateOne({ _id: id }, { $pull: { competitions: { _id: deleteID } } });
-        res.status(200).json({ success: true, msg: "Amjilttai ustgalaa" });
 
+        console.log(req.body);
+
+        await competition.updateOne(
+          { _id: id },
+          { $pull: { competitions: { _id: deleteID } } }
+        );
+        res.status(200).json({ success: true, msg: "Amjilttai ustgalaa" });
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });
