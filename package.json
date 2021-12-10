@@ -23,10 +23,6 @@
     "mongoose": "^6.1.0",
     "next": "^12.0.7",
     "next-auth": "^4.0.2",
-<<<<<<< HEAD
-=======
-    "rc-slider": "^9.7.5",
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
     "react": "^17.0.2",
     "react-dom": "17.0.2",
     "react-html-parser": "^2.0.2",
