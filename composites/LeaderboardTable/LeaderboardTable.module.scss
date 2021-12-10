@@ -58,31 +58,13 @@
   border: none;
   background-image: linear-gradient(45deg, transparent 50%, gray 50%),
     linear-gradient(135deg, gray 50%, transparent 50%);
-<<<<<<< HEAD
-  background-position: calc(100% - 1.7rem) calc(1em - 0.1em), calc(100% - 1.2rem) calc(1em - 0.1em);
-=======
   background-position: calc(100% - 1.7rem) calc(1em - 0.1em),
     calc(100% - 1.2rem) calc(1em - 0.1em);
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
   appearance: none;
   &:focus {
     min-width: 18rem;
-<<<<<<< HEAD
-    background-image:
-    linear-gradient(45deg, green 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, green 50%);
-  background-position:
-    calc(100% - 1.2rem) 1em,
-    calc(100% - 1.7rem) 1em;
-  background-size:
-    5px 5px,
-    5px 5px;
-  background-repeat: no-repeat;
-  border-color: green;
-  outline: 0;
-=======
     background-image: linear-gradient(45deg, green 50%, transparent 50%),
       linear-gradient(135deg, transparent 50%, green 50%);
     background-position: calc(100% - 1.2rem) 1em, calc(100% - 1.7rem) 1em;
@@ -90,7 +72,6 @@
     background-repeat: no-repeat;
     border-color: green;
     outline: 0;
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
   }
   &:not(:last-of-type) {
     margin-right: 1em;
@@ -109,14 +90,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-<<<<<<< HEAD
-  padding: 0 0.5em;
   padding-right: 1em;
-  border-bottom: 1px solid $clr-neutral-7;
-=======
-  padding-right: 1em;
-  border-bottom: .1rem solid $clr-neutral-7;
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
+  border-bottom: 0.1rem solid $clr-neutral-7;
   padding-bottom: 1em;
 }
 
@@ -130,10 +105,6 @@
 
 .tableBody {
   box-sizing: border-box;
-<<<<<<< HEAD
-  padding: 0.5em;
-=======
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -185,11 +156,7 @@
 }
 
 .nameCol {
-<<<<<<< HEAD
-  max-width: 20rem;
-=======
   max-width: 100%;
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
   text-align: left;
 }
 

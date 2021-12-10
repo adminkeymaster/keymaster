@@ -11,18 +11,12 @@ import styles from "./Team.module.scss";
 const Team = (props) => {
   return (
     <div className={styles.container}>
-<<<<<<< HEAD
-      <h1>Манай хамт олон</h1>
-      <div className={styles.content}>
-      <div className={styles.member}>
-=======
       <div className={styles.star}>
         <Image width={180} height={300} src="/star.png" layout="fixed" />
       </div>
       <h1>Манай хамт олон</h1>
       <div className={styles.content}>
         <div className={styles.member}>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
           <div className={styles.image}>
             <Image
               className={styles.cover}

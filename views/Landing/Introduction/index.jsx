@@ -1,8 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
-<<<<<<< HEAD
-=======
 import Image from "next/image"
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
 import ReactPlayer from "react-player";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -52,12 +49,9 @@ const Introduction = (props) => {
   };
   return (
     <div className={styles.container} ref={ref}>
-<<<<<<< HEAD
-=======
             <div className={styles.triangle}>
         <Image width={100} height={100} src="/triangle.png" layout="fixed" />
       </div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
       <div className={styles.contentContainer}>
         <motion.div
           initial="hidden"

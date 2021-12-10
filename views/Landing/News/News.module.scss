@@ -19,7 +19,7 @@
     &:not(:first-of-type) {
       margin: 2em 0;
     }
-    @include respondMax(xs){
+    @include respondMax(xs) {
       font-size: 2em;
     }
   }
@@ -58,11 +58,8 @@
     margin: 0 1rem;
     min-width: 30rem;
   }
-<<<<<<< HEAD
-=======
 }
 .rectangle {
   position: absolute;
   left: -18%;
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
 }

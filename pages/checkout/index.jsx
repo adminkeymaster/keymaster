@@ -112,6 +112,7 @@ const CheckoutPage = (props) => {
               filteredProducts.map((product) => {
                 return (
                   <ProductCard
+                    key={product._id}
                     _id={product._id}
                     photoLink={product.photoLink}
                     productName={product.productName}

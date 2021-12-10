@@ -4,7 +4,6 @@ import { useState } from "react";
 //import STORE from '@/store'
 
 //import COMPONENT from '@/components'
-<<<<<<< HEAD
 import Logo from "@/components/Logo";
 import styles from "./ProductReq.module.scss";
 
@@ -33,8 +32,6 @@ const ProductReq = ({ firstName, lastName, email, phoneNumber, ...props }) => {
         as: "/checkout",
       });
     }
-
-    console.log(form);
   };
 
   const handleChange = (e) => {
@@ -112,67 +109,6 @@ const ProductReq = ({ firstName, lastName, email, phoneNumber, ...props }) => {
       </div>
     </div>
   );
-=======
-<<<<<<< HEAD
-
-=======
-import Logo from '@/components/Logo';
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
-import styles from './ProductReq.module.scss'
-
-const ProductReq = (props) => {
-	 return (
-		 <div className={styles.container}>
-<<<<<<< HEAD
-			<form action="POST">
-				<label htmlFor="firstName">Овог</label>
-				<input type="text" />
-				<label htmlFor="lastName">Нэр</label>
-				<input type="text" />
-				<label htmlFor="email">Цахим шуудан</label>
-				<input type="email" />
-				<label htmlFor="phoneNumber">Утасны дугаар</label>
-				<input type="tel" />
-				<p>Та дараах данс руу төлбөрөө шилжүүлнэ үү.</p>
-				<p>Данс: 14051363171</p>
-				<p>Банк: Голомт Банк</p>
-				<p>Нэр: КиМастер Ворлд ХХК</p>
-				<p>Гүйлгээний утган дээр та өөрийн нэр болон утасны дугаараа бичээрэй</p>
-				<p>Санамж: Төлбөрөө бүрэн шилжүүлсэн тохиолдолд таны захиалга баталгаажихыг анхаарна уу!</p>
-				<button>Захиалга өгөх</button>
-			</form>
-=======
-			 <div className={styles.information}>
-			 <div className={styles.guide}>
-			<h3>Төлбөр төлөх заавар</h3>
-				<p>Та дараах данс руу төлбөрөө шилжүүлнэ үү.</p>
-				<div className={styles.bankInfo}>
-				<div className={styles.bank}>
-				<p>Данс: 14051363171</p>
-				<p>Банк: Голомт Банк</p>
-				<p>Нэр: КиМастер Ворлд ХХК</p>
-				</div>
-				<Logo/>
-				</div>
-				<p><b>Гүйлгээний утган дээр та өөрийн нэр болон утасны дугаараа бичээрэй</b></p>
-				<p><b>Санамж: Төлбөрөө бүрэн шилжүүлсэн тохиолдолд таны захиалга баталгаажихыг анхаарна уу!</b></p>
-			</div>
-			<form action="POST">
-				<label htmlFor="firstName">Овог</label>
-				<input type="text" placeholder="Овог"/>
-				<label htmlFor="lastName">Нэр</label>
-				<input type="text" placeholder="Нэр"/>
-				<label htmlFor="email">Цахим шуудан</label>
-				<input type="email" placeholder="Цахим шуудан"/>
-				<label htmlFor="phoneNumber">Утасны дугаар</label>
-				<input type="tel" placeholder="Утасны дугаар"/>
-				<button>Захиалга өгөх</button>
-			</form>
-			</div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
-		</div>
-	)
->>>>>>> 53cf62d755d0d5094c2cd68d4fb75a5981813357
 };
 
 export default ProductReq;

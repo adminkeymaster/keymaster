@@ -11,22 +11,12 @@ import styles from "./Goal.module.scss";
 const Goal = (props) => {
   return (
     <div className={styles.container}>
-<<<<<<< HEAD
-      <Image
-        className={styles.coverImage}
-        layout="fill"
-        objectFit="cover"
-        src="/HomeCover.png"
-        alt="cover image"
-      />
-=======
       <div className={styles.rectangle}>
         <Image width={200} height={300} src="/rectangle.png" layout="fixed" />
       </div>
       <div className={styles.circle}>
         <Image width={300} height={300} src="/circle.png" layout="fixed" />
       </div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
       <div className={styles.content}>
         <div className={styles.contentContainer}>
           <div className={styles.text}>

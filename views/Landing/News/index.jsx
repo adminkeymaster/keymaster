@@ -1,8 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
-<<<<<<< HEAD
-=======
 import Image from "next/image";
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAnimation, motion } from "framer-motion";
@@ -70,9 +67,13 @@ const News = (props) => {
     },
   };
   return (
-    <motion.div initial="hidden"
-    animate={animation}
-    variants={container} ref={ref} className={styles.container}>
+    <motion.div
+      initial="hidden"
+      animate={animation}
+      variants={container}
+      ref={ref}
+      className={styles.container}
+    >
       <motion.h2 variants={children}>Мэдээ</motion.h2>
       <motion.div variants={children} className={styles.content}>
         {isFetched &&
@@ -89,12 +90,9 @@ const News = (props) => {
             );
           })}
       </motion.div>
-<<<<<<< HEAD
-=======
       <div className={styles.rectangle}>
         <Image width={200} height={300} src="/rectangle.png" layout="fixed" />
       </div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
     </motion.div>
   );
 };

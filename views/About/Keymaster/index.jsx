@@ -11,23 +11,12 @@ import styles from "./Keymaster.module.scss";
 const Keymaster = (props) => {
   return (
     <div className={styles.container}>
-<<<<<<< HEAD
-      <Image
-        className={styles.coverImage}
-        layout="fill"
-        objectFit="cover"
-        src="/HomeCover.png"
-        alt="cover image"
-        priority
-      />
-=======
       <div className={styles.triangle}>
         <Image width={100} height={100} src="/triangle.png" layout="fixed" />
       </div>
       <div className={styles.smallTriangle}>
         <Image width={50} height={50} src="/smalltraingle.png" layout="fixed" />
       </div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
       <div className={styles.content}>
         <div className={styles.contentContainer}>
           <div className={styles.text}>

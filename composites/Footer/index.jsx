@@ -1,15 +1,17 @@
 //Next, React (core node_modules) imports must be placed here
-<<<<<<< HEAD
-=======
-import Image from 'next/image';
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
 
 import styled from "styled-components";
 
-import { FacebookSquare, Youtube, Twitter, Instagram } from "@styled-icons/boxicons-logos";
-import ContactForm from '@/composites/ContactForm';
-import LogoDark from '@/components/LogoDark'
+import {
+  FacebookSquare,
+  Youtube,
+  Twitter,
+  Instagram,
+} from "@styled-icons/boxicons-logos";
+import ContactForm from "@/composites/ContactForm";
+import LogoDark from "@/components/LogoDark";
 //Styles must be imported here
 import styles from "./Footer.module.scss";
 
@@ -45,67 +47,82 @@ const Footer = (props) => {
           <div className={styles.contentLeft}>
             <div className={styles.web}>
               <h4>кимастер</h4>
-              <Link href="/about"><p>Тухай</p></Link>
-<<<<<<< HEAD
-              <Link href="/rules"><p>дүрэм</p></Link>
-=======
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
-              <Link href="/competition"><p>тэмцээн</p></Link>
-              <Link href="/news"><p>мэдээ</p></Link>
+              <Link href="/about">
+                <p>Тухай</p>
+              </Link>
+              <Link href="/competition">
+                <p>тэмцээн</p>
+              </Link>
+              <Link href="/news">
+                <p>мэдээ</p>
+              </Link>
             </div>
             <div className={styles.info}>
               <div className={styles.infoTop}>
-              <h4>бидэнтэй холбогдох</h4>
-              <p>Та форумыг бөглөн илгээх товчыг дарснаар манай оператортой 24 цагийн дотор холбогдох болно. Баярлалаа!</p>
+                <h4>бидэнтэй холбогдох</h4>
+                <p>
+                  Та форумыг бөглөн илгээх товчыг дарснаар манай оператортой 24
+                  цагийн дотор холбогдох болно. Баярлалаа!
+                </p>
               </div>
               <div className={styles.infoBottom}>
-              <h4>Хан-Уул дүүрэг, 15 дугаар хороо,
-                Чингисийн өргөн чөлөө , 6A- 17</h4>
-              <p><span>Улаанбаатар хот, Сүхбаатар дүүрэг</span><span> Example<br />(+976) 7011 1111</span></p>
+                <h4>
+                  Хан-Уул дүүрэг, 15 дугаар хороо, Чингисийн өргөн чөлөө , 6A-
+                  17
+                </h4>
+                <p>
+                  <span>Улаанбаатар хот, Сүхбаатар дүүрэг</span>
+                  <span>
+                    {" "}
+                    Example
+                    <br />
+                    (+976) 7011 1111
+                  </span>
+                </p>
               </div>
             </div>
           </div>
           <div className={styles.contentRight}>
             <ContactForm />
-        </div>
-      </div>
-      <hr></hr>
-      <div className={styles.contentBottom}>
-        <div className={styles.legal}>
-          <div className={styles.socialContainer}>
-            <Link href="">
-              <StyledFacebook />
-            </Link>
-            <Link href="">
-              <StyledYoutube />
-            </Link>
-            <Link href="">
-              <StyledInstagram />
-            </Link>
-            <Link href="">
-              <StyledTwitter />
-            </Link>
           </div>
-          <Link href="/">
-
-            <div className={styles.legalRight}>
-              <LogoDark size={8} />
+        </div>
+        <hr></hr>
+        <div className={styles.contentBottom}>
+          <div className={styles.legal}>
+            <div className={styles.socialContainer}>
+              <Link href="">
+                <StyledFacebook />
+              </Link>
+              <Link href="">
+                <StyledYoutube />
+              </Link>
+              <Link href="">
+                <StyledInstagram />
+              </Link>
+              <Link href="">
+                <StyledTwitter />
+              </Link>
             </div>
-          </Link>
-          <div className={styles.legalLeft}>
-            <p>&lt;/&gt; 2021 Solid Frameworks LLC</p>
+            <Link href="/">
+              <div className={styles.legalRight}>
+                <LogoDark size={8} />
+              </div>
+            </Link>
+            <div className={styles.legalLeft}>
+              <p>&lt;/&gt; 2021 Solid Frameworks LLC</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-<<<<<<< HEAD
-
-=======
-    <div className={styles.bluestar}>
-        <Image width={"100%"} height={"100%"} src="/bluestar.png" layout="fill" />
+      <div className={styles.bluestar}>
+        <Image
+          width={"100%"}
+          height={"100%"}
+          src="/bluestar.png"
+          layout="fill"
+        />
       </div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
-    </footer >
+    </footer>
   );
 };
 

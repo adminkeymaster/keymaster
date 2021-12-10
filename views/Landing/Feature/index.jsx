@@ -1,8 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
-<<<<<<< HEAD
-=======
 import Image from "next/image";
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
 import { useEffect, useState } from "react";
 import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -54,22 +51,14 @@ const Feature = (props) => {
   return (
     <div className={styles.container}>
       <LeaderboardTable />
-<<<<<<< HEAD
-	  <SendVideoHome />
-      <h2>Тэмцээний мэдээллүүд</h2>
-      <div className={styles.content}>
-      <AthleteCard src="/Profile.jpg" />
-      <CompetitionTable />
-=======
       <SendVideoHome />
       <h2>Тэмцээний мэдээллүүд</h2>
       <div className={styles.content}>
         <AthleteCard src="/Profile.jpg" />
         <CompetitionTable />
       </div>
-      <div className={styles.circle}>      
-      <Image width={200} height={200} src="/circle.png" layout="fixed"/>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
+      <div className={styles.circle}>
+        <Image width={200} height={200} src="/circle.png" layout="fixed" />
       </div>
     </div>
   );

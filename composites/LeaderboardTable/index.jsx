@@ -1,10 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
 import Image from "next/image";
-<<<<<<< HEAD
-=======
 import { useState, useEffect } from "react";
 import axios from "axios";
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
 //import STORE from '@/store'
 
 //import COMPONENT from '@/components'
@@ -12,8 +9,6 @@ import axios from "axios";
 import styles from "./LeaderboardTable.module.scss";
 
 const LeaderboardTable = (props) => {
-<<<<<<< HEAD
-=======
   const [isFetched, setIsFetched] = useState(false);
   const [leaderboard, setLeaderboard] = useState([]);
   const [selectedType, setSelectedType] = useState("Keymaster 5");
@@ -151,33 +146,10 @@ const LeaderboardTable = (props) => {
     setSelectedType(e.target.value);
   };
 
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
-<<<<<<< HEAD
-          <input className={styles.search} placeholder="Овог/Нэр" type="text" />
-          <div className={styles.tabsContainer}>
-            <select className={styles.tab}>
-              <option value="">4 нас</option>
-              <option value="">5 нас</option>
-              <option value="">6 нас</option>
-              <option value="">7-8 нас</option>
-              <option value="">9-11 нас</option>
-              <option name="" id="">12-14 нас</option>
-              <option name="" id="">15-17 нас</option>
-              <option name="" id="">18-аас дээш нас</option>
-            </select>
-            <select className={styles.tab}>
-              <option name="" id="">Онлайн рекорд</option>
-              <option name="" id="">Тэмцээний рекорд</option>
-            </select>
-            <select className={styles.tab}>
-              <option name="" id="">5 түлхүүрт</option>
-              <option name="" id="">7 түлхүүрт</option>
-              <option name="" id="">9 түлхүүрт</option>
-=======
           <input
             className={styles.search}
             placeholder="Овог/Нэр"
@@ -210,7 +182,6 @@ const LeaderboardTable = (props) => {
               <option>Keymaster 5</option>
               <option>Keymaster 7</option>
               <option>Keymaster 9</option>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
             </select>
           </div>
         </div>
@@ -225,12 +196,6 @@ const LeaderboardTable = (props) => {
             <div className={`${styles.tableHeaderCol} ${styles.nameCol}`}>
               Овог Нэр
             </div>
-<<<<<<< HEAD
-            <div className={`${styles.tableHeaderCol} ${styles.locationCol}`}>
-              Хот/Аймаг
-            </div>
-=======
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
             <div className={`${styles.tableHeaderCol} ${styles.ageCol}`}>
               Нас
             </div>
@@ -240,444 +205,6 @@ const LeaderboardTable = (props) => {
             <div className={`${styles.tableHeaderCol} ${styles.timeCol}`}>
               Хугацаа (сек)
             </div>
-<<<<<<< HEAD
-            <div className={`${styles.tableHeaderCol} ${styles.countryCol}`}>
-              Улс
-            </div>
-          </div>
-          <div className={styles.tableBody}>
-            <div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-
-			<div className={styles.tableRow}>
-              <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>
-                1
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                <Image src="/Profile.jpg" layout="fill" objectFit="cover" />
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                Гантулга Дөлгөөн
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-                Улаанбаатар
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                21
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>
-                Эрэгтэй
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                69.6
-              </div>
-              <div className={`${styles.tableBodyCol} ${styles.countryCol}`}>
-                Монгол
-              </div>
-            </div>
-=======
           </div>
           <div className={styles.tableBody}>
             {isFetched &&
@@ -715,7 +242,6 @@ const LeaderboardTable = (props) => {
                   </div>
                 );
               })}
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
           </div>
         </div>
       </div>

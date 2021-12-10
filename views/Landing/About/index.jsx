@@ -48,14 +48,12 @@ const About = (props) => {
   };
   return (
     <div className={styles.container} ref={ref}>
-<<<<<<< HEAD
-=======
       <div className={styles.star}>
         <Image width={150} height={300} src="/star.png" layout="fixed" />
       </div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
       <div className={styles.contentContainer}>
-        <motion.div initial="hidden"
+        <motion.div
+          initial="hidden"
           animate={animation}
           variants={container}
           className={styles.content}
@@ -88,12 +86,9 @@ const About = (props) => {
           objectFit="cover"
         />
       </motion.div>
-<<<<<<< HEAD
-=======
       <div className={styles.greencircle}>
         <Image width={120} height={150} src="/greencircle.png" layout="fixed" />
       </div>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
     </div>
   );
 };

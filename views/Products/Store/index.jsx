@@ -42,22 +42,13 @@ const Store = (props) => {
     <div className={styles.container}>
       <div className={styles.feature}>
         <div className={styles.imageContainer}>
-<<<<<<< HEAD
-          <Image src="/product.jpg" layout="fill" objectFit="cover" />
-=======
           <Image src="/keymasterPack.png" layout="fill" objectFit="cover" />
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
         </div>
         <div className={styles.information}>
           <div className={styles.featureHeading}>
             <h2>Кимастер Багц</h2>
-<<<<<<< HEAD
-            <p>Өнгө: Гүн Хөх</p>
-            <p>Үнэ: 200'000₮</p>
-=======
             <p>Өнгө: Олон төрөл</p>
             <p>Үнэ: 60'000₮</p>
->>>>>>> 09ff2e9565a7565f40059591bb80eae4479f3178
           </div>
           <ul className={styles.featureList}>
             <li>Металл хайрцаг</li>
