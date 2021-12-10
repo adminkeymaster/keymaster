@@ -16,18 +16,22 @@ const requestModHandler = async (req, res) => {
 
         const data = await Promise.all(
           recordRequests.map(async (recordRequest) => {
+
             const tempUser = await user.findById(
               recordRequest.userID,
               "firstName lastName birthDate gender"
             ).lean()
 
             return {
-              ...recordRequest,
-              ...tempUser
+              ...tempUser,
+              ...recordRequest
+              
             };
           })
 
         )
+
+        console.log(data);
 
         res.status(200).json({ success: true, data: data });
 
@@ -61,6 +65,7 @@ const requestModHandler = async (req, res) => {
             };
 
             resolve(myForm);
+            
           })
         }).then(async (myForm) => {
           let isSuccess = false;
