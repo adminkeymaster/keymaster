@@ -31,7 +31,7 @@ const CompetitionPage = (props) => {
         <Image width={200} height={300} src="/star.png" layout="fixed" />
       </div>
       <div className={styles.circle}>
-        <Image width={150} height={200} src="/greencircle.png" layout="fixed" />
+        <Image width={150} height={200} src="/circle1.png" layout="fixed" />
       </div>
       </div>
     </main>

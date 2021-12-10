@@ -28,3 +28,21 @@
 .heading {
   padding: 1em;
 }
+.rectangleRight {
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  top: 10%
+}
+.star {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+}
+.circle {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  bottom: 20%;
+}
