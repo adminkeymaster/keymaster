@@ -4,10 +4,11 @@
 import styles from './Login.module.scss'
 
 //Components must be imported here
-
+import Navbar from '@/composites/Navbar';
 const LoginLayout = ({children, ...props}) => {
 	 return (
 		 <div className={styles.container}>
+			 <Navbar />
 			{children}
 		</div>
 	)

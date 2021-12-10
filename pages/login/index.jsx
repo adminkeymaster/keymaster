@@ -4,7 +4,7 @@ import Link from 'next/link';
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
-import LandingLayout from '@/layouts/Landing'
+import LoginLayout from '@/layouts/Login'
 //import VIEWS from '@/views'
 
 //import useFETCHER from '@/tools'
@@ -23,14 +23,14 @@ const LoginPage = (props) => {
 			</div>
 			<form className={styles.form} action="POST">
 				<div className={styles.imageContainer}>
-					<Image className={styles.image} width={"100%"} height={"100%"} src="/signinbg.png" layout="fill" alt="Login" />
+					<Image className={styles.image} src="/signinbg.png" layout="fill" alt="Login" />
 				</div>
 				<div className={styles.details}>
-					<label htmlFor="email">И-Мейл</label>
+					<label htmlFor="email">Цахим шуудан</label>
 					<input type="email" placeholder="Таны и-мейл хаяг" />
 					<label htmlFor="password">Нууц үг</label>
 					<input type="password" placeholder="Таны нууц үг" />
-					<div>
+					<div className={styles.remember}>
 						<input type="checkbox" />
 						<label htmlFor="checkbox">Хэрэглэгч сануулах</label>
 					</div>
@@ -41,5 +41,5 @@ const LoginPage = (props) => {
 		</main>
 	)
 };
-LoginPage.Layout = LandingLayout;
+LoginPage.Layout = LoginLayout;
 export default LoginPage;

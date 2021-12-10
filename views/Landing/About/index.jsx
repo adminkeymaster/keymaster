@@ -82,7 +82,7 @@ const About = (props) => {
         <Image
           className={styles.cover}
           layout="fill"
-          src="/AboutCover.png"
+          src="/AboutCover.jpg"
           objectFit="cover"
         />
       </motion.div>
