@@ -6,7 +6,6 @@ import Image from "next/image";
 import LandingLayout from "@/layouts/Landing";
 
 //import VIEWS from '@/views'
-import Information from "@/views/Competition/Information";
 import CompetitionTable from "@/composites/CompetitionTable";
 import Rules from "@/views/Rules/Rules";
 //import useFETCHER from '@/tools'
@@ -21,18 +20,36 @@ const CompetitionPage = (props) => {
   return (
     <main className={styles.container}>
       <div className={styles.withBackground}>
-        <Rules/>
+        <Rules />
         <h2>КиМастер Тэмцээн</h2>
         <CompetitionTable />
         <div className={styles.rectangleRight}>
-        <Image width={200} height={300} src="/rectangleright.png" layout="fixed" />
-      </div>
-      <div className={styles.star}>
-        <Image width={200} height={300} src="/star.png" layout="fixed" />
-      </div>
-      <div className={styles.circle}>
-        <Image width={150} height={200} src="/circle1.png" layout="fixed" />
-      </div>
+          <Image
+            width={200}
+            height={300}
+            src="/rectangleright.png"
+            layout="fixed"
+            alt="rectagleRight"
+          />
+        </div>
+        <div className={styles.star}>
+          <Image
+            width={200}
+            height={300}
+            src="/star.png"
+            layout="fixed"
+            alt="star"
+          />
+        </div>
+        <div className={styles.circle}>
+          <Image
+            width={150}
+            height={200}
+            src="/circle1.png"
+            layout="fixed"
+            alt="circle"
+          />
+        </div>
       </div>
     </main>
   );

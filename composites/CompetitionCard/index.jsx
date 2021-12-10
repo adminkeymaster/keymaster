@@ -1,25 +1,10 @@
 //Next, React (core node_modules) imports must be placed here
-import Image from "next/image";
 import Link from "next/link";
-import styled from "styled-components";
-import { Trophy } from "@styled-icons/bootstrap/Trophy";
-import { PermMedia } from "@styled-icons/material-outlined/PermMedia";
 //import STORE from '@/store'
 
 //import COMPONENT from '@/components'
-import PrimaryLink from "@/components/PrimaryLink";
 
 import styles from "./CompetitionCard.module.scss";
-
-const StyledTrophyIcon = styled(Trophy)`
-  margin-left: 0.5em;
-  height: 2rem;
-`;
-
-const StyledMediaIcon = styled(PermMedia)`
-  width: 32%;
-  height: 32%;
-`;
 
 const CompetitionCard = ({
   name,

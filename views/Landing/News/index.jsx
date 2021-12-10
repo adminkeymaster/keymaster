@@ -23,7 +23,7 @@ const News = (props) => {
       .get("/api/news", { signal: controller.signal })
       .then(({ data }) => {
         const news = data.data.slice(0, 6);
-        setNews(news);
+        setNews(news.reverse());
         setIsFetched(true);
       })
       .catch((err) => {
@@ -91,7 +91,13 @@ const News = (props) => {
           })}
       </motion.div>
       <div className={styles.rectangle}>
-        <Image width={200} height={300} src="/rectangle.png" layout="fixed" />
+        <Image
+          width={200}
+          height={300}
+          src="/rectangle.png"
+          layout="fixed"
+          alt="rectangle"
+        />
       </div>
     </motion.div>
   );

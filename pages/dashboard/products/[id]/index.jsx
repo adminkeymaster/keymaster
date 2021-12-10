@@ -32,7 +32,7 @@ const StyledUploadIcon = styled(Upload)`
   height: 3.6rem;
 `;
 
-const EditArticle = () => {
+const EditProduct = () => {
   const [isFetched, setIsFetched] = useState(false);
   const router = useRouter();
   const { id } = router.query;
@@ -114,7 +114,7 @@ const EditArticle = () => {
         }
       })
       .catch((err) => {
-        console.log("Edit Article handleSubmit:", err);
+        console.log("Edit Product handleSubmit:", err);
       });
   };
 
@@ -140,11 +140,21 @@ const EditArticle = () => {
 
         <div className={styles.imageContainer}>
           {isFetched && formData.photoLink && (
-            <Image src={formData.photoLink} layout="fill" objectFit="cover" />
+            <Image
+              src={formData.photoLink}
+              layout="fill"
+              objectFit="cover"
+              alt="product image"
+            />
           )}
 
           {formData.photoUpload && (
-            <Image src={preview} layout="fill" objectFit="cover" />
+            <Image
+              src={preview}
+              layout="fill"
+              objectFit="cover"
+              alt="uploaded image"
+            />
           )}
 
           {formData.photoUpload && (
@@ -263,6 +273,6 @@ const EditArticle = () => {
   );
 };
 
-EditArticle.Layout = DashboardLayout;
+EditProduct.Layout = DashboardLayout;
 
-export default EditArticle;
+export default EditProduct;

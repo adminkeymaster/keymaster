@@ -12,10 +12,22 @@ const Keymaster = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.triangle}>
-        <Image width={100} height={100} src="/triangle.png" layout="fixed" />
+        <Image
+          width={100}
+          height={100}
+          src="/triangle.png"
+          layout="fixed"
+          alt="triangle"
+        />
       </div>
       <div className={styles.smallTriangle}>
-        <Image width={50} height={50} src="/smalltraingle.png" layout="fixed" />
+        <Image
+          width={50}
+          height={50}
+          src="/smalltraingle.png"
+          layout="fixed"
+          alt="small triangle"
+        />
       </div>
       <div className={styles.content}>
         <div className={styles.contentContainer}>

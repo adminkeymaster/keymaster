@@ -49,7 +49,13 @@ const About = (props) => {
   return (
     <div className={styles.container} ref={ref}>
       <div className={styles.star}>
-        <Image width={150} height={300} src="/star.png" layout="fixed" />
+        <Image
+          width={150}
+          height={300}
+          src="/star.png"
+          layout="fixed"
+          alt="star"
+        />
       </div>
       <div className={styles.contentContainer}>
         <motion.div
@@ -84,10 +90,17 @@ const About = (props) => {
           layout="fill"
           src="/AboutCover.jpg"
           objectFit="cover"
+          alt="cover"
         />
       </motion.div>
       <div className={styles.greencircle}>
-        <Image width={120} height={150} src="/greencircle.png" layout="fixed" />
+        <Image
+          width={120}
+          height={150}
+          src="/greencircle.png"
+          layout="fixed"
+          alt="greencircle"
+        />
       </div>
     </div>
   );

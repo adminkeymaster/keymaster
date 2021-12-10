@@ -210,6 +210,7 @@ const LeaderboardTable = (props) => {
                         src="/Profile.jpg"
                         layout="fill"
                         objectFit="cover"
+                        alt="profile"
                       />
                     </div>
                     <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>

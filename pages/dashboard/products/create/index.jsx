@@ -108,7 +108,12 @@ const CreateProductPage = () => {
 
         <div className={styles.imageContainer}>
           {formData.photoUpload && (
-            <Image src={preview} layout="fill" objectFit="cover" />
+            <Image
+              src={preview}
+              layout="fill"
+              objectFit="cover"
+              alt="uploaded image"
+            />
           )}
 
           {formData.photoUpload && (

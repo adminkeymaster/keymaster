@@ -1,7 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
-import Image from "next/image"
+import Image from "next/image";
 import ReactPlayer from "react-player";
-import Link from "next/link";
 import { useEffect } from "react";
 import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -10,7 +9,6 @@ import { useInView } from "react-intersection-observer";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
-import SecondaryButton from "@/components/SecondaryButton";
 import styles from "./Introduction.module.scss";
 
 const Introduction = (props) => {
@@ -49,8 +47,14 @@ const Introduction = (props) => {
   };
   return (
     <div className={styles.container} ref={ref}>
-            <div className={styles.triangle}>
-        <Image width={100} height={100} src="/triangle.png" layout="fixed" />
+      <div className={styles.triangle}>
+        <Image
+          width={100}
+          height={100}
+          src="/triangle.png"
+          layout="fixed"
+          alt="triangle"
+        />
       </div>
       <div className={styles.contentContainer}>
         <motion.div

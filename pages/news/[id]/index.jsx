@@ -77,7 +77,12 @@ const Article = () => {
     <main className={styles.container}>
       <motion.div className={styles.imageContainer} ref={ref} style={{ y: y }}>
         {article?.photoLink && (
-          <Image src={article?.photoLink} layout="fill" objectFit="cover" />
+          <Image
+            src={article?.photoLink}
+            layout="fill"
+            objectFit="cover"
+            alt="article image"
+          />
         )}
         <div className={styles.overlay}></div>
         <h1 className={styles.heading} data-date={dateDiff(article?.date)}>

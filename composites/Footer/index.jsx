@@ -119,6 +119,7 @@ const Footer = (props) => {
           height={"100%"}
           src="/bluestar.png"
           layout="fill"
+          alt="bluestar"
         />
       </div>
     </footer>

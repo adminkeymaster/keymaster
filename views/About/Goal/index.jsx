@@ -12,10 +12,22 @@ const Goal = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.rectangle}>
-        <Image width={200} height={300} src="/rectangle.png" layout="fixed" />
+        <Image
+          width={200}
+          height={300}
+          src="/rectangle.png"
+          layout="fixed"
+          alt="rectangle"
+        />
       </div>
       <div className={styles.circle}>
-        <Image width={300} height={300} src="/circle.png" layout="fixed" />
+        <Image
+          width={300}
+          height={300}
+          src="/circle.png"
+          layout="fixed"
+          alt="circle"
+        />
       </div>
       <div className={styles.content}>
         <div className={styles.contentContainer}>

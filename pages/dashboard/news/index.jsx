@@ -124,6 +124,7 @@ const DashboardNews = (props) => {
                       alt={article.title}
                       layout="fill"
                       objectFit="cover"
+                      alt={article.title}
                     />
                   </div>
                   <div

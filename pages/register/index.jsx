@@ -71,7 +71,7 @@ const RegisterPage = (props) => {
           src="/star.png"
           layout="fixed"
           className={styles.star}
-          alt=""
+          alt="star"
         />
       </div>
       <form className={styles.form} action="POST">

@@ -47,35 +47,50 @@ const Benefits = (props) => {
   };
   return (
     <div className={styles.container}>
-      <motion.div         initial="hidden"
+      <motion.div
+        initial="hidden"
         animate={animation}
-        variants={container} className={styles.content} ref={ref}>
-        <motion.h2
-        variants={children}>Давуу талууд</motion.h2>
+        variants={container}
+        className={styles.content}
+        ref={ref}
+      >
+        <motion.h2 variants={children}>Давуу талууд</motion.h2>
         <motion.div variants={children} className={styles.benefits}>
           <div className={styles.benefit}>
             <div className={styles.icon}>
-              <Image layout="fill" objectFit="cover" src="/BenefitsOne.png" />
+              <Image
+                layout="fill"
+                objectFit="cover"
+                src="/BenefitsOne.png"
+                alt="benefit image"
+              />
             </div>
-              <p>
-                Стресс бууруулах, Спорт зан чанар, Анхаарал төвлөрөлт
-              </p>
+            <p>Стресс бууруулах, Спорт зан чанар, Анхаарал төвлөрөлт</p>
           </div>
           <motion.div variants={children} className={styles.benefit}>
             <div className={styles.icon}>
-              <Image layout="fill" objectFit="cover" src="/BenefitsTwo.png" />
+              <Image
+                layout="fill"
+                objectFit="cover"
+                src="/BenefitsTwo.png"
+                alt="benefit image"
+              />
             </div>
-              <p>
-                Гарын жижиг булчингийн хөгжил, Цусны эргэлт, Тооцоолон бодох чадвар
-              </p>
+            <p>
+              Гарын жижиг булчингийн хөгжил, Цусны эргэлт, Тооцоолон бодох
+              чадвар
+            </p>
           </motion.div>
           <motion.div variants={children} className={styles.benefit}>
             <div className={styles.icon}>
-              <Image layout="fill" objectFit="cover" src="/BenefitsThree.png" />
+              <Image
+                layout="fill"
+                objectFit="cover"
+                src="/BenefitsThree.png"
+                alt="benefit image"
+              />
             </div>
-              <p>
-                Хоёр тархины хөгжил, Тэвчээр, Тууштай зан чанар, 
-              </p>
+            <p>Хоёр тархины хөгжил, Тэвчээр, Тууштай зан чанар,</p>
           </motion.div>
         </motion.div>
       </motion.div>
