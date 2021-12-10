@@ -11,14 +11,17 @@ import Store from "@/views/Products/Store";
 
 //import COMPOSITES from '@/composites'
 import ProductReq from "@/composites/ProductReq";
+// import Carousel from "@/composites/Carousel";
 //import COMPONENT from '@/components'
 
 import styles from "./Products.module.scss";
-
+// const SLIDE_COUNT = 10;
+// const slides = Array.from(Array(SLIDE_COUNT).keys());
 const ProductsPage = (props) => {
   return (
     <main className={styles.container}>
       <Header />
+      {/* <Carousel slides={slides}/> */}
       <Store />
       <ProductReq />
     </main>

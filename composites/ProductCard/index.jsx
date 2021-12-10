@@ -1,6 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
 import Image from "next/image";
-import { useContext } from "react";
+import { useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import { PermMedia } from "@styled-icons/material-outlined/PermMedia";
 import { Plus } from "@styled-icons/entypo/Plus";
@@ -25,7 +25,6 @@ const StyledMinusIcon = styled(Minus)`
   width: 1.6rem;
   height: 1.6rem;
 `;
-
 const ProductCard = ({
   photoLink,
   productName,
@@ -44,9 +43,28 @@ const ProductCard = ({
     deleteOrder(_id);
   };
 
+  const [showModal, setShowModal] = useState(false);
+  const modalRef = useRef();
+  const closeModal = e => {
+    if (modalRef.current === e.target) {
+      setShowModal(false);
+      console.log("clicked")
+    }
+  };
   return (
     <div className={styles.container} key={_id}>
-      <div className={styles.imageContainer}>
+      {showModal ? (<div onClick={closeModal} ref={modalRef} className={styles.modalBackground}>
+        <div className={styles.modalImageContainer} showModal={showModal}>
+          <Image
+            src={photoLink}
+            layout="fill"
+            objectFit="cover"
+            alt="product image"
+            priority
+          />
+        </div>
+      </div>) : null}
+      <div className={styles.imageContainer} onClick={() => setShowModal(prev => !prev)}>
         <Image
           src={photoLink}
           layout="fill"

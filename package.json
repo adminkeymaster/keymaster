@@ -16,6 +16,7 @@
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "embla-carousel-react": "^6.0.2",
     "formidable": "^2.0.1",
     "framer-motion": "^5.4.3",
     "lodash": "^4.17.21",

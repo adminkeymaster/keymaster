@@ -27,6 +27,10 @@
 
   background-color: $clr-neutral-7;
   color: $clr-neutral-8;
+  cursor: pointer;
+  &:hover {
+    filter:blur(0.2rem);
+  }
 }
 
 .information {
@@ -115,4 +119,46 @@
     transform: translateY(0);
     background-color: rgba($color: #000000, $alpha: 0.1);
   }
+}
+.modalBackground {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+}
+.modalWrapper {
+  width: 800px;
+  height: 500px;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 99;
+  border-radius: 10px;
+}
+.modalImageContainer {
+    user-select: none;
+    width: 80%;
+    height: 80%;
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.close {
+  position: fixed;
+  z-index: 9999;
+cursor: pointer;
+right: 3%;
+top: 3%;
 }
