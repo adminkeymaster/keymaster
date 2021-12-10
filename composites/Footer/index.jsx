@@ -71,12 +71,11 @@ const Footer = (props) => {
                   17
                 </h4>
                 <p>
-                  <span>Улаанбаатар хот, Сүхбаатар дүүрэг</span>
                   <span>
                     {" "}
-                    Example
+                    admin@keymaster.mn
                     <br />
-                    (+976) 7011 1111
+                    (+976) 88111488
                   </span>
                 </p>
               </div>

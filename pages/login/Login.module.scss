@@ -1,5 +1,71 @@
 @import 'global';
 
 .container {
-
+    margin-top: 2 * $navbarHeight;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.form {
+    width: 90%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 50rem;
+    height: 55rem;
+    border-radius: 2rem;
+    box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
+}
+.imageContainer {
+    position: relative;
+    height: 13.5rem;
+}
+.image {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    border-radius: 2rem 2rem 0 0;
+}
+.details {
+    height: 40rem;
+    padding: 3em;
+    display: flex;
+    flex-direction: column;
+    background-color: $clr-neutral-8;
+    input {
+        padding: 1em;
+        border-radius: 0.2em;
+        border: 0.1em solid $clr-neutral-7;
+        margin-bottom: 1em;
+    };
+    label {
+        margin-bottom: 0.5em;
+    }
+    button {
+        background-color: $clr-primary;
+        padding: 1em 2em;
+        color: $clr-neutral-8;
+        border-radius: 0.5em;
+        margin: 1.5em 0em;
+    }
+    a {
+        background-color: $clr-neutral-8;
+        padding: 0.8em 2em;
+        color: $clr-neutral-1;
+        border-radius: 0.5em;
+        text-decoration: none;
+        border: 0.1em solid $clr-neutral-1;
+        text-align: center;
+        font-size: 0.8em;
+    }
+    @include respondMax(xs){
+        padding: 1.5em;
+    }
+}
+.star {
+    position: absolute;
+    left: 0;
+    z-index: -1;
 }

@@ -94,9 +94,11 @@ const SidePanel = ({ handler, isOpen, ...props }) => {
             </a>
           </Link>
         </li>
+        <Link href="/login">
         <li>
-          <PrimaryButton>Нэвтрэх</PrimaryButton>
+         <PrimaryButton> Нэвтрэх</PrimaryButton>
         </li>
+        </Link>
       </ul>
     </aside>
   );

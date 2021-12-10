@@ -85,9 +85,11 @@ const Menu = (props) => {
           </a>
         </Link>
       </li>
+      <Link href="/login">
       <li>
         <PrimaryButton>Нэвтрэх</PrimaryButton>
       </li>
+      </Link>
     </ul>
   );
 };

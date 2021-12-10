@@ -1,9 +1,10 @@
 //Next, React (core node_modules) imports must be placed here
-
+import Image from 'next/image'
+import Link from 'next/link';
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
-
+import LandingLayout from '@/layouts/Landing'
 //import VIEWS from '@/views'
 
 //import useFETCHER from '@/tools'
@@ -15,20 +16,30 @@
 import styles from './Login.module.scss'
 
 const LoginPage = (props) => {
-	 return (
-		 <main className={styles.container}>
-			<form action="POST">
-				<label htmlFor="email">И-Мейл</label>
-				<input type="email" placeholder="Таны и-мейл хаяг"/>
-				<label htmlFor="password">Нууц үг</label>
-				<input type="password" placeholder="Таны нууц үг"/>
-				<label htmlFor="checkbox">Хэрэглэгч сануулах</label>
-				<input type="checkbox" />
-				<button>Нэвтрэх</button>
-				<a href="">Бүртгүүлэх</a>
+	return (
+		<main className={styles.container}>
+			<div className={styles.star}>
+			<Image width={150} height={250} src="/star.png" layout="fixed" className={styles.star} alt=""/>
+			</div>
+			<form className={styles.form} action="POST">
+				<div className={styles.imageContainer}>
+					<Image className={styles.image} width={"100%"} height={"100%"} src="/signinbg.png" layout="fill" alt="Login" />
+				</div>
+				<div className={styles.details}>
+					<label htmlFor="email">И-Мейл</label>
+					<input type="email" placeholder="Таны и-мейл хаяг" />
+					<label htmlFor="password">Нууц үг</label>
+					<input type="password" placeholder="Таны нууц үг" />
+					<div>
+						<input type="checkbox" />
+						<label htmlFor="checkbox">Хэрэглэгч сануулах</label>
+					</div>
+					<button><span>Нэвтрэх</span></button>
+					<Link href="/register"><a href="">Бүртгүүлэх</a></Link>
+				</div>
 			</form>
 		</main>
 	)
 };
-LoginPage.Layout = LoginLayout;
+LoginPage.Layout = LandingLayout;
 export default LoginPage;

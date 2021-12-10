@@ -1,15 +1,15 @@
 @import 'global';
 
 .container {
-    margin: $navbarHeight*2;
-    height: 100vh;
+    margin-top: $navbarHeight * 2;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 .innerContainer {
     max-width: has(md);
-
+    width: 90%;
 }
 .featuredVideo {
     width: 100%;
