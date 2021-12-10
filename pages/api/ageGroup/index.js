@@ -27,6 +27,8 @@ const requestModHandler = async (req, res) => {
             try {
                 const { age } = req.body;
 
+                if (!age) return res.status(200).json({ success: false, msg: "Missing age variable" });
+
                 const tempAgeGroup = await ageGroup.findOne({ age: age });
                 if (tempAgeGroup) 
                     return res.status(200).json({ success: false, msg: "ageGroup already exists" });

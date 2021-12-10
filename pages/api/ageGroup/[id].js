@@ -6,25 +6,31 @@ dbConnect();
 const requestModHandler = async (req, res) => {
     const {
         method,
-        query: {id},
+        query: { id },
     } = req;
 
-    switch (method) {       
+    switch (method) {
         case "GET":
             try {
                 const data = await ageGroup.findOne({ _id: id });
                 res.status(200).json({ success: true, data: data });
 
-            } catch (error) {      
+            } catch (error) {
                 console.log(error);
                 res.status(400).json({ success: false })
             }
             break;
 
-        case "POST": 
-            try { 
+        case "POST":
+            try {
                 const { newAge } = req.body;
-                await ageGroup.updateOne({ _id: id } , { age: newAge })
+                if (!newAge) return res.status(200).json({ success: false, msg: "Missing age variable" });
+
+                const ageCheck = await ageGroup.findOne({ _id: id });
+
+                if (JSON.stringify(newAge) == JSON.stringify(ageCheck.age)) {
+                    return res.status(200).json({ success: false, msg: "Same ageGroup entered" });
+                }
                 res.status(200).json({ success: true, data: newAge })
 
             } catch (error) {
@@ -36,7 +42,7 @@ const requestModHandler = async (req, res) => {
         default:
             res.status(400).json({ success: false });
             break;
-    }   
+    }
 };
 
 export default requestModHandler;

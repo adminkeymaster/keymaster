@@ -25,10 +25,10 @@ const requestModHandler = async (req, res) => {
 
     case "POST":
       try {
-        const { name, phoneNumber, email, title, description } = req.body;
+        const { firstName, lastName, phoneNumber, email, description } = req.body;
 
         const myRequest = {
-          name, phoneNumber, email, title, description
+          firstName, lastName, phoneNumber, email, description
         };
         
         await contactInfo.create(myRequest);

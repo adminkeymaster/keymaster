@@ -42,7 +42,7 @@ const requestModHandler = async (req, res) => {
               reject(err);
               return;
             }
-            console.log(fields);
+
             let compInfo = {
               fields,
             };
@@ -55,6 +55,11 @@ const requestModHandler = async (req, res) => {
               compInfo.newpath = `./public/assets/images/competition/${dateNow.getTime()}-${files.photoUpload.originalFilename
                 }`;
             } else {
+              
+              if (fields.htmlText) {
+                return res.status(200).json({ success: false, msg: "htmlText is missing" });
+              }
+
               await competition.updateOne(
                 { _id: docID },
                 {
