@@ -1,7 +1,6 @@
 import recordRequest from '@/models/recordrequest'
 import dbConnect from '@/utils/database'
 import users from '@/models/users'
-import keymasterTypes from '@/models/keymasterTypes'
 
 dbConnect();
 
@@ -20,6 +19,7 @@ const requestModHandler = async (req, res) => {
         query: { id },
     } = req;
     const requestRecord = await recordRequest.findOne({ _id: id });
+    console.log(requestRecord);
 
     switch (method) {
         case "GET":
