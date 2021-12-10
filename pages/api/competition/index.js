@@ -66,7 +66,7 @@ const requestModHandler = async (req, res) => {
       try {
         const { deleteID } = req.body;
         await competition.updateOne({ _id: id }, { $pull: { competitions: { _id: deleteID } } });
-        res.status(200).json({ success: true, msg: some });
+        res.status(200).json({ success: true, msg: "Amjilttai ustgalaa" });
 
       } catch (error) {
         console.log(error);
