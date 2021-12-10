@@ -56,7 +56,7 @@ const CheckoutPage = (props) => {
     });
 
     setFilteredProducts(filteredOrders);
-  }, [isFetched, orders]);
+  }, [isFetched, orders, products]);
 
   const handleChange = (e) => {
     setForm({
@@ -77,7 +77,7 @@ const CheckoutPage = (props) => {
     };
 
     axios.post("/api/productReq", productReq).then((res) => {
-      if(res.status === 200) {
+      if (res.status === 200) {
         // addOrder(filteredProducts);
         // deleteOrder();
         router.push("/");
