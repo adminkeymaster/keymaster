@@ -42,7 +42,7 @@ const Store = (props) => {
       <div className={styles.feature}>
         <div className={styles.imageContainer}>
           <Image
-            src="/keymasterPack.png"
+            src="/keymasterpack.png"
             layout="fill"
             objectFit="cover"
             alt="product image"
