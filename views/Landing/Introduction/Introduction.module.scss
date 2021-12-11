@@ -72,4 +72,7 @@
   right: 0;
   top: -20%;
   z-index: -1;
+  @include respondMax(sm){
+    display: none;
+  }
 }

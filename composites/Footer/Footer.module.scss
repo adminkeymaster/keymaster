@@ -149,10 +149,13 @@
   }
 }
 .bluestar {
-  position: relative;
+  position: absolute;
   width: 10rem;
   height: 10rem;
   right: 5%;
   top: 0;
   z-index: -1;
+  @include respondMax(sm){
+    display: none;
+  }
 }
