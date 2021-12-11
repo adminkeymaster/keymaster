@@ -129,8 +129,7 @@ const Carousel = ({
           </p>
         </div>
         <div className={styles.actions}>
-          <span>
-            {orders.find((order) => {
+          <span>{orders.find((order) => {
               return order.productID === _id;
             })?.quantity || 0}
           </span>

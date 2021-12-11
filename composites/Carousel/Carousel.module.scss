@@ -5,10 +5,11 @@
     display: flex;
     width: 90%;
     max-width: max-content;
-    @include respondMax(sm){
+    @include respondMax(md){
         flex-direction: column;
+        margin: 1em 1em;
     }
-    margin: 2em 0;
+    margin: 2em 1em;
 }
 .productInfo{
     padding: 2rem;
@@ -25,6 +26,7 @@
       font-size: 2.4rem;
       font-weight: 800;
       margin-bottom: 0.5em;
+      text-transform: none;
     }
   
     p {
@@ -106,9 +108,12 @@
 .embla {
     padding: 2rem;
     position: relative;
-    max-width: 30rem;
+    max-width: 50rem;
     margin-left: auto;
     margin-right: auto;
+    @include respondMax(sm){
+      max-width: 30rem;
+    }
   }
   
   .emblaViewport {
@@ -143,10 +148,13 @@
   .emblaSlideInner {
     position: relative;
     overflow: hidden;
-    height: 30rem;
+    height: 50rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    @include respondMax(sm){
+      height: 30rem
+    }
   }
   
   .emblaSlideImg {
@@ -160,8 +168,12 @@
     max-width: none;
     transform: translate(-50%, -50%);
     background-color: #220831;
-    width: 30rem;
-    height: 30rem;
+    width: 50rem;
+    height: 50rem;
+    @include respondMax(sm){
+      width: 30rem;
+      height: 30rem;
+    }
   }
   
   .emblaThumb {
@@ -172,7 +184,7 @@
   .emblaContainerThumb {
     cursor: default;
     margin-left: -8px;
-  }
+    }
   
   .emblaSlideThumb {
     padding-left: 8px;
@@ -214,6 +226,10 @@
   }
   .image{
     position: relative;
-    height: 30rem;
-    width: 30rem;
+    height: 50rem;
+    width: 50rem;
+    @include respondMax(sm){
+      height: 30rem;
+      width: 30rem;
+    }
 }

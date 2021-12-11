@@ -26,12 +26,12 @@ const StyledMinusIcon = styled(Minus)`
   height: 1.6rem;
 `;
 const ProductCard = ({
-  photoLink,
+  photoLinks,
   productName,
   productPrice,
-  color,
   hexColor,
   _id,
+  ...props
 }) => {
   const { orders, addOrder, deleteOrder } = useContext(CartContext);
 
@@ -56,7 +56,7 @@ const ProductCard = ({
       {showModal ? (<div onClick={closeModal} ref={modalRef} className={styles.modalBackground}>
         <div className={styles.modalImageContainer} showModal={showModal}>
           <Image
-            src={photoLink}
+            src={photoLinks[0]}
             layout="fill"
             objectFit="cover"
             alt="product image"
@@ -66,7 +66,7 @@ const ProductCard = ({
       </div>) : null}
       <div className={styles.imageContainer} onClick={() => setShowModal(prev => !prev)}>
         <Image
-          src={photoLink}
+          src={photoLinks[0]}
           layout="fill"
           objectFit="cover"
           alt="product image"
@@ -78,12 +78,16 @@ const ProductCard = ({
         <h2>{productName}</h2>
         <p>Үнэ: {productPrice}₮</p>
         <p className={styles.colorContainer}>
-          Өнгө: {color}
-          <span
-            style={{
-              backgroundColor: hexColor,
-            }}
-          ></span>
+          Өнгө: {hexColor.map((color, index) => {
+              return (
+                <span
+                  key={index}
+                  style={{
+                    backgroundColor: color,
+                  }}
+                ></span>
+              );
+            })}
         </p>
       </div>
       <div className={styles.actions}>
