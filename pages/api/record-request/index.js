@@ -16,25 +16,23 @@ const requestModHandler = async (req, res) => {
 
         const data = await Promise.all(
           recordRequests.map(async (recordRequest) => {
-
-            const tempUser = await user.findById(
-              recordRequest.userID,
-              "firstName lastName birthDate gender"
-            ).lean()
+            const tempUser = await user
+              .findById(
+                recordRequest.userID,
+                "firstName lastName birthDate gender"
+              )
+              .lean();
 
             return {
               ...tempUser,
-              ...recordRequest
-              
+              ...recordRequest,
             };
           })
-
-        )
+        );
 
         console.log(data);
 
         res.status(200).json({ success: true, data: data });
-
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });
@@ -47,7 +45,6 @@ const requestModHandler = async (req, res) => {
 
         const formParseVideoSuccess = await new Promise((resolve, reject) => {
           form.parse(req, async (err, fields, files) => {
-
             if (err) {
               reject(err);
               return;
@@ -58,48 +55,51 @@ const requestModHandler = async (req, res) => {
             const myForm = {
               fields,
               oldpath: files.videoUpload.filepath,
-              link: `/assets/videos/records/${dateNow.getTime()}-${files.videoUpload.originalFilename
-                }`,
-              newpath: `./public/assets/videos/records/${dateNow.getTime()}-${files.videoUpload.originalFilename
-                }`,
+              link: `/assets/videos/records/${dateNow.getTime()}-${
+                files.videoUpload.originalFilename
+              }`,
+              newpath: `./public/assets/videos/records/${dateNow.getTime()}-${
+                files.videoUpload.originalFilename
+              }`,
             };
 
             resolve(myForm);
-            
-          })
+          });
         }).then(async (myForm) => {
           let isSuccess = false;
 
-          await fs.rename(myForm.oldpath, myForm.newpath, (err) => {
-            if (err) {
-              console.log(err)
-              throw err;
-            }
-          }).then(async () => {
+          await fs
+            .rename(myForm.oldpath, myForm.newpath, (err) => {
+              if (err) {
+                console.log(err);
+                throw err;
+              }
+            })
+            .then(async () => {
+              const newReq = {
+                userID: myForm.fields.userID,
+                videoLink: myForm.link,
+                keymasterType: myForm.fields.keymasterType,
+                time: myForm.fields.time,
+              };
 
-            const newReq = {
-              userID: myForm.fields.userID,
-              videoLink: myForm.link,
-              keymasterType: myForm.fields.keymasterType,
-              time: myForm.fields.time
-            }
-
-            isSuccess = true;
-            await recordRequest.create(newReq);
-          });
+              isSuccess = true;
+              await recordRequest.create(newReq);
+            });
 
           return isSuccess;
         });
 
-
-
         if (formParseVideoSuccess) {
-          return res.status(200).json({ success: true, msg: "Successfully sent record request" });
+          return res
+            .status(200)
+            .json({ success: true, msg: "Successfully sent record request" });
         } else {
-          return res.status(200).json({ success: false, msg: "Error occured while uploading files" });
+          return res.status(200).json({
+            success: false,
+            msg: "Error occured while uploading files",
+          });
         }
-
-
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

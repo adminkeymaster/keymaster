@@ -16,6 +16,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./RecordRequest.module.scss";
 
@@ -32,6 +33,10 @@ const StyledCrossIcon = styled(Cross)`
 const RecordRequestPage = (props) => {
   const [isFetched, setIsFetched] = useState(false);
   const [recordRequests, setRecordRequests] = useState([]);
+  const [notification, setNotification] = useState({
+    message: "",
+    successs: false,
+  });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -39,7 +44,6 @@ const RecordRequestPage = (props) => {
     axios
       .get("/api/record-request", { signal: controller.signal })
       .then(({ data }) => {
-        console.log(data.data);
         // Reverse the array so the newest request is first
         setRecordRequests(data.data.reverse());
         setIsFetched(true);
@@ -51,30 +55,67 @@ const RecordRequestPage = (props) => {
     return () => controller.abort();
   }, []);
 
-  const handleApprove = (e) => {
-    axios
-      .post(`/api/record-request/${e.target.id}`, { approval: true })
-      .then((res) => {
-        const newRecordRequests = recordRequests.filter(
-          (request) => request._id !== e.target.id
-        );
-        setRecordRequests([...newRecordRequests]);
-      })
-      .catch((err) => console.log("/dashboard/record-request", err));
-  };
+  useEffect(() => {
+    if (!notification.message) return;
 
-  const handleDeny = (e) => {
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
+
+  const handleApprove = (id) => {
     axios
-      .post(`/api/record-request/${e.target.id}`, { approval: false })
+      .post(`/api/record-request/${id}`, { approval: true })
       .then((res) => {
         if (res.status === 200) {
           const newRecordRequests = recordRequests.filter(
-            (request) => request._id !== e.target.id
+            (request) => request._id !== id
           );
           setRecordRequests([...newRecordRequests]);
+
+          setNotification({
+            message: "Хүсэлтийг амжилттай зөвшөөрлөө",
+            success: true,
+          });
         }
       })
-      .catch((err) => console.log("/dashboard/record-request", err));
+      .catch((err) => {
+        setNotification({
+          message: "Хүсэлтийг зөвшөөрөх явцад алдаа гарлаа",
+          success: false,
+        });
+        console.log("/dashboard/record-request", err);
+      });
+  };
+
+  const handleDeny = (id) => {
+    axios
+      .post(`/api/record-request/${id}`, { approval: false })
+      .then((res) => {
+        if (res.status === 200) {
+          const newRecordRequests = recordRequests.filter((request) => {
+            return request._id !== id;
+          });
+
+          setRecordRequests([...newRecordRequests]);
+          setNotification({
+            message: "Хүсэлт амжилттай устгагдлаа",
+            success: true,
+          });
+        }
+      })
+      .catch((err) => {
+        setNotification({
+          message: "Хүсэлтийг устгах явцад алдаа гарлаа",
+          success: false,
+        });
+        console.log("/dashboard/record-request", err);
+      });
   };
 
   const calculateAgeByBirthday = (birthday) => {
@@ -90,6 +131,10 @@ const RecordRequestPage = (props) => {
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Рекорд хүсэлт</h1>
       </div>
@@ -169,9 +214,11 @@ const RecordRequestPage = (props) => {
                       className={`${styles.tableBodyCol} ${styles.tableAction}`}
                     >
                       <button
-                        id={request._id}
                         className={styles.tableButton}
-                        onClick={handleApprove}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleApprove(request._id);
+                        }}
                       >
                         <StyledCheckIcon />
                       </button>
@@ -180,9 +227,11 @@ const RecordRequestPage = (props) => {
                       className={`${styles.tableBodyCol} ${styles.tableAction}`}
                     >
                       <button
-                        id={request._id}
                         className={styles.tableButton}
-                        onClick={handleDeny}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDeny(request._id);
+                        }}
                       >
                         <StyledCrossIcon />
                       </button>

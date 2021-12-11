@@ -16,6 +16,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./SendRecord.module.scss";
 
@@ -32,10 +33,15 @@ const StyledUploadIcon = styled(Upload)`
 const SendRecordPage = (props) => {
   const router = useRouter();
   const [isFetched, setIsFetched] = useState(false);
-  const [preview, setPreview] = useState(null);
+  const [notification, setNotification] = useState({
+    message: "",
+    status: "",
+  });
+
   const [types, setTypes] = useState([]);
   const [formData, setFormData] = useState({
-    videoUpload: "",
+    videoUpload: null,
+    preview: null,
     keymasterType: "",
     time: "",
   });
@@ -56,6 +62,19 @@ const SendRecordPage = (props) => {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
+
   const handleInputFormData = (e) => {
     setFormData({
       ...formData,
@@ -65,11 +84,11 @@ const SendRecordPage = (props) => {
 
   const handleFileInput = (e) => {
     const objectURL = URL.createObjectURL(e.target.files[0]);
-    setPreview(objectURL);
 
     setFormData({
       ...formData,
       [e.target.name]: e.target.files[0],
+      preview: objectURL,
     });
 
     e.target.value = null;
@@ -81,11 +100,18 @@ const SendRecordPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const form = new FormData();
     form.append("userID", "61b302d67f6a44f925f3a7d9");
-
+    
     for (const key in formData) {
-      if (!formData[key]) return;
+      if (!formData[key]) {
+        setNotification({
+          message: "Бүх талбаруудыг бөглөнө үү!",
+          success: false,
+        });
+        return;
+      }
       form.append(key, formData[key]);
     }
 
@@ -97,17 +123,25 @@ const SendRecordPage = (props) => {
         }
       })
       .catch((err) => {
+        setNotification({
+          message: "Рекорд илгээхэд алдаа гарлаа",
+          success: false,
+        });
         console.log("SendRecordPage handleSubmit:", err);
       });
   };
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <div className={styles.videoContainer}>
             {formData.videoUpload && (
               <video controls>
-                <source src={preview} type="video/mp4" />
+                <source src={formData.preview} type="video/mp4" />
               </video>
             )}
 
@@ -117,10 +151,10 @@ const SendRecordPage = (props) => {
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
-                  setPreview(null);
                   setFormData({
                     ...formData,
                     videoUpload: null,
+                    preview: null,
                   });
                 }}
               >
@@ -163,7 +197,6 @@ const SendRecordPage = (props) => {
               onChange={handleInputFormData}
               className={styles.input}
               defaultValue={types[0].keymasterType}
-              required
             >
               {types.map((type) => {
                 return (
@@ -178,16 +211,16 @@ const SendRecordPage = (props) => {
 
         <div className={styles.formGroup}>
           <label htmlFor="time" className={styles.inputLabel}>
-            Цаг
+            Цаг (секунд)
           </label>
           <input
             className={styles.input}
             type="number"
-            step="0.01"
+            min="0.1"
+            step="0.1"
             name="time"
             id="time"
             onChange={handleInputFormData}
-            required
           />
         </div>
 

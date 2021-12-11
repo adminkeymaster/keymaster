@@ -68,7 +68,6 @@ const EditArticle = () => {
     axios
       .get(`/api/news/${id}`, { signal: controller.signal })
       .then(({ data }) => {
-        console.log(data);
         setFormData({
           title: data.data.title,
           description: data.data.description,
