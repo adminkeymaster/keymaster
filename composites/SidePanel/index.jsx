@@ -94,10 +94,10 @@ const SidePanel = ({ handler, isOpen, ...props }) => {
             </a>
           </Link>
         </li>
-        <Link href="/login">
-        <li>
-         <PrimaryButton> Нэвтрэх</PrimaryButton>
-        </li>
+        <Link href="/auth/login">
+          <li>
+            <PrimaryButton> Нэвтрэх</PrimaryButton>
+          </li>
         </Link>
       </ul>
     </aside>

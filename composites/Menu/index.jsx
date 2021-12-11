@@ -1,7 +1,8 @@
+import { useSession, getSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import ActiveAnchorContext from "@/store/ActiveAnchor";
 
@@ -10,8 +11,14 @@ import PrimaryButton from "@/components/PrimaryButton";
 import styles from "./Menu.module.scss";
 
 const Menu = (props) => {
+  const { data: session, status } = useSession();
+
   const { route } = useRouter();
   const { activeAnchor } = useContext(ActiveAnchorContext);
+
+  useEffect(() => {
+    console.log(session);
+  }, [status]);
 
   return (
     <ul className={styles.container}>
@@ -85,11 +92,26 @@ const Menu = (props) => {
           </a>
         </Link>
       </li>
-      <Link href="/auth/login">
-      <li>
-        <PrimaryButton>Нэвтрэх</PrimaryButton>
-      </li>
-      </Link>
+      {(session &&
+        (session.user.isAdmin ? (
+          <Link href="/dashboard">
+            <li>
+              <PrimaryButton>Dashboard</PrimaryButton>
+            </li>
+          </Link>
+        ) : (
+          <Link href="/dashboard">
+            <li>
+              <PrimaryButton>{session.user.firstName}</PrimaryButton>
+            </li>
+          </Link>
+        ))) || (
+        <Link href="/auth/login">
+          <li>
+            <PrimaryButton>Нэвтрэх</PrimaryButton>
+          </li>
+        </Link>
+      )}
     </ul>
   );
 };

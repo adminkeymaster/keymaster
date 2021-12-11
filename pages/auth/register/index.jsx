@@ -1,6 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import axios from "axios";
 //import STORE from '@/store'
@@ -18,6 +19,7 @@ import LoginLayout from "@/layouts/Login";
 import styles from "./Register.module.scss";
 
 const RegisterPage = (props) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -39,9 +41,14 @@ const RegisterPage = (props) => {
     e.preventDefault();
     console.log(formData);
     console.log("submit");
-    axios.post("/api/user", formData).then((res) => {
-      console.log(res);
-    }).catch((err) => {})
+    axios
+      .post("/api/user", formData)
+      .then((res) => {
+        router.push("/auth/login");
+      })
+      .catch((err) => {
+        console.log("/auth/register", err);
+      });
   };
 
   return (
