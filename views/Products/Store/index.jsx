@@ -5,14 +5,13 @@ import Image from "next/image";
 import {
   useState,
   useEffect,
-  useRef,
   // useContext
 } from "react";
 import axios from "axios";
 //import STORE from '@/store'
 
 //import COMPOSITES from '@/composites'
-import ProductCard from "@/composites/ProductCard";
+import Carousel from "@/composites/Carousel";
 //import COMPONENT from '@/components'
 
 import styles from "./Store.module.scss";
@@ -67,20 +66,20 @@ const Store = (props) => {
         </div>
       </div>
       <div className={styles.products}>
-        {/* {isFetched &&
+        {isFetched &&
           products.map((product) => {
             return (
-              <ProductCard
+              <Carousel
                 key={product._id}
                 _id={product._id}
-                photoLink={product.photoLink}
+                photoLinks={product.photoLinks}
                 productName={product.productName}
                 productPrice={product.productPrice}
                 color={product.color}
                 hexColor={product.hexColor}
               />
             );
-          })} */}
+          })}
       </div>
     </div>
   );
