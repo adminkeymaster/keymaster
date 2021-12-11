@@ -19,6 +19,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./Product.module.scss";
 
@@ -34,20 +35,22 @@ const StyledUploadIcon = styled(Upload)`
 
 const EditProduct = () => {
   const [isFetched, setIsFetched] = useState(false);
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
   const router = useRouter();
   const { id } = router.query;
-  const [description, setDescription] = useState("");
   const [formData, setFormData] = useState({
     productName: "",
     photoUpload: null,
+    preview: null,
     price: "",
     color: "",
     hexColor: "",
     type: "",
     photoLink: "",
   });
-
-  const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     if (!id) {
@@ -59,7 +62,6 @@ const EditProduct = () => {
     axios
       .get(`/api/product/${id}`, { signal: controller.signal })
       .then(({ data }) => {
-        console.log(data);
         setFormData({
           productName: data.data.productName,
           photoLink: data.data.photoLink,
@@ -68,7 +70,6 @@ const EditProduct = () => {
           hexColor: data.data.hexColor,
           type: data.data.type,
         });
-        setDescription(data.data.description);
         setIsFetched(true);
       })
       .catch((err) => {
@@ -78,21 +79,36 @@ const EditProduct = () => {
     return () => controller.abort();
   }, [id]);
 
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
+
   const handleInputFormData = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleFileInput = (e) => {
     const objectURL = URL.createObjectURL(e.target.files[0]);
-
-    setPreview(objectURL);
 
     setFormData({
       ...formData,
       [e.target.name]: e.target.files[0],
+      preview: objectURL,
     });
+
+    e.target.value = null;
 
     return () => URL.revokeObjectURL(objectUrl);
   };
@@ -103,6 +119,7 @@ const EditProduct = () => {
     const form = new FormData();
 
     for (const key in formData) {
+      if (!formData[key] && key !== "photoUpload" && key !== "preview") return;
       form.append(key, formData[key]);
     }
 
@@ -110,16 +127,33 @@ const EditProduct = () => {
       .post(`/api/product/${id}`, form)
       .then((res) => {
         if (res.status === 200) {
-          router.push("/dashboard/products");
+          router.push(
+            {
+              pathname: "/dashboard/products",
+              query: {
+                success: true,
+                message: "Бүтээгдэхүүн амжилттай засагдлаа",
+              },
+            },
+            "/dashboard/products"
+          );
         }
       })
       .catch((err) => {
+        setNotification({
+          message: "Бүтээгдэхүүнийг засах явцад алдаа гарлаа",
+          success: false,
+        });
         console.log("Edit Product handleSubmit:", err);
       });
   };
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <form className={styles.form}>
         <h1 className={styles.heading}>Бүтээгдэхүүн Засах</h1>
 
@@ -150,7 +184,7 @@ const EditProduct = () => {
 
           {formData.photoUpload && (
             <Image
-              src={preview}
+              src={formData.preview}
               layout="fill"
               objectFit="cover"
               alt="uploaded image"
@@ -163,10 +197,10 @@ const EditProduct = () => {
               type="button"
               onClick={(e) => {
                 e.preventDefault();
-                setPreview(null);
                 setFormData({
                   ...formData,
                   photoUpload: null,
+                  preview: null,
                 });
               }}
             >

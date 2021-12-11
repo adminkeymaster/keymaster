@@ -84,8 +84,8 @@ const SendRecordPage = (props) => {
     const form = new FormData();
     form.append("userID", "61b302d67f6a44f925f3a7d9");
 
-    // append all the keys and values from the formData object
     for (const key in formData) {
+      if (!formData[key]) return;
       form.append(key, formData[key]);
     }
 

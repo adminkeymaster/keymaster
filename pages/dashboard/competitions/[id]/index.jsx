@@ -66,7 +66,16 @@ const EditCompetitionPage = (props) => {
       })
       .then((res) => {
         if (res.status === 200) {
-          router.push("/dashboard/competitions");
+          router.push(
+            {
+              pathname: "/dashboard/competitions",
+              query: {
+                message: "Тэмцээний мэдээлэл амжилттай засагдлаа",
+                success: true,
+              },
+            },
+            "/dashboard/competitions"
+          );
         }
       })
       .catch((err) => {

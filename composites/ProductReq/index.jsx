@@ -21,16 +21,18 @@ const ProductReq = ({ firstName, lastName, email, phoneNumber, ...props }) => {
     e.preventDefault();
 
     if (router.pathname === "/products") {
-      router.push({
-        pathname: "/checkout",
-        query: {
-          firstName: form.firstName,
-          lastName: form.lastName,
-          email: form.email,
-          phoneNumber: form.phoneNumber,
+      router.push(
+        {
+          pathname: "/checkout",
+          query: {
+            firstName: form.firstName,
+            lastName: form.lastName,
+            email: form.email,
+            phoneNumber: form.phoneNumber,
+          },
         },
-        as: "/checkout",
-      });
+        "/checkout"
+      );
     }
   };
 

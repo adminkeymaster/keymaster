@@ -1,7 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import styled from "styled-components";
@@ -19,6 +19,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./CreateProduct.module.scss";
 
@@ -37,13 +38,29 @@ const CreateProductPage = () => {
   const [formData, setFormData] = useState({
     productName: "",
     photoUpload: null,
-    price: "",
+    productPrice: "",
     color: "",
     hexColor: "",
     type: "",
+    preview: "",
+  });
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
   });
 
-  const [preview, setPreview] = useState(null);
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   const handleInputFormData = (e) => {
     setFormData({
@@ -55,12 +72,13 @@ const CreateProductPage = () => {
   const handleFileInput = (e) => {
     const objectURL = URL.createObjectURL(e.target.files[0]);
 
-    setPreview(objectURL);
-
     setFormData({
       ...formData,
+      preview: objectURL,
       [e.target.name]: e.target.files[0],
     });
+
+    e.target.value = null;
 
     return () => URL.revokeObjectURL(objectUrl);
   };
@@ -71,6 +89,13 @@ const CreateProductPage = () => {
     const form = new FormData();
 
     for (const key in formData) {
+      if (!formData[key]) {
+        setNotification({
+          message: "Бүх талбаруудыг бөглөнө үү!",
+          success: false,
+        });
+        return;
+      }
       form.append(key, formData[key]);
     }
 
@@ -78,16 +103,34 @@ const CreateProductPage = () => {
       .post("/api/product/", form)
       .then((res) => {
         if (res.status === 200) {
-          router.push("/dashboard/products");
+          router.push(
+            {
+              pathname: "/dashboard/products",
+              query: {
+                success: true,
+                message: "Бүтээгдэхүүн амжилттай нэмэгдлээ",
+              },
+            },
+            "/dashboard/products"
+          );
         }
       })
       .catch((err) => {
         console.log("CreateProductPage handleSubmit", err);
+        setNotification({
+          ...notification,
+          message: "Бүтээгдэхүүн үүсгэх явцад алдаа гарлаа",
+          success: false,
+        });
       });
   };
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <form className={styles.form}>
         <h1 className={styles.heading}>Бүтээгдэхүүн Нэмэх</h1>
 
@@ -109,7 +152,7 @@ const CreateProductPage = () => {
         <div className={styles.imageContainer}>
           {formData.photoUpload && (
             <Image
-              src={preview}
+              src={formData.preview}
               layout="fill"
               objectFit="cover"
               alt="uploaded image"
@@ -122,10 +165,10 @@ const CreateProductPage = () => {
               type="button"
               onClick={(e) => {
                 e.preventDefault();
-                setPreview(null);
                 setFormData({
                   ...formData,
                   photoUpload: null,
+                  preview: null,
                 });
               }}
             >

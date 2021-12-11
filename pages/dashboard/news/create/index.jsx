@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "react-quill/dist/quill.snow.css";
 
@@ -9,6 +9,9 @@ import styled from "styled-components";
 import { Upload } from "@styled-icons/heroicons-outline/Upload";
 
 import DashboardLayout from "@/layouts/Dashboard";
+
+import Notification from "@/components/Notification";
+
 import styles from "./CreateArticle.module.scss";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -20,12 +23,29 @@ const StyledUploadIcon = styled(Upload)`
 
 const CreateArticle = () => {
   const router = useRouter();
-  const [description, setDescription] = useState("");
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
 
   const [formData, setFormData] = useState({
     title: "",
+    description: "",
     photoUpload: null,
   });
+
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   const handleInputFormData = (e) => {
     setFormData({
@@ -33,6 +53,14 @@ const CreateArticle = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleQuill = (value) => {
+    setFormData({
+      ...formData,
+      description: value,
+    });
+  };
+
   const handleFileInput = (e) => {
     setFormData({
       ...formData,
@@ -44,23 +72,49 @@ const CreateArticle = () => {
     e.preventDefault();
 
     const form = new FormData();
-    form.append("title", formData.title);
-    form.append("description", description);
-    form.append("photoUpload", formData.photoUpload);
+
+    for (const key in formData) {
+      if (!formData[key]) {
+        setNotification({
+          ...notification,
+          message: "Бүх талбаруудыг бөглөнө үү!",
+          success: false,
+        });
+        return;
+      }
+      form.append(key, formData[key]);
+    }
 
     axios
       .post("/api/news", form)
       .then((res) => {
         if (res.status === 200) {
-          router.push("/dashboard/news");
+          router.push(
+            {
+              pathname: "/dashboard/news",
+              query: {
+                success: true,
+                message: "Мэдээ амжилттай нэмэгдлээ",
+              },
+            },
+            "/dashboard/news"
+          );
         }
       })
       .catch((err) => {
+        setNotification({
+          message: "Мэдээ нэмэхэд алдаа гарлаа.",
+          success: false,
+        });
         console.log("CreateArticle handleSubmit:", err);
       });
   };
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <form className={styles.form}>
         <h1 className={styles.heading}>Мэдээ нэмэх</h1>
 
@@ -111,8 +165,8 @@ const CreateArticle = () => {
         <ReactQuill
           className={styles.formEditor}
           theme="snow"
-          value={description}
-          onChange={setDescription}
+          value={formData.description}
+          onChange={handleQuill}
         />
       </form>
     </main>

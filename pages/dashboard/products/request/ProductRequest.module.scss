@@ -293,7 +293,6 @@
 .productInfo {
   display: flex;
   justify-content: space-between;
-  text-transform: capitalize;
 
   &:not(:last-of-type) {
     margin-bottom: 0.5rem;
