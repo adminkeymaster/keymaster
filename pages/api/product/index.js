@@ -30,6 +30,8 @@ const requestModHandler = async (req, res) => {
               return;
             }
 
+            const hexColor = await fields.hexColor.split(",");
+
             const photoUpload = await Object.values(files).map((file) => {
               const dateNow = new Date();
               return {
@@ -51,6 +53,7 @@ const requestModHandler = async (req, res) => {
               ...fields,
               photoUpload: photoUpload,
               photoLinks: photoLinks,
+              hexColor: hexColor,
             };
 
             resolve(productInfo);
@@ -67,12 +70,9 @@ const requestModHandler = async (req, res) => {
             });
           });
 
-          console.log(productInfo.photoLinks);
-
           await product.create(
             {
               productName: productInfo.productName,
-              color: productInfo.color,
               hexColor: productInfo.hexColor,
               type: productInfo.type,
               photoLinks: productInfo.photoLinks,
@@ -83,10 +83,10 @@ const requestModHandler = async (req, res) => {
                 console.log(err);
                 return;
               }
-
-              isSuccess = true;
             }
           );
+
+          isSuccess = true;
         });
 
         if (formParsePhotoSuccess) {

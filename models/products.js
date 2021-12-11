@@ -5,12 +5,8 @@ const product = new mongoose.Schema({
     type: String,
     required: true,
   },
-  color: {
-    type: String,
-    required: true,
-  },
   hexColor: {
-    type: String,
+    type: [String],
     required: true,
   },
   type: {

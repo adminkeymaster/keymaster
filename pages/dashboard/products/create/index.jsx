@@ -1,7 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 
 import styled from "styled-components";
@@ -35,12 +35,13 @@ const StyledUploadIcon = styled(Upload)`
 
 const CreateProductPage = () => {
   const router = useRouter();
+  const [currentColor, setCurrentColor] = useState("#000000");
+  const [colorInputs, setColorInputs] = useState([]);
   const [formData, setFormData] = useState({
     productName: "",
     photoUpload: null,
     productPrice: "",
-    color: "",
-    hexColor: "",
+    hexColor: [],
     type: "",
     preview: "",
   });
@@ -62,10 +63,51 @@ const CreateProductPage = () => {
     return () => clearTimeout(timer);
   }, [notification]);
 
+  useEffect(() => {
+    setColorInputs([
+      ...colorInputs,
+      <input
+        type="color"
+        name="hexColor"
+        id="hexColor"
+        defaultValue={currentColor}
+        className={styles.inputHexColor}
+        onChange={handleColorChange}
+        required
+      />,
+    ]);
+  }, []);
+
   const handleInputFormData = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleColorChange = (e) => {
+    setCurrentColor(e.target.value);
+  };
+
+  const handleColorAdd = (e) => {
+    setColorInputs([
+      ...colorInputs,
+      <input
+        type="color"
+        name="hexColor"
+        id="hexColor"
+        value={currentColor}
+        className={styles.inputHexColor}
+        readOnly
+        onClick={(e) => {
+          e.preventDefault();
+        }}
+      />,
+    ]);
+
+    setFormData({
+      ...formData,
+      hexColor: [...formData.hexColor, currentColor],
     });
   };
 
@@ -93,6 +135,8 @@ const CreateProductPage = () => {
     e.preventDefault();
 
     const form = new FormData();
+
+    console.log(formData);
 
     for (const key in formData) {
       if (!formData[key]) {
@@ -220,24 +264,12 @@ const CreateProductPage = () => {
             Бүтээгдэхүүний өнгө
           </label>
           <div className={styles.inputColorContainer}>
-            <input
-              type="text"
-              name="color"
-              id="color"
-              defaultValue={formData.color}
-              className={styles.inputColor}
-              onChange={handleInputFormData}
-              required
-            />
-            <input
-              type="color"
-              name="hexColor"
-              id="hexColor"
-              defaultValue={formData.hexColor}
-              className={styles.inputHexColor}
-              onChange={handleInputFormData}
-              required
-            />
+            {colorInputs.map((input, index) => {
+              return <Fragment key={index}>{input}</Fragment>;
+            })}
+            <button type="button" onClick={handleColorAdd}>
+              +
+            </button>
           </div>
         </div>
 

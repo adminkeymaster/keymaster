@@ -26,7 +26,6 @@ const Carousel = ({
   photoLinks,
   productName,
   productPrice,
-  color,
   hexColor,
   _id,
   ...props
@@ -116,12 +115,17 @@ const Carousel = ({
           <h2>{productName}</h2>
           <p>Үнэ: {productPrice}₮</p>
           <p className={styles.colorContainer}>
-            Өнгө: {color}
-            <span
-              style={{
-                backgroundColor: hexColor,
-              }}
-            ></span>
+            Өнгө:
+            {hexColor.map((color, index) => {
+              return (
+                <span
+                  key={index}
+                  style={{
+                    backgroundColor: color,
+                  }}
+                ></span>
+              );
+            })}
           </p>
         </div>
         <div className={styles.actions}>
