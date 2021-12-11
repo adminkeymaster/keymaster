@@ -1,5 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
-
+import { motion } from "framer-motion";
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -15,7 +15,11 @@ import DashboardLayout from "@/layouts/Dashboard";
 import styles from "./Dashboard.module.scss";
 
 const DashboardPage = (props) => {
-  return <main className={styles.container}>Welcome to dashboard</main>;
+  return <motion.main exit={{ opacity: 0 }}
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 1 }}
+  className={styles.container}>Welcome to dashboard</motion.main>;
 };
 
 DashboardPage.Layout = DashboardLayout;

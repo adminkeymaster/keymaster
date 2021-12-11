@@ -6,11 +6,16 @@ import About from "@/views/Landing/About";
 import Benefits from "@/views/Landing/Benefits";
 import News from "@/views/Landing/News";
 import Partners from "@/views/Landing/Partners";
+import {motion} from "framer-motion";
 import styles from "./Root.module.scss";
 
 const RootPage = (props) => {
   return (
-    <main className={styles.container}>
+    <motion.main       exit={{ opacity: 0 }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
+    className={styles.container}>
       <Home />
       <Feature />
       <Introduction />
@@ -18,7 +23,7 @@ const RootPage = (props) => {
       <Benefits />
       <News />
       <Partners />
-    </main>
+    </motion.main>
   );
 };
 

@@ -1,6 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -39,7 +40,11 @@ const NewsPage = (props) => {
   }, []);
 
   return (
-    <main className={styles.container}>
+    <motion.main exit={{ opacity: 0 }}
+		initial={{ opacity: 0 }}
+		animate={{ opacity: 1 }}
+		transition={{ duration: 1 }}
+    className={styles.container}>
       {isFetched &&
         news.map((article) => {
           return (
@@ -53,7 +58,7 @@ const NewsPage = (props) => {
             />
           );
         })}
-    </main>
+    </motion.main>
   );
 };
 
