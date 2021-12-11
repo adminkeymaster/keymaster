@@ -85,7 +85,7 @@ const Menu = (props) => {
           </a>
         </Link>
       </li>
-      <Link href="/login">
+      <Link href="/auth/login">
       <li>
         <PrimaryButton>Нэвтрэх</PrimaryButton>
       </li>

@@ -18,20 +18,16 @@ import LoginLayout from "@/layouts/Login";
 import styles from "./Register.module.scss";
 
 const RegisterPage = (props) => {
-  const [formIsSent, setFormIsSent] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     birthDate: "",
-    gender: "",
+    gender: "male",
     email: "",
     phoneNumber: "",
     password: "",
   });
-  const [signUpError, setSignUpError] = useState({
-    error: false,
-    errorMsg: "",
-  });
+
   const handleInputFormData = (e) => {
     setFormData({
       ...formData,
@@ -42,24 +38,10 @@ const RegisterPage = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    try {
-      const response = await axios.post("/api/user", formData);
-      setFormIsSent(true);
-      console.log(response);
-      if (!response.data.success) {
-        setSignUpError({
-          error: true,
-          errorMsg: response.data.msg,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      setFormIsSent(true);
-      setSignUpError({
-        error: true,
-        errorMsg: error.message,
-      });
-    }
+    console.log("submit");
+    axios.post("/api/user", formData).then((res) => {
+      console.log(res);
+    }).catch((err) => {})
   };
 
   return (
@@ -72,41 +54,45 @@ const RegisterPage = (props) => {
           layout="fixed"
           className={styles.star}
           alt="star"
+          priority
         />
       </div>
-      <form className={styles.form} action="POST">
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.imageContainer}>
           <Image
             className={styles.image}
             src="/signinbg.png"
             layout="fill"
             alt="Login"
+            priority
           />
         </div>
         <div className={styles.details}>
-          <label htmlFor="firstName">Овог</label>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            placeholder="Овог"
-            onChange={handleInputFormData}
-            required
-          />
-          <label htmlFor="lastName">Нэр</label>
+          <label htmlFor="lastName">Овог</label>
           <input
             type="text"
             name="lastName"
             id="lastName"
+            placeholder="Овог"
+            onChange={handleInputFormData}
+            required
+          />
+          <label htmlFor="firstName">Нэр</label>
+          <input
+            type="text"
+            name="firstName"
+            id="firstName"
             placeholder="Нэр"
             onChange={handleInputFormData}
             required
           />
           <label htmlFor="gender">Хүйс</label>
-          <select name="gender" onChange={handleInputFormData}>
-            <option defaultValue value="male">
-              Эр
-            </option>
+          <select
+            defaultValue={formData.gender}
+            name="gender"
+            onChange={handleInputFormData}
+          >
+            <option value="male">Эр</option>
             <option value="female">Эм</option>
           </select>
           <label htmlFor="birthDate">Birthday:</label>
@@ -120,7 +106,7 @@ const RegisterPage = (props) => {
           <input
             type="tel"
             name="phoneNumber"
-            id="phonenumber"
+            id="phoneNumber"
             placeholder="Утасны дугаар"
             onChange={handleInputFormData}
             required
@@ -150,11 +136,11 @@ const RegisterPage = (props) => {
             id="passwordconfirm"
             placeholder="Нууц үг"
           />
-          <button onSubmit={handleSubmit}>
+          <button>
             <span>Бүртгүүлэх</span>
           </button>
-          <Link href="/register">
-            <a href="">Нэвтрэх</a>
+          <Link href="/auth/login">
+            <a>Нэвтрэх</a>
           </Link>
         </div>
       </form>

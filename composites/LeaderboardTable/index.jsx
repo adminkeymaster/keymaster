@@ -61,7 +61,8 @@ const LeaderboardTable = (props) => {
         name: `${user.lastName} ${user.firstName}`,
         gender: user.gender,
         age: calculateAge(user.birthDate),
-        time: getTimeByType(user.record),
+        // time: getTimeByType(user.record),
+        time: Math.floor(Math.random() * 40 + 2),
       };
 
       return newUser;
