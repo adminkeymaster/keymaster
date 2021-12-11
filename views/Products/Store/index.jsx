@@ -67,7 +67,7 @@ const Store = (props) => {
         </div>
       </div>
       <div className={styles.products}>
-        {isFetched &&
+        {/* {isFetched &&
           products.map((product) => {
             return (
               <ProductCard
@@ -80,7 +80,7 @@ const Store = (props) => {
                 hexColor={product.hexColor}
               />
             );
-          })}
+          })} */}
       </div>
     </div>
   );

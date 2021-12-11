@@ -1,10 +1,112 @@
 @import 'global';
-
+.container {
+    box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.2);
+    border-radius: 2rem;
+    display: flex;
+    width: 90%;
+    max-width: max-content;
+    @include respondMax(sm){
+        flex-direction: column;
+    }
+    margin: 2em 0;
+}
+.productInfo{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.information {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2em;
+  
+    h2 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 0.5em;
+    }
+  
+    p {
+      text-transform: capitalize;
+      font-weight: 500;
+      &:not(:last-of-type) {
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+  
+  .colorContainer {
+    display: flex;
+    align-items: center;
+  
+    span {
+      display: inline-block;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      margin-left: 0.5em;
+      box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .actions {
+    box-sizing: border-box;
+    padding: 1em;
+    padding-top: 0;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  
+    span {
+      box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+      background-color: $clr-neutral-3;
+      color: $clr-neutral-8;
+      font-size: 1.6rem;
+      padding: 0.5em 1em;
+      border-radius: 0.5rem;
+    }
+  }
+  
+  .buttons {
+    display: flex;
+    align-items: center;
+    width: max-content;
+  }
+  
+  .cardButton {
+    will-change: box-shadow, transform, background-color;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out,
+      background-color 0.2s ease-in-out;
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+    background-color: $clr-neutral-8;
+    color: $clr-neutral-3;
+  
+    font-size: 1.6rem;
+    padding: 0.6em 0.7em;
+    border-radius: 0.5rem;
+    border: none;
+  
+    &:not(:last-of-type) {
+      margin-right: 0.5em;
+    }
+  
+    &:hover {
+      box-shadow: 0 0.1rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+      transform: translateY(-0.2rem);
+    }
+  
+    &:active {
+      box-shadow: 0 0rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+      transform: translateY(0);
+      background-color: rgba($color: #000000, $alpha: 0.1);
+    }
+  }
 .embla {
+    padding: 2rem;
     position: relative;
-    background-color: #f7f7f7;
-    padding: 20px;
-    max-width: 670px;
+    max-width: 30rem;
     margin-left: auto;
     margin-right: auto;
   }
@@ -41,7 +143,10 @@
   .emblaSlideInner {
     position: relative;
     overflow: hidden;
-    height: 190px;
+    height: 30rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .emblaSlideImg {
@@ -54,6 +159,9 @@
     min-width: 100%;
     max-width: none;
     transform: translate(-50%, -50%);
+    background-color: #220831;
+    width: 30rem;
+    height: 30rem;
   }
   
   .emblaThumb {
@@ -104,8 +212,8 @@
   .emblaSlideThumb.is-selected .emblaSlideThumbnail {
     opacity: 1;
   }
-  .image {
-      position: relative;
-      width: 100rem;
-      height: 80rem;
-  }
+  .image{
+    position: relative;
+    height: 30rem;
+    width: 30rem;
+}

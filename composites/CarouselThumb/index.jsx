@@ -17,7 +17,9 @@ const CarouselThumb = (selected, onClick, imgSrc) => {
 				className={`${styles.emblaSlideInner} ${styles.emblaSlideInnerThumb}`}
 				type="button"
 			>
-				<Image className={styles.emblaSlideThumbnail} width={200} height={200} src="/5pink.png" layout="responsive" alt="A cool cat." />
+					<div className={styles.image}>
+						<Image src="/AboutCover.jpg" width={"100%"} height={"100%"} layout="responsive" objectFit="cover" alt="Poor internet connection" />
+					</div>
 			</button>
 		</div>
 	)
