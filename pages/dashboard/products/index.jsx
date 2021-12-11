@@ -139,7 +139,7 @@ const ProductsPage = (props) => {
                     className={`${styles.tableBodyCol} ${styles.tableImage}`}
                   >
                     <Image
-                      src={product.photoLink}
+                      src={product.photoLinks[0]}
                       alt={product.productName}
                       layout="fill"
                       objectFit="cover"

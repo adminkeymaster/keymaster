@@ -69,13 +69,19 @@ const CreateProductPage = () => {
     });
   };
 
-  const handleFileInput = (e) => {
+  const handleFileInput = async (e) => {
     const objectURL = URL.createObjectURL(e.target.files[0]);
 
-    setFormData({
+    const files = await Promise.all(
+      [...e.target.files].map(async (file) => {
+        return file;
+      })
+    );
+
+    await setFormData({
       ...formData,
       preview: objectURL,
-      [e.target.name]: e.target.files[0],
+      photoUpload: [...files],
     });
 
     e.target.value = null;
@@ -96,6 +102,13 @@ const CreateProductPage = () => {
         });
         return;
       }
+
+      if (key === "photoUpload") {
+        formData[key].forEach((file, index) => {
+          form.append(index, file);
+        });
+      }
+
       form.append(key, formData[key]);
     }
 
@@ -196,6 +209,7 @@ const CreateProductPage = () => {
             name="photoUpload"
             id="photoUpload"
             accept="image/png, image/jpeg"
+            multiple
             onChange={handleFileInput}
             required
           />
