@@ -1,5 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
 import Image from "next/image";
+import { motion } from "framer-motion";
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -18,7 +19,11 @@ import styles from "./Competition.module.scss";
 
 const CompetitionPage = (props) => {
   return (
-    <main className={styles.container}>
+    <motion.main exit={{ opacity: 0 }}
+		initial={{ opacity: 0 }}
+		animate={{ opacity: 1 }}
+		transition={{ duration: 1 }}
+    className={styles.container}>
       <div className={styles.withBackground}>
         <Rules />
         <h2>КиМастер Тэмцээн</h2>
@@ -51,7 +56,7 @@ const CompetitionPage = (props) => {
           />
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 };
 

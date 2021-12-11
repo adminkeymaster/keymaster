@@ -1,5 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
 import ReactPlayer from "react-player";
+import { motion } from "framer-motion";
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -16,7 +17,11 @@ import styles from "./Videos.module.scss";
 
 const VideosPage = (props) => {
   return (
-    <main className={styles.container}>
+    <motion.main exit={{ opacity: 0 }}
+	initial={{ opacity: 0 }}
+	animate={{ opacity: 1 }}
+	transition={{ duration: 1 }}
+	className={styles.container}>
       <div className={styles.innerContainer}>
         <div className={styles.featuredVideo}>
           <ReactPlayer
@@ -64,7 +69,7 @@ const VideosPage = (props) => {
 					</div>
 				</div> */}
       </div>
-    </main>
+    </motion.main>
   );
 };
 VideosPage.Layout = LandingLayout;

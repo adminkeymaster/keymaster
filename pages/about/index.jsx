@@ -1,6 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
 //import STORE from '@/store'
-
+import { motion } from 'framer-motion'
 //import LAYOUT from '@/layouts'
 import LandingLayout from '@/layouts/Landing';
 //import VIEWS from '@/views'
@@ -18,12 +18,17 @@ import styles from './About.module.scss'
 
 const AboutPage = (props) => {
 	 return (
-		<main className={styles.container}>
+		<motion.main       
+		exit={{ opacity: 0 }}
+		initial={{ opacity: 0 }}
+		animate={{ opacity: 1 }}
+		transition={{ duration: 1 }}
+		className={styles.container}>
 			<Keymaster/>
 			<History/>
 			<Goal/>
 			<Team/>
-		</main>
+		</motion.main>
 	)
 };
 AboutPage.Layout = LandingLayout;

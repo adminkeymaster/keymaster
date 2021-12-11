@@ -1,5 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
-
+import { motion } from 'framer-motion';
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -19,12 +19,16 @@ import styles from "./Products.module.scss";
 // const slides = Array.from(Array(SLIDE_COUNT).keys());
 const ProductsPage = (props) => {
   return (
-    <main className={styles.container}>
+    <motion.main exit={{ opacity: 0 }}
+		initial={{ opacity: 0 }}
+		animate={{ opacity: 1 }}
+		transition={{ duration: 1 }}
+    className={styles.container}>
       <Header />
       {/* <Carousel slides={slides}/> */}
       <Store />
       <ProductReq />
-    </main>
+    </motion.main>
   );
 };
 
