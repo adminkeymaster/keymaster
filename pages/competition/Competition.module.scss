@@ -32,17 +32,26 @@
   position: absolute;
   z-index: -1;
   right: 0;
-  top: 10%
+  top: 10%;
+  @include respondMax(sm){
+    display: none;
+  }
 }
 .star {
   position: absolute;
   z-index: -1;
   left: 0;
   top: 0;
+  @include respondMax(sm){
+    display: none;
+  }
 }
 .circle {
   position: absolute;
   z-index: -1;
   left: 0;
   bottom: 20%;
+  @include respondMax(sm){
+    display: none;
+  }
 }

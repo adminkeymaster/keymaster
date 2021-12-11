@@ -72,6 +72,9 @@
   left: -2%;
   top: 10%;
   z-index: -1;
+  @include respondMax(sm){
+    display: none;
+  }
 }
 .smallTriangle {
   position: absolute;
@@ -79,4 +82,7 @@
   top: 10%;
   z-index: -1;
   overflow: hidden;
+  @include respondMax(sm){
+    display: none;
+  }
 }

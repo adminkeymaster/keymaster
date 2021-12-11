@@ -71,11 +71,17 @@
   left: 0;
   top: -30%;
   z-index: -1;
+  @include respondMax(sm){
+    display: none;
+  }
 }
 .greencircle {
   position: absolute;
   right: 0;
   bottom: -30%;
   z-index: -1;
+  @include respondMax(sm){
+    display: none;
+  }
 }
 

@@ -43,4 +43,7 @@
   z-index: -1;
   bottom: 5%;
   left: -5%;
+  @include respondMax(sm){
+    display: none;
+  }
 }

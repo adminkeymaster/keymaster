@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  position: relative;
   background: linear-gradient(
     to bottom,
     rgba($color: $clr-primary, $alpha: .5) 0%,

@@ -10,6 +10,10 @@
   &:not(:last-of-type) {
     margin-bottom: 5em;
   }
+  @include respondMax(md){
+    flex-direction: column;
+    padding: 2em;
+  }
 }
 
 .headline {
@@ -38,6 +42,9 @@
     color: $clr-neutral-8;
     font-size: 3.6rem;
     max-width: 64rem;
+    @include respondMax(md){
+      font-size: 1.2em;
+    }
   }
 }
 
@@ -76,6 +83,9 @@
   margin-left: 3em;
   padding: 3em;
   border-left: 0.1rem solid $clr-neutral-3;
+  @include respondMax(sm){
+    margin-left: 0;
+  }
 }
 
 .text {
@@ -99,6 +109,9 @@
   span {
     &:not(:last-of-type) {
       margin-right: 3em;
+      @include respondMax(xs){
+        margin-right: 0.5em;
+      }
     }
   }
 }

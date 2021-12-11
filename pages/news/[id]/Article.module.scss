@@ -42,7 +42,9 @@
 
   color: $clr-neutral-8;
   font-size: 4.8rem;
-
+  @include respondMax(md){
+    font-size: 3rem;
+  }
   &::after {
     content: attr(data-date);
     display: block;
