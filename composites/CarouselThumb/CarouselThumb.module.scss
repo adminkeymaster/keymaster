@@ -1,0 +1,63 @@
+@import 'global';
+
+.emblaSlide {
+    padding-left: 10px;
+    min-width: 100%;
+    position: relative;
+  }
+  
+  .emblaSlideInner {
+    position: relative;
+    overflow: hidden;
+    height: 190px;
+  }
+  .emblaThumb {
+    padding-top: 0;
+    margin-top: -12px;
+  }
+  
+  .emblaContainerThumb {
+    cursor: default;
+    margin-left: -8px;
+  }
+  
+  .emblaSlideThumb {
+    padding-left: 8px;
+    min-width: 20%;
+  }
+  
+  .emblaSlideInnerThumb {
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    height: 100px;
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  
+  .emblaSlideThumbnail {
+    position: absolute;
+    opacity: 0.2;
+    top: 0;
+    bottom: 0;
+    left: -10000%;
+    right: -10000%;
+    margin: auto;
+    min-width: 1000%;
+    min-height: 1000%;
+    max-width: none;
+    transform: scale(0.1);
+    transition: opacity 0.2s;
+  }
+  
+  .isSelected {
+    opacity: 1;
+  }
+  
+  

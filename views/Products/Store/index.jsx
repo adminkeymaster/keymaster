@@ -5,6 +5,7 @@ import Image from "next/image";
 import {
   useState,
   useEffect,
+  useRef,
   // useContext
 } from "react";
 import axios from "axios";
@@ -36,7 +37,6 @@ const Store = (props) => {
 
     return () => controller.abort();
   }, []);
-
   return (
     <div className={styles.container}>
       <div className={styles.feature}>
