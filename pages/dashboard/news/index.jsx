@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -14,14 +15,29 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./News.module.scss";
 
 const DashboardNews = (props) => {
+  const router = useRouter();
+  const { query } = router;
   const [isFetched, setIsFetched] = useState(false);
   const [news, setNews] = useState([]);
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
 
   useEffect(() => {
+    if (query) {
+      setNotification({
+        ...notification,
+        message: query.message,
+        success: query.success,
+      });
+    }
+
     const controller = new AbortController();
     axios
       .get("/api/news", { signal: controller.signal })
@@ -36,6 +52,19 @@ const DashboardNews = (props) => {
 
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   const truncateText = (text, length) => {
     const textContent = text
@@ -65,14 +94,28 @@ const DashboardNews = (props) => {
       .delete(`/api/news/${e.target.id}`)
       .then(() => {
         setNews(news.filter((article) => article._id !== e.target.id));
+        setNotification({
+          ...notification,
+          message: "Мэдээ амжилттай устгагдлаа.",
+          success: true,
+        });
       })
       .catch((err) => {
+        setNotification({
+          ...notification,
+          message: "Мэдээ устгахад алдаа гарлаа",
+          success: false,
+        });
         console.log("/dashboard/news handleDelete:", err);
       });
   };
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Мэдээ</h1>
         <Link href="/dashboard/news/create">

@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -14,14 +15,28 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./Products.module.scss";
 
 const ProductsPage = (props) => {
+  const router = useRouter();
+  const { query } = router;
   const [isFetched, setIsFetched] = useState(false);
   const [products, setProducts] = useState([]);
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
 
   useEffect(() => {
+    if (query) {
+      setNotification({
+        ...notification,
+        message: query.message,
+        success: query.success,
+      });
+    }
     const controller = new AbortController();
     axios
       .get("/api/product", { signal: controller.signal })
@@ -37,19 +52,50 @@ const ProductsPage = (props) => {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
+
   const handleDelete = (e) => {
     axios
       .delete(`/api/product/${e.target.id}`)
-      .then(() => {
-        setProducts(products.filter((product) => product._id !== e.target.id));
+      .then((res) => {
+        if (res.status === 200) {
+          setProducts(
+            products.filter((product) => product._id !== e.target.id)
+          );
+          setNotification({
+            ...notification,
+            message: "Бүтээгдэхүүнийг амжилттай устгалаа.",
+            success: true,
+          });
+        }
       })
       .catch((err) => {
+        setNotification({
+          ...notification,
+          message: "Бүтээгдэхүүн устгах үед алдаа гарлаа",
+          success: false,
+        });
         console.log("ProductsPage handleDelete:", err);
       });
   };
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Бүтээгдэхүүн</h1>
         <Link href="/dashboard/products/create">
