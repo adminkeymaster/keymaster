@@ -1,7 +1,9 @@
 //Next, React (core node_modules) imports must be placed here
 import { signIn, useSession, getCsrfToken } from 'next-auth/react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -17,6 +19,13 @@ import LoginLayout from '@/layouts/Login';
 import styles from './Login.module.scss';
 
 const LoginPage = ({ csrfToken }) => {
+  const router = useRouter();
+  const [hasError, setHasError] = useState(false);
+  const { error } = router.query;
+  if (error) {
+    console.log(error);
+  }
+
   return (
     <main className={styles.container}>
       <div className={styles.star}>

@@ -11,6 +11,7 @@ export default NextAuth({
   secret: process.env.NEXT_AUTH_SECRET,
   pages: {
     signIn: '/auth/login',
+    error: '/auth/login',
   },
   session: {
     strategy: 'jwt',
@@ -36,16 +37,12 @@ export default NextAuth({
         const user = await users.findOne({ email });
 
         if (!user) {
-          return {
-            message: 'Таны хэрэглэгчийн мэдээлэл байхгүй байна',
-          };
+          throw new Error('noUser');
         }
         const isValid = await verifyPassword(password, user.password);
 
         if (!isValid) {
-          return {
-            message: 'Нууц үг буруу байна',
-          };
+          throw new Error('wrongPassword');
         }
 
         return user;

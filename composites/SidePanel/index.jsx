@@ -20,9 +20,6 @@ const StyledCloseIcon = styled(Close)`
 const SidePanel = ({ handler, isOpen, ...props }) => {
   const { data: session, status } = useSession();
   const { route } = useRouter();
-  useEffect(() => {
-    console.log(session);
-  }, [status]);
   return (
     <aside className={isOpen ? styles.container : styles.closed}>
       <button className={styles.closeButton} onClick={handler}>
