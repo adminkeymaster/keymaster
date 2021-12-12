@@ -80,7 +80,7 @@ const Article = () => {
           <Image
             src={article?.photoLink}
             layout="fill"
-            objectFit="cover"
+            objectFit="contain"
             alt="article image"
           />
         )}

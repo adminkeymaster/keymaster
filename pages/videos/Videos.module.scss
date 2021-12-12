@@ -10,10 +10,18 @@
 .innerContainer {
     max-width: has(md);
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+        margin: 1em 0;;
+    }
 }
 .featuredVideo {
     width: 100%;
     height: 50rem;
+    margin: 1em 0;
 }
 .videoList {
     display: flex;

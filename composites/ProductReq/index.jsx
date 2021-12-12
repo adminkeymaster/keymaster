@@ -78,6 +78,7 @@ const ProductReq = ({ firstName, lastName, email, phoneNumber, ...props }) => {
             id="lastName"
             defaultValue={form.lastName}
             onChange={handleChange}
+            required
           />
           <label htmlFor="firstName">Нэр</label>
           <input
@@ -87,6 +88,7 @@ const ProductReq = ({ firstName, lastName, email, phoneNumber, ...props }) => {
             id="firstName"
             defaultValue={form.firstName}
             onChange={handleChange}
+            required
           />
           <label htmlFor="email">Цахим шуудан</label>
           <input
@@ -96,6 +98,7 @@ const ProductReq = ({ firstName, lastName, email, phoneNumber, ...props }) => {
             id="email"
             defaultValue={form.email}
             onChange={handleChange}
+            required
           />
           <label htmlFor="phoneNumber">Утасны дугаар</label>
           <input
@@ -105,8 +108,9 @@ const ProductReq = ({ firstName, lastName, email, phoneNumber, ...props }) => {
             id="phoneNumber"
             defaultValue={form.phoneNumber}
             onChange={handleChange}
+            required
           />
-          <button>Урьдчилан Захиалах</button>
+          <button type="submit">Урьдчилан Захиалах</button>
         </form>
       </div>
     </div>
