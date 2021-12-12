@@ -19,8 +19,8 @@ const DashboardPage = (props) => {
 
 
   const { data: session, status } = useSession()
-
-  if (status === "authenticated") {
+  console.log(session)
+  if (session) {
 
     return <motion.main exit={{ opacity: 0 }}
       initial={{ opacity: 0 }}
