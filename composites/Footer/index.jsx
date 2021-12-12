@@ -89,17 +89,11 @@ const Footer = (props) => {
         <div className={styles.contentBottom}>
           <div className={styles.legal}>
             <div className={styles.socialContainer}>
-              <Link href="">
+              <Link href="https://www.facebook.com/keymasterworld">
                 <StyledFacebook />
               </Link>
-              <Link href="">
+              <Link href="https://www.youtube.com/channel/UCl2XI34meFRfPHt_JJLzGbg">
                 <StyledYoutube />
-              </Link>
-              <Link href="">
-                <StyledInstagram />
-              </Link>
-              <Link href="">
-                <StyledTwitter />
               </Link>
             </div>
             <Link href="/">
