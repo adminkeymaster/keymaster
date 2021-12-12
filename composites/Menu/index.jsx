@@ -16,10 +16,6 @@ const Menu = (props) => {
   const { route } = useRouter();
   const { activeAnchor } = useContext(ActiveAnchorContext);
 
-  useEffect(() => {
-    console.log(session);
-  }, [status]);
-
   return (
     <ul className={styles.container}>
       <li>

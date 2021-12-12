@@ -13,12 +13,13 @@ const DashboardMenu = (props) => {
   const { route } = useRouter();
   const { activeAnchor } = useContext(ActiveAnchorContext);
   const { data: session, status } = useSession()
+  console.log(status)
 
   if (status === "loading") {
     return <p>Loading...</p>
   }
 
-  if (status === "authenticated") {
+  else if (status === "authenticated") {
 
     return (
       <ul className={styles.container}>
@@ -170,6 +171,8 @@ const DashboardMenu = (props) => {
 
       </ul>
     );
+  } else {
+    return <p>Page not found</p>
   }
 
 

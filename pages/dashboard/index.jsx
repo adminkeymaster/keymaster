@@ -16,20 +16,12 @@ import { useSession } from "next-auth/react"
 import styles from "./Dashboard.module.scss";
 
 const DashboardPage = (props) => {
-
-
-  const { data: session, status } = useSession()
-  console.log(session)
-  if (session) {
-
     return <motion.main exit={{ opacity: 0 }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
       className={styles.container}>Welcome to dashboard</motion.main>;
-  } else {
-    return <p>Page Not Found</p>
-  }
+
 };
 
 DashboardPage.Layout = DashboardLayout;
