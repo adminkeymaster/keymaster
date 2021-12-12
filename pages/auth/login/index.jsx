@@ -1,6 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
 import { signIn, useSession, getCsrfToken } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 
 //import LAYOUT from '@/layouts'
 import LoginLayout from '@/layouts/Login';
+import Notification from '@/components/Notification';
 //import VIEWS from '@/views'
 
 //import useFETCHER from '@/tools'
@@ -18,16 +19,44 @@ import LoginLayout from '@/layouts/Login';
 
 import styles from './Login.module.scss';
 
+const errorMsgs = {
+  noUser: 'Хэрэглэгч олдсонгүй',
+  wrongPassword: 'Таны нууц үг буруу байна',
+};
+
 const LoginPage = ({ csrfToken }) => {
   const router = useRouter();
-  const [hasError, setHasError] = useState(false);
   const { error } = router.query;
-  if (error) {
-    console.log(error);
-  }
+  const [notification, setNotification] = useState({
+    message: '',
+    success: false,
+  });
+
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: '',
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
+
+  useEffect(() => {
+    if (error) {
+      setNotification({
+        message: errorMsgs[error],
+        success: false,
+      });
+    }
+  }, [error]);
 
   return (
     <main className={styles.container}>
+      <Notification message={notification.message} success={notification.success} />
       <div className={styles.star}>
         <Image width={150} height={250} src="/star.png" layout="fixed" className={styles.star} alt="star" priority />
       </div>
