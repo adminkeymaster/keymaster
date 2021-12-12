@@ -9,7 +9,6 @@ import styles from "./ProductReqVerify.module.scss";
 
 const ProductReqVerify = ({
   handleSubmit,
-  handleChange,
   firstName,
   lastName,
   email,
@@ -44,42 +43,42 @@ const ProductReqVerify = ({
         <form onSubmit={handleSubmit}>
           <label htmlFor="lastName">Овог</label>
           <input
+            readonly
             type="text"
             placeholder="Овог"
             name="lastName"
             id="lastName"
             defaultValue={lastName}
-            onChange={handleChange}
             required
           />
           <label htmlFor="firstName">Нэр</label>
           <input
+            readonly
             type="text"
             placeholder="Нэр"
             name="firstName"
             id="firstName"
             defaultValue={firstName}
-            onChange={handleChange}
             required
           />
           <label htmlFor="email">Цахим шуудан</label>
           <input
+            readonly
             type="email"
             placeholder="Цахим шуудан"
             name="email"
             id="email"
             defaultValue={email}
-            onChange={handleChange}
             required
           />
           <label htmlFor="phoneNumber">Утасны дугаар</label>
           <input
+            readonly
             type="text"
             placeholder="Утасны дугаар"
             name="phoneNumber"
             id="phoneNumber"
             defaultValue={phoneNumber}
-            onChange={handleChange}
             required
           />
         </form>

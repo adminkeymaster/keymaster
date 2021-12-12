@@ -102,7 +102,6 @@ const CheckoutPage = (props) => {
           lastName={lastName}
           email={email}
           phoneNumber={phoneNumber}
-          handleChange={handleChange}
         />
 
         <div className={styles.cart}>
