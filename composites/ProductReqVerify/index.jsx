@@ -23,7 +23,7 @@ const ProductReqVerify = ({
           <p>Та дараах данс руу төлбөрөө шилжүүлнэ үү.</p>
           <div className={styles.bankInfo}>
             <div className={styles.bank}>
-              <p>Данс: 1405136317</p>
+              <p>Данс: 1405136371</p>
               <p>Банк: Голомт Банк</p>
               <p>Нэр: КиМастер Ворлд ХХК</p>
             </div>
