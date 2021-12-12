@@ -43,7 +43,7 @@ const ProductReqVerify = ({
         <form onSubmit={handleSubmit}>
           <label htmlFor="lastName">Овог</label>
           <input
-            readonly
+            readOnly
             type="text"
             placeholder="Овог"
             name="lastName"
@@ -53,7 +53,7 @@ const ProductReqVerify = ({
           />
           <label htmlFor="firstName">Нэр</label>
           <input
-            readonly
+            readOnly
             type="text"
             placeholder="Нэр"
             name="firstName"
@@ -63,7 +63,7 @@ const ProductReqVerify = ({
           />
           <label htmlFor="email">Цахим шуудан</label>
           <input
-            readonly
+            readOnly
             type="email"
             placeholder="Цахим шуудан"
             name="email"
@@ -73,7 +73,7 @@ const ProductReqVerify = ({
           />
           <label htmlFor="phoneNumber">Утасны дугаар</label>
           <input
-            readonly
+            readOnly
             type="text"
             placeholder="Утасны дугаар"
             name="phoneNumber"
