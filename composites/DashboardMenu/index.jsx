@@ -139,7 +139,7 @@ const DashboardMenu = (props) => {
 
         {session && (
           <li>
-            <Link href="/dashboard/send-record">
+            <Link href="/profile/send-record">
               <a
                 className={
                   route == "/dashboard/send-record"
@@ -155,7 +155,7 @@ const DashboardMenu = (props) => {
 
         {session && (
           <li>
-            <Link href="/dashboard/user">
+            <Link href="/profile/user">
               <a
                 className={
                   route == "/dashboard/user"
