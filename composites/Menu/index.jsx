@@ -1,14 +1,14 @@
-import { useSession, getSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useSession, getSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect } from 'react';
 
-import ActiveAnchorContext from "@/store/ActiveAnchor";
+import ActiveAnchorContext from '@/store/ActiveAnchor';
 
-import PrimaryButton from "@/components/PrimaryButton";
+import PrimaryButton from '@/components/PrimaryButton';
 
-import styles from "./Menu.module.scss";
+import styles from './Menu.module.scss';
 
 const Menu = (props) => {
   const { data: session, status } = useSession();
@@ -24,28 +24,14 @@ const Menu = (props) => {
     <ul className={styles.container}>
       <li>
         <Link href="/about">
-          <a
-            className={
-              route == "/about"
-                ? `${styles.isActive} ${styles.link}`
-                : styles.link
-            }
-            onClick={props.onClick}
-          >
+          <a className={route == '/about' ? `${styles.isActive} ${styles.link}` : styles.link} onClick={props.onClick}>
             Тухай
           </a>
         </Link>
       </li>
       <li>
         <Link href="/news">
-          <a
-            className={
-              route == "/news"
-                ? `${styles.isActive} ${styles.link}`
-                : styles.link
-            }
-            onClick={props.onClick}
-          >
+          <a className={route == '/news' ? `${styles.isActive} ${styles.link}` : styles.link} onClick={props.onClick}>
             Мэдээ
           </a>
         </Link>
@@ -53,11 +39,7 @@ const Menu = (props) => {
       <li>
         <Link href="/competition">
           <a
-            className={
-              route == "/competition"
-                ? `${styles.isActive} ${styles.link}`
-                : styles.link
-            }
+            className={route == '/competition' ? `${styles.isActive} ${styles.link}` : styles.link}
             onClick={props.onClick}
           >
             Тэмцээн
@@ -66,14 +48,7 @@ const Menu = (props) => {
       </li>
       <li>
         <Link href="/videos">
-          <a
-            className={
-              route == "/videos"
-                ? `${styles.isActive} ${styles.link}`
-                : styles.link
-            }
-            onClick={props.onClick}
-          >
+          <a className={route == '/videos' ? `${styles.isActive} ${styles.link}` : styles.link} onClick={props.onClick}>
             Keymaster
           </a>
         </Link>
@@ -81,11 +56,7 @@ const Menu = (props) => {
       <li>
         <Link href="/products">
           <a
-            className={
-              route == "/products"
-                ? `${styles.isActive} ${styles.link}`
-                : styles.link
-            }
+            className={route == '/products' ? `${styles.isActive} ${styles.link}` : styles.link}
             onClick={props.onClick}
           >
             Бараа бүтээгдэхүүн
@@ -106,7 +77,7 @@ const Menu = (props) => {
             </li>
           </Link>
         ))) || (
-        <Link href="/auth/login">
+        <Link href="/api/auth/signin">
           <li>
             <PrimaryButton>Нэвтрэх</PrimaryButton>
           </li>
