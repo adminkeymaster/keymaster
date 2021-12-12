@@ -78,11 +78,15 @@ const CheckoutPage = (props) => {
     };
 
     axios.post("/api/productReq", productReq).then((res) => {
-      if (res.status === 200) {
-        // addOrder(filteredProducts);
-        // deleteOrder();
-        router.push("/");
+      console.log(res)
+      if (res.status === 201) {
+        addOrder(filteredProducts);
+        deleteOrder();
+        router.push("/checkout/success");
       }
+    })
+    .catch((err) => {
+      console.log("ProductReq handleSubmit:", err);
     });
   };
 
@@ -103,6 +107,7 @@ const CheckoutPage = (props) => {
 
         <div className={styles.cart}>
           <div className={styles.cartHeader}>
+            <h2 className={styles.cartTitle}>Таны Сагс</h2>
             <div className={styles.cartHeaderPrice}>
               <span>Нийт Үнэ</span>
               <span>
@@ -112,10 +117,6 @@ const CheckoutPage = (props) => {
                 ₮
               </span>
             </div>
-            <h2 className={styles.cartTitle}>Таны Сагс</h2>
-            <button onClick={handleSubmit} className={styles.submitButton}>
-              Захиалгаа Баталгаажуулах
-            </button>
           </div>
           <div className={styles.cartBody}>
             {isFetched &&
@@ -133,6 +134,9 @@ const CheckoutPage = (props) => {
                 );
               })}
           </div>
+          <button onClick={handleSubmit} className={styles.submitButton}>
+              Захиалгаа Баталгаажуулах
+         </button>
         </div>
       </div>
     </motion.main>

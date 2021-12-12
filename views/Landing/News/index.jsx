@@ -9,7 +9,9 @@ import { useInView } from "react-intersection-observer";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
-import NewsCard from "@/composites/NewsCard";
+// import NewsCard from "@/composites/NewsCard";
+import AthleteCard from "@/composites/AthleteCard";
+import CompetitionTable from "@/composites/CompetitionTable";
 import styles from "./News.module.scss";
 
 const News = (props) => {
@@ -74,7 +76,13 @@ const News = (props) => {
       ref={ref}
       className={styles.container}
     >
-      <motion.h2 variants={children}>Мэдээ</motion.h2>
+            <h2>Тэмцээний мэдээллүүд</h2>
+
+            {/* <div className={styles.content}> */}
+        {/* <AthleteCard src="/Profile.jpg" /> */}
+        <CompetitionTable />
+      {/* </div> */}
+      {/* <motion.h2 variants={children}>Мэдээ</motion.h2>
       <motion.div variants={children} className={styles.content}>
         {isFetched &&
           news.map((article) => {
@@ -89,7 +97,7 @@ const News = (props) => {
               />
             );
           })}
-      </motion.div>
+      </motion.div> */}
       <div className={styles.rectangle}>
         <Image
           width={200}

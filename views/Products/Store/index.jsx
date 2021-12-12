@@ -38,7 +38,7 @@ const Store = (props) => {
   }, []);
   return (
     <div className={styles.container}>
-      <div className={styles.feature}>
+      {/* <div className={styles.feature}>
         <div className={styles.imageContainer}>
           <Image
             src="/KeymasterPack.png"
@@ -64,7 +64,7 @@ const Store = (props) => {
             </li>
           </ul>
         </div>
-      </div>
+      </div> */}
       <div className={styles.products}>
         {isFetched &&
           products.map((product) => {
