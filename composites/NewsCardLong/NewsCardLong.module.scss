@@ -5,7 +5,8 @@
   padding: 5em;
   width: 100%;
   display: flex;
-  height: 64rem;
+  height: 72rem;
+  min-height: 64rem;
 
   &:not(:last-of-type) {
     margin-bottom: 5em;
@@ -26,7 +27,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-
+  min-height: 30rem;
   cursor: pointer;
   filter: grayscale(0.2);
 
@@ -95,6 +96,9 @@
   height: 100%;
   overflow: hidden;
   line-height: 1.6em;
+  @include respondMax(xs){
+    font-size: 0.9em;
+  }
 }
 
 .date {

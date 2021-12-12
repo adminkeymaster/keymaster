@@ -8,10 +8,10 @@
   flex-direction: column;
   position: relative;
   max-width: has(lg);
-  transform: translateY(-20vh);
+  // transform: translateY(-20vh);
   h2 {
-    margin-top: 3em;
-    margin-bottom: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 }
 .cardsContainer {

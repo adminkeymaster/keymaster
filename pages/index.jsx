@@ -17,11 +17,11 @@ const RootPage = (props) => {
     transition={{ duration: 1 }}
     className={styles.container}>
       <Home />
-      <Feature />
+      <News />
       <Introduction />
       <About />
       <Benefits />
-      <News />
+      <Feature />
       <Partners />
     </motion.main>
   );
