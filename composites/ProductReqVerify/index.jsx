@@ -50,6 +50,7 @@ const ProductReqVerify = ({
             id="lastName"
             defaultValue={lastName}
             onChange={handleChange}
+            required
           />
           <label htmlFor="firstName">Нэр</label>
           <input
@@ -59,6 +60,7 @@ const ProductReqVerify = ({
             id="firstName"
             defaultValue={firstName}
             onChange={handleChange}
+            required
           />
           <label htmlFor="email">Цахим шуудан</label>
           <input
@@ -68,6 +70,7 @@ const ProductReqVerify = ({
             id="email"
             defaultValue={email}
             onChange={handleChange}
+            required
           />
           <label htmlFor="phoneNumber">Утасны дугаар</label>
           <input
@@ -77,6 +80,7 @@ const ProductReqVerify = ({
             id="phoneNumber"
             defaultValue={phoneNumber}
             onChange={handleChange}
+            required
           />
         </form>
       </div>

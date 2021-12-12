@@ -1,16 +1,16 @@
 //Next, React (core node_modules) imports must be placed here
-import { useRouter } from "next/router";
-import Image from "next/image";
-import { useState, useEffect, Fragment } from "react";
-import axios from "axios";
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { useState, useEffect, Fragment } from 'react';
+import axios from 'axios';
 
-import styled from "styled-components";
-import { Close } from "@styled-icons/evaicons-solid/Close";
-import { Upload } from "@styled-icons/heroicons-outline/Upload";
+import styled from 'styled-components';
+import { Close } from '@styled-icons/evaicons-solid/Close';
+import { Upload } from '@styled-icons/heroicons-outline/Upload';
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
-import DashboardLayout from "@/layouts/Dashboard";
+import DashboardLayout from '@/layouts/Dashboard';
 
 //import VIEWS from '@/views'
 
@@ -19,9 +19,9 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
-import Notification from "@/components/Notification";
+import Notification from '@/components/Notification';
 
-import styles from "./CreateProduct.module.scss";
+import styles from './CreateProduct.module.scss';
 
 const StyledCloseIcon = styled(Close)`
   width: 3.6rem;
@@ -35,18 +35,18 @@ const StyledUploadIcon = styled(Upload)`
 
 const CreateProductPage = () => {
   const router = useRouter();
-  const [currentColor, setCurrentColor] = useState("#000000");
+  const [currentColor, setCurrentColor] = useState('#000000');
   const [colorInputs, setColorInputs] = useState([]);
   const [formData, setFormData] = useState({
-    productName: "",
+    productName: '',
     photoUpload: null,
-    productPrice: "",
+    productPrice: '',
     hexColor: [],
-    type: "",
-    preview: "",
+    type: '',
+    preview: '',
   });
   const [notification, setNotification] = useState({
-    message: "",
+    message: '',
     success: false,
   });
 
@@ -55,7 +55,7 @@ const CreateProductPage = () => {
 
     const timer = setTimeout(() => {
       setNotification({
-        message: "",
+        message: '',
         success: false,
       });
     }, 3000);
@@ -136,22 +136,30 @@ const CreateProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formEvent = e.currentTarget;
+
     const form = new FormData();
+    const imageForm = new FormData();
+
+    // const fileInput = Array.from(formEvent.elements).find(({ name }) => name === 'photoUpload');
+    // console.log(fileInput);
 
     console.log(formData);
 
     for (const key in formData) {
       if (!formData[key]) {
         setNotification({
-          message: "Бүх талбаруудыг бөглөнө үү!",
+          message: 'Бүх талбаруудыг бөглөнө үү!',
           success: false,
         });
         return;
       }
 
-      if (key === "photoUpload") {
+      if (key === 'photoUpload') {
+        console.log(key);
         formData[key].forEach((file, index) => {
           form.append(index, file);
+          imageForm.append(index, file);
         });
       }
 
@@ -159,26 +167,26 @@ const CreateProductPage = () => {
     }
 
     axios
-      .post("/api/product/", form)
+      .post('/api/product/', form)
       .then((res) => {
         if (res.status === 200) {
           router.push(
             {
-              pathname: "/dashboard/products",
+              pathname: '/dashboard/products',
               query: {
                 success: true,
-                message: "Бүтээгдэхүүн амжилттай нэмэгдлээ",
+                message: 'Бүтээгдэхүүн амжилттай нэмэгдлээ',
               },
             },
-            "/dashboard/products"
+            '/dashboard/products'
           );
         }
       })
       .catch((err) => {
-        console.log("CreateProductPage handleSubmit", err);
+        console.log('CreateProductPage handleSubmit', err);
         setNotification({
           ...notification,
-          message: "Бүтээгдэхүүн үүсгэх явцад алдаа гарлаа",
+          message: 'Бүтээгдэхүүн үүсгэх явцад алдаа гарлаа',
           success: false,
         });
       });
@@ -186,10 +194,7 @@ const CreateProductPage = () => {
 
   return (
     <main className={styles.container}>
-      <Notification
-        message={notification.message}
-        success={notification.success}
-      />
+      <Notification message={notification.message} success={notification.success} />
       <form className={styles.form}>
         <h1 className={styles.heading}>Бүтээгдэхүүн Нэмэх</h1>
 
@@ -210,12 +215,7 @@ const CreateProductPage = () => {
 
         <div className={styles.imageContainer}>
           {formData.photoUpload && (
-            <Image
-              src={formData.preview}
-              layout="fill"
-              objectFit="cover"
-              alt="uploaded image"
-            />
+            <Image src={formData.preview} layout="fill" objectFit="cover" alt="uploaded image" />
           )}
 
           {formData.photoUpload && (
@@ -240,13 +240,10 @@ const CreateProductPage = () => {
           <label
             htmlFor="photoUpload"
             className={
-              !formData.photoUpload
-                ? styles.labelFileSend
-                : `${styles.labelFileSend} ${styles.labelFileSendActive}`
+              !formData.photoUpload ? styles.labelFileSend : `${styles.labelFileSend} ${styles.labelFileSendActive}`
             }
           >
-            <StyledUploadIcon /> Зураг{" "}
-            {(formData.photoUpload && "засах") || "өөрчлөх"}
+            <StyledUploadIcon /> Зураг {(formData.photoUpload && 'засах') || 'өөрчлөх'}
           </label>
 
           <input
@@ -310,11 +307,7 @@ const CreateProductPage = () => {
         </div>
 
         <div className={styles.formGroupFile}>
-          <button
-            type="submit"
-            className={styles.postButton}
-            onClick={handleSubmit}
-          >
+          <button type="submit" className={styles.postButton} onClick={handleSubmit}>
             Засах
           </button>
         </div>
