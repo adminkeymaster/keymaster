@@ -11,8 +11,8 @@ const requestModHandler = async (req, res) => {
     method,
     query: { id },
   } = req;
-  const session = await getSession({ req })
-  s
+  const session = await getSession({ req });
+  
   switch (method) {
     case "GET":
       try {
