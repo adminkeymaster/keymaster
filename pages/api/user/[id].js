@@ -2,6 +2,7 @@ import dbConnect from '@/utils/database'
 import users from '@/models/users'
 import { promises as fs } from "fs";
 import formidable from "formidable";
+import { getSession } from "next-auth/react"
 
 dbConnect();
 
@@ -10,81 +11,90 @@ const requestModHandler = async (req, res) => {
         method,
         query: { id },
     } = req;
+    const session = await getSession({ req })
 
-    switch (method) {
-        case "GET":
-            try {
-                const user = await users.findOne({ _id: id });
-                res.status(200).json({ success: true, data: user });
 
-            } catch (error) {
-                console.log(error)
-                res.status(400).json({ success: false })
-            }
-            break;
+    if (session.user.email) {
+        switch (method) {
+            case "GET":
+                try {
+                    const user = await users.findOne({ _id: id });
+                    res.status(200).json({ success: true, data: user });
 
-        case "POST":
-            try {
-                const form = new formidable.IncomingForm({ keepExtensions: true });
+                } catch (error) {
+                    console.log(error)
+                    res.status(400).json({ success: false })
+                }
+                break;
 
-                const formParsePhotoSuccess = await new Promise((resolve, reject) => {
-                    form.parse(req, async (err, fields, files) => {
+            case "POST":
+                try {
+                    const form = new formidable.IncomingForm({ keepExtensions: true });
 
-                        if (err) {
-                            reject(err);
-                            return;
-                        }
+                    const formParsePhotoSuccess = await new Promise((resolve, reject) => {
+                        form.parse(req, async (err, fields, files) => {
 
-                        const dateNow = new Date();
+                            if (err) {
+                                reject(err);
+                                return;
+                            }
 
-                        const photoUpload = {
-                            oldpath: files.photoUpload.filepath,
-                            link: `/assets/images/users/${dateNow.getTime()}-${files.photoUpload.originalFilename
-                                }`,
-                            newpath: `./public/assets/images/users/${dateNow.getTime()}-${files.photoUpload.originalFilename
-                                }`,
-                        };
+                            const dateNow = new Date();
 
-                        resolve(photoUpload);
-                    })
-                }).then(async (photoUpload) => {
-                    let isSuccess = false;
+                            const photoUpload = {
+                                oldpath: files.photoUpload.filepath,
+                                link: `/assets/images/users/${dateNow.getTime()}-${files.photoUpload.originalFilename
+                                    }`,
+                                newpath: `./public/assets/images/users/${dateNow.getTime()}-${files.photoUpload.originalFilename
+                                    }`,
+                            };
 
-                    await fs.rename(photoUpload.oldpath, photoUpload.newpath, (err) => {
-                        if (err) {
-                            console.log(err)
-                            throw err;
-                        }
-                    }).then(async () => {
-                        isSuccess = true;
-                        await users.updateOne({ _id: id }, { photoLink: photoUpload.link });
+                            resolve(photoUpload);
+                        })
+                    }).then(async (photoUpload) => {
+                        let isSuccess = false;
+
+                        await fs.rename(photoUpload.oldpath, photoUpload.newpath, (err) => {
+                            if (err) {
+                                console.log(err)
+                                throw err;
+                            }
+                        }).then(async () => {
+                            isSuccess = true;
+                            await users.updateOne({ _id: id }, { photoLink: photoUpload.link });
+                        });
+
+                        return isSuccess;
                     });
 
-                    return isSuccess;
-                });
+
+
+                    if (formParsePhotoSuccess) {
+                        return res.status(200).json({ success: true, msg: "Successfully added/changed photo" });
+                    } else {
+                        return res.status(200).json({ success: false, msg: "Error occured while uploading files" });
+                    }
 
 
 
-                if (formParsePhotoSuccess) {
-                    return res.status(200).json({ success: true, msg: "Successfully added/changed photo" });
-                } else {
-                    return res.status(200).json({ success: false, msg: "Error occured while uploading files" });
+
+
+                } catch (error) {
+                    console.log(error)
+                    res.status(400).json({ success: false })
                 }
+                break;
 
-
-
-
-
-            } catch (error) {
-                console.log(error)
-                res.status(400).json({ success: false })
-            }
-            break;
-
-        default:
-            res.status(400).json({ success: false });
-            break;
+            default:
+                res.status(400).json({ success: false });
+                break;
+        }
+    } else {
+        return res.status(401).json({ success: false, msg: "You dont have a access" });
     }
+
+
+
 };
 
 export const config = {

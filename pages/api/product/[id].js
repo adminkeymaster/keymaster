@@ -2,6 +2,7 @@ import product from "@/models/products";
 import dbConnect from "@/utils/database";
 import { promises as fs } from "fs";
 import formidable from "formidable";
+import { getSession } from "next-auth/react"
 
 dbConnect();
 
@@ -10,7 +11,8 @@ const requestModHandler = async (req, res) => {
     method,
     query: { id },
   } = req;
-
+  const session = await getSession({ req })
+  s
   switch (method) {
     case "GET":
       try {
@@ -24,81 +26,89 @@ const requestModHandler = async (req, res) => {
 
     case "POST":
       try {
-        const form = new formidable.IncomingForm({ keepExtensions: true });
 
-        const formParsePhotoSuccess = await new Promise((resolve, reject) => {
-          form.parse(req, async (err, fields, files) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-            const dateNow = new Date();
-            let productInfo = {
-              fields,
-            };
 
-            if (files.photoUpload) {
-              productInfo.oldpath = files.photoUpload.filepath;
-              productInfo.link = `/assets/images/products/${dateNow.getTime()}-${
-                files.photoUpload.originalFilename
-              }`;
-              productInfo.newpath = `./public/assets/images/products/${dateNow.getTime()}-${
-                files.photoUpload.originalFilename
-              }`;
-            } else {
-              await product.updateOne(
-                { _id: id },
-                {
-                  productName: fields.productName,
-                  color: fields.color,
-                  hexColor: fields.hexColor,
-                  type: fields.type,
-                  productPrice: fields.productPrice,
-                }
-              );
-              return res
-                .status(200)
-                .json({ success: true, msg: "amjilttai edit hiile" });
-            }
+        if (session.user.isAdmin) {
 
-            resolve(productInfo);
-          });
-        }).then(async (productInfo) => {
-          let isSuccess = false;
+          const form = new formidable.IncomingForm({ keepExtensions: true });
 
-          await fs
-            .rename(productInfo.oldpath, productInfo.newpath, (err) => {
+          const formParsePhotoSuccess = await new Promise((resolve, reject) => {
+            form.parse(req, async (err, fields, files) => {
               if (err) {
-                console.log(err);
-                throw err;
+                reject(err);
+                return;
               }
-            })
-            .then(async () => {
-              isSuccess = true;
-
-              const newProduct = {
-                productName: productInfo.fields.productName,
-                color: productInfo.fields.color,
-                hexColor: productInfo.fields.hexColor,
-                type: productInfo.fields.type,
-                photoLink: productInfo.link,
-                productPrice: productInfo.fields.productPrice,
+              const dateNow = new Date();
+              let productInfo = {
+                fields,
               };
-              await product.updateOne({ _id: id }, newProduct);
+
+              if (files.photoUpload) {
+                productInfo.oldpath = files.photoUpload.filepath;
+                productInfo.link = `/assets/images/products/${dateNow.getTime()}-${files.photoUpload.originalFilename
+                  }`;
+                productInfo.newpath = `./public/assets/images/products/${dateNow.getTime()}-${files.photoUpload.originalFilename
+                  }`;
+              } else {
+                await product.updateOne(
+                  { _id: id },
+                  {
+                    productName: fields.productName,
+                    color: fields.color,
+                    hexColor: fields.hexColor,
+                    type: fields.type,
+                    productPrice: fields.productPrice,
+                  }
+                );
+                return res
+                  .status(200)
+                  .json({ success: true, msg: "amjilttai edit hiile" });
+              }
+
+              resolve(productInfo);
             });
+          }).then(async (productInfo) => {
+            let isSuccess = false;
 
-          return isSuccess;
-        });
+            await fs
+              .rename(productInfo.oldpath, productInfo.newpath, (err) => {
+                if (err) {
+                  console.log(err);
+                  throw err;
+                }
+              })
+              .then(async () => {
+                isSuccess = true;
 
-        if (formParsePhotoSuccess) {
-          return res
-            .status(200)
-            .json({ success: true, msg: "Successfully added a new product" });
+                const newProduct = {
+                  productName: productInfo.fields.productName,
+                  color: productInfo.fields.color,
+                  hexColor: productInfo.fields.hexColor,
+                  type: productInfo.fields.type,
+                  photoLink: productInfo.link,
+                  productPrice: productInfo.fields.productPrice,
+                };
+                await product.updateOne({ _id: id }, newProduct);
+              });
+
+            return isSuccess;
+          });
+
+          if (formParsePhotoSuccess) {
+            return res
+              .status(200)
+              .json({ success: true, msg: "Successfully added a new product" });
+          } else {
+            return res
+              .status(200)
+              .json({ success: false, msg: "Error adding product" });
+          }
+
         } else {
-          return res
-            .status(200)
-            .json({ success: false, msg: "Error adding product" });
+          return res.status(401).json({ success: false, msg: "You dont have a access" });
         }
+
+
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });
@@ -107,8 +117,16 @@ const requestModHandler = async (req, res) => {
 
     case "DELETE":
       try {
-        await product.deleteOne({ _id: id });
-        res.status(200).json({ success: true, msg: "Successfully deleted" });
+
+
+        if (session.user.isAdmin) {
+          await product.deleteOne({ _id: id });
+          res.status(200).json({ success: true, msg: "Successfully deleted" });
+        } else {
+          return res.status(401).json({ success: false, msg: "You dont have a access" });
+        }
+
+
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

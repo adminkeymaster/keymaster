@@ -32,7 +32,7 @@ const requestModHandler = async (req, res) => {
 
                 if (filteredUserArray.length)
                     return res.status(200).json({ success: true, data: filteredUserArray })
-                else return res.status(200).json({ success: true, msg: "No such user found" })
+                else return res.status(200).json({ success: false, msg: "No such user found" })
 
 
 
