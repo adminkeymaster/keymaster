@@ -159,12 +159,21 @@ const CreateProductPage = () => {
         console.log(key);
         formData[key].forEach((file, index) => {
           form.append(index, file);
-          imageForm.append(index, file);
+          imageForm.append('file', file);
         });
       }
 
       form.append(key, formData[key]);
     }
+
+    imageForm.append('upload_preset', 'keymaster');
+
+    const data = fetch('https://api.cloudinary.com/v1_1/dl9girfpg/image/upload', {
+      method: 'POST',
+      body: imageForm,
+    }).then((r) => r.json());
+
+    console.log(data);
 
     axios
       .post('/api/product/', form)

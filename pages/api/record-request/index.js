@@ -1,31 +1,25 @@
-import recordRequest from "@/models/recordrequest";
-import dbConnect from "@/utils/database";
-import { promises as fs } from "fs";
-import formidable from "formidable";
-import user from "@/models/users";
-import { getSession } from "next-auth/react"
+import recordRequest from '@/models/recordrequest';
+import dbConnect from '@/utils/database';
+import { promises as fs } from 'fs';
+import formidable from 'formidable';
+import user from '@/models/users';
+import { getSession } from 'next-auth/react';
 
 dbConnect();
 
 const requestModHandler = async (req, res) => {
   const { method } = req;
-  const session = await getSession({ req })
-
+  const session = await getSession({ req });
 
   if (session.user.isAdmin) {
     switch (method) {
-      case "GET":
+      case 'GET':
         try {
           const recordRequests = await recordRequest.find({}).lean();
 
           const data = await Promise.all(
             recordRequests.map(async (recordRequest) => {
-              const tempUser = await user
-                .findById(
-                  recordRequest.userID,
-                  "firstName lastName birthDate gender"
-                )
-                .lean();
+              const tempUser = await user.findById(recordRequest.userID, 'firstName lastName birthDate gender').lean();
 
               return {
                 ...tempUser,
@@ -43,65 +37,26 @@ const requestModHandler = async (req, res) => {
         }
         break;
 
-      case "POST":
+      case 'POST':
         try {
           const form = new formidable.IncomingForm({ keepExtensions: true });
 
-          const formParseVideoSuccess = await new Promise((resolve, reject) => {
-            form.parse(req, async (err, fields, files) => {
-              if (err) {
-                reject(err);
-                return;
-              }
+          form.parse(req, async (err, fields, files) => {
+            if (err) {
+              reject(err);
+              return;
+            }
 
-              const dateNow = new Date();
+            const newReq = {
+              userID: fields.userID,
+              videoLink: fields.videoLink,
+              keymasterType: fields.keymasterType,
+              time: fields.time,
+            };
 
-              const myForm = {
-                fields,
-                oldpath: files.videoUpload.filepath,
-                link: `/assets/videos/records/${dateNow.getTime()}-${files.videoUpload.originalFilename
-                  }`,
-                newpath: `./public/assets/videos/records/${dateNow.getTime()}-${files.videoUpload.originalFilename
-                  }`,
-              };
-
-              resolve(myForm);
-            });
-          }).then(async (myForm) => {
-            let isSuccess = false;
-
-            await fs
-              .rename(myForm.oldpath, myForm.newpath, (err) => {
-                if (err) {
-                  console.log(err);
-                  throw err;
-                }
-              })
-              .then(async () => {
-                const newReq = {
-                  userID: myForm.fields.userID,
-                  videoLink: myForm.link,
-                  keymasterType: myForm.fields.keymasterType,
-                  time: myForm.fields.time,
-                };
-
-                isSuccess = true;
-                await recordRequest.create(newReq);
-              });
-
-            return isSuccess;
+            await recordRequest.create(newReq);
+            return res.status(200).json({ success: true, msg: 'Successfully sent record request' });
           });
-
-          if (formParseVideoSuccess) {
-            return res
-              .status(200)
-              .json({ success: true, msg: "Successfully sent record request" });
-          } else {
-            return res.status(200).json({
-              success: false,
-              msg: "Error occured while uploading files",
-            });
-          }
         } catch (error) {
           console.log(error);
           res.status(400).json({ success: false });
@@ -113,10 +68,8 @@ const requestModHandler = async (req, res) => {
         break;
     }
   } else {
-    return res.status(401).json({ success: false, msg: "You dont have a access" });
+    return res.status(401).json({ success: false, msg: 'You dont have a access' });
   }
-
-
 };
 
 export const config = {
