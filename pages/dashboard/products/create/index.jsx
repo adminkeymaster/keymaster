@@ -73,6 +73,7 @@ const CreateProductPage = () => {
         defaultValue={currentColor}
         className={styles.inputHexColor}
         onChange={handleColorChange}
+        key={colorInputs.length}
         required
       />,
     ]);
@@ -98,6 +99,7 @@ const CreateProductPage = () => {
         id="hexColor"
         value={currentColor}
         className={styles.inputHexColor}
+        key={colorInputs.length}
         readOnly
         onClick={(e) => {
           e.preventDefault();
