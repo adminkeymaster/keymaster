@@ -114,7 +114,7 @@ const SidePanel = ({ handler, isOpen, ...props }) => {
             </li>
           </Link>
         ))) || (
-        <Link href="/auth/login">
+        <Link href="/api/auth/signin">
           <li>
             <PrimaryButton>Нэвтрэх</PrimaryButton>
           </li>
