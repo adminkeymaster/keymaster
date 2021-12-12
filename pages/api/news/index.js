@@ -25,6 +25,30 @@ const requestModHandler = async (req, res) => {
     case "POST":
       try {
         if (session.user.isAdmin) {
+
+
+          const { photoLink, title, description } = req.body;
+          const myNews = {
+            photoLink, title, description
+          }
+          await news.create(myNews)
+          res.status(201).json({ success: true, msg: "Amjilttai medee nemlee" });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           const form = new formidable.IncomingForm({ keepExtensions: true });
 
           const formParsePhotoSuccess = await new Promise((resolve, reject) => {

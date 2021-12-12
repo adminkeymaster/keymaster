@@ -21,7 +21,6 @@ const DashboardPage = (props) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
       className={styles.container}>Welcome to dashboard</motion.main>;
-
 };
 
 DashboardPage.Layout = DashboardLayout;
