@@ -44,7 +44,7 @@ const RegisterPage = (props) => {
     axios
       .post("/api/user", formData)
       .then((res) => {
-        router.push("/auth/login");
+        router.push("/api/auth/signin");
       })
       .catch((err) => {
         console.log("/auth/register", err);
