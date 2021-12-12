@@ -80,8 +80,8 @@ const CheckoutPage = (props) => {
     axios.post("/api/productReq", productReq).then((res) => {
       console.log(res)
       if (res.status === 201) {
-        addOrder(filteredProducts);
-        deleteOrder();
+        // addOrder(filteredProducts);
+        // deleteOrder();
         router.push("/checkout/success");
       }
     })
