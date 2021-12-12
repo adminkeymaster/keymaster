@@ -14,6 +14,7 @@ import LandingLayout from "@/layouts/Landing";
 //import COMPOSITES from '@/composites'
 import ProductReqVerify from "@/composites/ProductReqVerify";
 import ProductCard from "@/composites/ProductCard";
+import Notification from "@/components/Notification";
 //import COMPONENT from '@/components'
 
 import styles from "./Checkout.module.scss";
@@ -31,6 +32,23 @@ const CheckoutPage = (props) => {
     email: email,
     phoneNumber: phoneNumber,
   });
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
+
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -86,6 +104,10 @@ const CheckoutPage = (props) => {
       }
     })
     .catch((err) => {
+      setNotification({
+        message: "Таны сагс хоосон байна.",
+        success: false,
+      });
       console.log("ProductReq handleSubmit:", err);
     });
   };
@@ -96,6 +118,10 @@ const CheckoutPage = (props) => {
 		animate={{ opacity: 1 }}
 		transition={{ duration: 1 }}
     className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <div className={styles.content}>
         <ProductReqVerify
           firstName={firstName}
