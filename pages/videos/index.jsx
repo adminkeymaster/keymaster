@@ -23,6 +23,7 @@ const VideosPage = (props) => {
 	transition={{ duration: 1 }}
 	className={styles.container}>
       <div className={styles.innerContainer}>
+		<h2>КиМастер тоглоомын заавар</h2>
         <div className={styles.featuredVideo}>
           <ReactPlayer
             width="100%"
