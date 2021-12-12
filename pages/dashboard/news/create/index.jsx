@@ -1,20 +1,20 @@
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-import "react-quill/dist/quill.snow.css";
+import 'react-quill/dist/quill.snow.css';
 
-import styled from "styled-components";
-import { Upload } from "@styled-icons/heroicons-outline/Upload";
+import styled from 'styled-components';
+import { Upload } from '@styled-icons/heroicons-outline/Upload';
 
-import DashboardLayout from "@/layouts/Dashboard";
+import DashboardLayout from '@/layouts/Dashboard';
 
-import Notification from "@/components/Notification";
+import Notification from '@/components/Notification';
 
-import styles from "./CreateArticle.module.scss";
+import styles from './CreateArticle.module.scss';
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const StyledUploadIcon = styled(Upload)`
   width: 3.6rem;
@@ -24,13 +24,14 @@ const StyledUploadIcon = styled(Upload)`
 const CreateArticle = () => {
   const router = useRouter();
   const [notification, setNotification] = useState({
-    message: "",
+    message: '',
     success: false,
   });
 
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
+    title: '',
+    description: '',
+    photoLink: '',
     photoUpload: null,
   });
 
@@ -39,7 +40,7 @@ const CreateArticle = () => {
 
     const timer = setTimeout(() => {
       setNotification({
-        message: "",
+        message: '',
         success: false,
       });
     }, 3000);
@@ -71,50 +72,43 @@ const CreateArticle = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const form = new FormData();
+    const imageForm = new FormData();
+    imageForm.append('upload_preset', 'keymaster');
+    imageForm.append('file', formData['photoUpload']);
+    const data = await fetch('https://api.cloudinary.com/v1_1/keymaster123/image/upload', {
+      method: 'POST',
+      body: imageForm,
+    }).then((r) => r.json());
 
-    for (const key in formData) {
-      if (!formData[key]) {
-        setNotification({
-          ...notification,
-          message: "Бүх талбаруудыг бөглөнө үү!",
-          success: false,
-        });
-        return;
-      }
-      form.append(key, formData[key]);
-    }
-
-    axios
-      .post("/api/news", form)
+    formData.photoLink = data.url;
+    console.log(formData);
+    await axios
+      .post('/api/news', { title: formData.title, description: formData.description, photoLink: formData.photoLink })
       .then((res) => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           router.push(
             {
-              pathname: "/dashboard/news",
+              pathname: '/dashboard/news',
               query: {
                 success: true,
-                message: "Мэдээ амжилттай нэмэгдлээ",
+                message: 'Мэдээ амжилттай нэмэгдлээ',
               },
             },
-            "/dashboard/news"
+            '/dashboard/news'
           );
         }
       })
       .catch((err) => {
         setNotification({
-          message: "Мэдээ нэмэхэд алдаа гарлаа.",
+          message: 'Мэдээ нэмэхэд алдаа гарлаа.',
           success: false,
         });
-        console.log("CreateArticle handleSubmit:", err);
+        console.log('CreateArticle handleSubmit:', err);
       });
   };
   return (
     <main className={styles.container}>
-      <Notification
-        message={notification.message}
-        success={notification.success}
-      />
+      <Notification message={notification.message} success={notification.success} />
       <form className={styles.form}>
         <h1 className={styles.heading}>Мэдээ нэмэх</h1>
 
@@ -136,19 +130,12 @@ const CreateArticle = () => {
           <label
             htmlFor="photoUpload"
             className={
-              !formData.photoUpload
-                ? styles.labelFileSend
-                : `${styles.labelFileSend} ${styles.labelFileSendActive}`
+              !formData.photoUpload ? styles.labelFileSend : `${styles.labelFileSend} ${styles.labelFileSendActive}`
             }
           >
-            <StyledUploadIcon /> Зураг{" "}
-            {(formData.photoUpload && "засах") || "оруулах"}
+            <StyledUploadIcon /> Зураг {(formData.photoUpload && 'засах') || 'оруулах'}
           </label>
-          <button
-            type="submit"
-            className={styles.postButton}
-            onClick={handleSubmit}
-          >
+          <button type="submit" className={styles.postButton} onClick={handleSubmit}>
             Нийтлэх
           </button>
           <input
@@ -162,12 +149,7 @@ const CreateArticle = () => {
           />
         </div>
 
-        <ReactQuill
-          className={styles.formEditor}
-          theme="snow"
-          value={formData.description}
-          onChange={handleQuill}
-        />
+        <ReactQuill className={styles.formEditor} theme="snow" value={formData.description} onChange={handleQuill} />
       </form>
     </main>
   );

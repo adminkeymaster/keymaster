@@ -108,7 +108,7 @@ const SendRecordPage = (props) => {
     videoForm.append('upload_preset', 'keymaster');
     videoForm.append('file', formData['videoUpload']);
 
-    const data = await fetch('https://api.cloudinary.com/v1_1/dl9girfpg/video/upload', {
+    const data = await fetch('https://api.cloudinary.com/v1_1/keymaster123/video/upload', {
       method: 'POST',
       body: videoForm,
     }).then((r) => r.json());
