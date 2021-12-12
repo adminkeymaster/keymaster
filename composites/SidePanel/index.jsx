@@ -1,6 +1,8 @@
 //Next, React (core node_modules) imports must be placed here
 import Link from "next/link";
+import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { Close } from "@styled-icons/evaicons-solid/Close";
 //import STORE from '@/store'
@@ -16,7 +18,11 @@ const StyledCloseIcon = styled(Close)`
 `;
 
 const SidePanel = ({ handler, isOpen, ...props }) => {
+  const { data: session, status } = useSession();
   const { route } = useRouter();
+  useEffect(() => {
+    console.log(session);
+  }, [status]);
   return (
     <aside className={isOpen ? styles.container : styles.closed}>
       <button className={styles.closeButton} onClick={handler}>
@@ -94,11 +100,26 @@ const SidePanel = ({ handler, isOpen, ...props }) => {
             </a>
           </Link>
         </li>
-        <Link href="/auth/login">
+        {(session &&
+        (session.user.isAdmin ? (
+          <Link href="/dashboard">
+            <li>
+              <PrimaryButton>Dashboard</PrimaryButton>
+            </li>
+          </Link>
+        ) : (
+          <Link href="/dashboard">
+            <li>
+              <PrimaryButton>{session.user.firstName}</PrimaryButton>
+            </li>
+          </Link>
+        ))) || (
+        <Link href="/api/auth/signin">
           <li>
-            <PrimaryButton> Нэвтрэх</PrimaryButton>
+            <PrimaryButton>Нэвтрэх</PrimaryButton>
           </li>
         </Link>
+      )}
       </ul>
     </aside>
   );

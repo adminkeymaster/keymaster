@@ -90,7 +90,7 @@ const NewsSection = ({ title, src, description, date, link, ...props }) => {
 
       <div className={styles.content}>
         <p className={styles.text}>
-          {ReactHtmlParser(truncateText(description, 480))}
+          {ReactHtmlParser(truncateText(description, 300))}
         </p>
 
         <Link href={link}>
