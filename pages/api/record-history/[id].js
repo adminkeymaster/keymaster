@@ -1,5 +1,4 @@
 import dbConnect from '@/utils/database'
-// import players from '@/models/players'
 
 dbConnect();
 
