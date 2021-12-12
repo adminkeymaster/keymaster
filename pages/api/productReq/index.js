@@ -10,11 +10,11 @@ const requestModHandler = async (req, res) => {
   const { method } = req;
   const session = await getSession({ req })
 
-  if (session.user.isAdmin) {
 
-    switch (method) {
-      case "GET":
-        try {
+  switch (method) {
+    case "GET":
+      try {
+        if (session.user.isAdmin) {
           const productRequests = await productReq.find({}).lean();
 
           const data = await Promise.all(
@@ -42,44 +42,46 @@ const requestModHandler = async (req, res) => {
           );
 
           res.status(200).json({ success: true, data: data });
-        } catch (error) {
-          console.log(error);
-          res.status(400).json({ success: false });
+        } else {
+          return res.status(401).json({ success: false, msg: "You dont have a access" });
         }
-        break;
 
-      case "POST":
-        try {
-          const { productInfo, email, phoneNumber, firstName, lastName } =
-            req.body;
 
-          const status = false;
-
-          const myRequest = {
-            firstName,
-            lastName,
-            email,
-            phoneNumber,
-            productInfo,
-            status
-          };
-
-          await productReq.create(myRequest);
-          res.status(201).json({ success: true, message: "created" });
-        } catch (error) {
-          console.log(error);
-          res.status(400).json({ success: false });
-        }
-        break;
-
-      default:
+      } catch (error) {
+        console.log(error);
         res.status(400).json({ success: false });
-        break;
-    }
+      }
+      break;
 
-  } else {
-    return res.status(401).json({ success: false, msg: "You dont have a access" });
+    case "POST":
+      try {
+        const { productInfo, email, phoneNumber, firstName, lastName } =
+          req.body;
+
+        const status = false;
+
+        const myRequest = {
+          firstName,
+          lastName,
+          email,
+          phoneNumber,
+          productInfo,
+          status
+        };
+
+        await productReq.create(myRequest);
+        res.status(201).json({ success: true, message: "created" });
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ success: false });
+      }
+      break;
+
+    default:
+      res.status(400).json({ success: false });
+      break;
   }
+
 
 
 };
