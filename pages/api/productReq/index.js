@@ -58,6 +58,8 @@ const requestModHandler = async (req, res) => {
         const { productInfo, email, phoneNumber, firstName, lastName } =
           req.body;
 
+        if (!productInfo) return res.status(400).json({ success: false, message: "Products can not be empty" });
+
         const status = false;
 
         const myRequest = {
