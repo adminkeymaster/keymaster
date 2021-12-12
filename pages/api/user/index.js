@@ -1,6 +1,6 @@
 import users from '@/models/users'
-import ageGroup from '@/models/ageGroup'
 import dbConnect from '@/utils/database'
+import keymasterTypes from '@/models/keymasterTypes';
 import { hashPassword } from "@/utils/auth";
 
 
@@ -17,7 +17,25 @@ const requestModHandler = async (req, res) => {
         case "GET":
             try {
                 const data = await users.find({})
-                res.status(200).json({ success: true, data: data })
+
+                const allKeymasterTypes = await keymasterTypes.find({});
+
+                const userArray = await Promise.all(
+                    data.map(async (user) => {
+                        if (user.record.length) return user
+                        else return;
+                    })
+                )
+                const filteredUserArray = userArray.filter(user => {
+                    return user !== undefined;
+                })
+
+                if (filteredUserArray.length)
+                    return res.status(200).json({ success: true, data: filteredUserArray })
+                else return res.status(200).json({ success: true, msg: "No such user found" })
+
+
+
 
             } catch (error) {
                 console.log(error);
@@ -30,10 +48,9 @@ const requestModHandler = async (req, res) => {
                 const { firstName, lastName, birthDate, gender, email, phoneNumber, password } = req.body;
 
                 const user = await users.findOne({ email: email });
-                console.log(user);
-                if (user) 
+                if (user)
                     return res.status(200).json({ success: false, msg: "User already exist" });
-                
+
                 const hashedPass = await hashPassword(password);
 
                 const myRequest = {

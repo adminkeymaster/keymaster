@@ -21,8 +21,7 @@ const requestModHandler = async (req, res) => {
 
     case "POST":
       try {
-        const { endDate, startDate, description, location, newsLink, compID } =
-          req.body;
+        const { endDate, startDate, description, location, newsLink, compID } = req.body;
         const myComp = {
           endDate,
           startDate,
