@@ -1,32 +1,35 @@
 //Next, React (core node_modules) imports must be placed here
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 //import STORE from '@/store'
 
 //import COMPONENT from '@/components'
 
-import styles from "./LeaderboardTable.module.scss";
+import styles from './LeaderboardTable.module.scss';
 
 const LeaderboardTable = (props) => {
   const [isFetched, setIsFetched] = useState(false);
   const [leaderboard, setLeaderboard] = useState([]);
-  const [selectedType, setSelectedType] = useState("Keymaster 5");
+  const [selectedType, setSelectedType] = useState('Keymaster 5');
   const [selectedAgeGroup, setSelectedAgeGroup] = useState([]);
   const [filteredLeaderBoard, setFilteredLeaderBoard] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const controller = new AbortController();
 
     axios
-      .get("/api/user", { signal: controller.signal })
+      .get('/api/user', { signal: controller.signal })
       .then(({ data }) => {
-        setLeaderboard(data.data);
+        if (!data.msg) {
+          setLeaderboard(data.data);
+        }
+
         setIsFetched(true);
       })
       .catch((err) => {
-        console.log("Leaderboard Fetch Aborted", err);
+        console.log('Leaderboard Fetch Aborted', err);
       });
 
     return () => controller.abort();
@@ -60,7 +63,7 @@ const LeaderboardTable = (props) => {
         _id: user._id,
         name: `${user.lastName} ${user.firstName}`,
         // gender: user.gender,
-        gender: user.gender === "male" ? "Эр" : "Эм",
+        gender: user.gender === 'male' ? 'Эр' : 'Эм',
         age: calculateAge(user.birthDate),
         // time: getTimeByType(user.record),
         time: Math.floor(Math.random() * 40 + 2),
@@ -77,20 +80,15 @@ const LeaderboardTable = (props) => {
       setFilteredLeaderBoard(typeFilteredLeaderBoard);
       return;
     } else if (selectedAgeGroup.length === 0 && search.length > 0) {
-      const searchFilteredLeaderBoard = typeFilteredLeaderBoard.filter(
-        (user) => {
-          return user.name.toLowerCase().includes(search.toLowerCase());
-        }
-      );
+      const searchFilteredLeaderBoard = typeFilteredLeaderBoard.filter((user) => {
+        return user.name.toLowerCase().includes(search.toLowerCase());
+      });
 
       setFilteredLeaderBoard(searchFilteredLeaderBoard);
       return;
     } else if (selectedAgeGroup.length > 0 && search.length === 0) {
       const ageFilteredLeaderBoard = typeFilteredLeaderBoard.filter((user) => {
-        if (
-          user.age >= +selectedAgeGroup[0] &&
-          user.age <= +selectedAgeGroup[1]
-        ) {
+        if (user.age >= +selectedAgeGroup[0] && user.age <= +selectedAgeGroup[1]) {
           return user;
         }
       });
@@ -99,19 +97,14 @@ const LeaderboardTable = (props) => {
       return;
     } else {
       const ageFilteredLeaderBoard = typeFilteredLeaderBoard.filter((user) => {
-        if (
-          user.age >= +selectedAgeGroup[0] &&
-          user.age <= +selectedAgeGroup[1]
-        ) {
+        if (user.age >= +selectedAgeGroup[0] && user.age <= +selectedAgeGroup[1]) {
           return user;
         }
       });
 
-      const searchFilteredLeaderBoard = ageFilteredLeaderBoard.filter(
-        (user) => {
-          return user.name.toLowerCase().includes(search.toLowerCase());
-        }
-      );
+      const searchFilteredLeaderBoard = ageFilteredLeaderBoard.filter((user) => {
+        return user.name.toLowerCase().includes(search.toLowerCase());
+      });
 
       setFilteredLeaderBoard(searchFilteredLeaderBoard);
       return;
@@ -123,7 +116,7 @@ const LeaderboardTable = (props) => {
   };
 
   const handleAgeGroup = (e) => {
-    const ageGroup = e.target.value.split("-");
+    const ageGroup = e.target.value.split('-');
     if (ageGroup.length === 1) {
       setSelectedAgeGroup([...ageGroup, ageGroup[0]]);
     } else {
@@ -139,18 +132,9 @@ const LeaderboardTable = (props) => {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <input
-            className={styles.search}
-            placeholder="Овог/Нэр"
-            type="text"
-            onChange={handleSearch}
-          />
+          <input className={styles.search} placeholder="Овог/Нэр" type="text" onChange={handleSearch} />
           <div className={styles.tabsContainer}>
-            <select
-              className={styles.tab}
-              onChange={handleAgeGroup}
-              defaultValue=""
-            >
+            <select className={styles.tab} onChange={handleAgeGroup} defaultValue="">
               <option disabled value="">
                 Нас сонгох
               </option>
@@ -176,59 +160,26 @@ const LeaderboardTable = (props) => {
         </div>
         <div className={styles.table}>
           <div className={styles.tableHeader}>
-            <div className={`${styles.tableHeaderCol} ${styles.placementCol}`}>
-              Байр
-            </div>
-            <div
-              className={`${styles.tableHeaderCol} ${styles.profileCol}`}
-            ></div>
-            <div className={`${styles.tableHeaderCol} ${styles.nameCol}`}>
-              Овог Нэр
-            </div>
-            <div className={`${styles.tableHeaderCol} ${styles.ageCol}`}>
-              Нас
-            </div>
-            <div className={`${styles.tableHeaderCol} ${styles.genderCol}`}>
-              Хүйс
-            </div>
-            <div className={`${styles.tableHeaderCol} ${styles.timeCol}`}>
-              Хугацаа (сек)
-            </div>
+            <div className={`${styles.tableHeaderCol} ${styles.placementCol}`}>Байр</div>
+            <div className={`${styles.tableHeaderCol} ${styles.profileCol}`}></div>
+            <div className={`${styles.tableHeaderCol} ${styles.nameCol}`}>Овог Нэр</div>
+            <div className={`${styles.tableHeaderCol} ${styles.ageCol}`}>Нас</div>
+            <div className={`${styles.tableHeaderCol} ${styles.genderCol}`}>Хүйс</div>
+            <div className={`${styles.tableHeaderCol} ${styles.timeCol}`}>Хугацаа (сек)</div>
           </div>
           <div className={styles.tableBody}>
             {isFetched &&
               filteredLeaderBoard.map((user, index) => {
                 return (
                   <div className={styles.tableRow} key={user._id}>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.placementCol}`}
-                    >
-                      {index + 1}
+                    <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>{index + 1}</div>
+                    <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
+                      <Image src="/Profile.jpg" layout="fill" objectFit="cover" alt="profile" />
                     </div>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.profileCol}`}
-                    >
-                      <Image
-                        src="/Profile.jpg"
-                        layout="fill"
-                        objectFit="cover"
-                        alt="profile"
-                      />
-                    </div>
-                    <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>
-                      {user.name}
-                    </div>
-                    <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>
-                      {user.age}
-                    </div>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.genderCol}`}
-                    >
-                      {user.gender}
-                    </div>
-                    <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>
-                      {user.time}
-                    </div>
+                    <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>{user.name}</div>
+                    <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>{user.age}</div>
+                    <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>{user.gender}</div>
+                    <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>{user.time}</div>
                   </div>
                 );
               })}
