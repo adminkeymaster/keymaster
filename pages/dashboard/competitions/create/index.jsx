@@ -1,9 +1,9 @@
 //Next, React (core node_modules) imports must be placed here
-import { useState } from "react";
+import { useState } from 'react';
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
-import DashboardLayout from "@/layouts/Dashboard";
+import DashboardLayout from '@/layouts/Dashboard';
 //import VIEWS from '@/views'
 
 //import useFETCHER from '@/tools'
@@ -12,16 +12,16 @@ import DashboardLayout from "@/layouts/Dashboard";
 
 //import COMPONENT from '@/components'
 
-import styles from "./Create.module.scss";
-import axios from "axios";
+import styles from './Create.module.scss';
+import axios from 'axios';
 
 const CreateCompetitionPage = (props) => {
   const [form, setForm] = useState({
-    description: "",
-    location: "",
-    startDate: "",
-    endDate: "",
-    newsLink: "",
+    description: '',
+    location: '',
+    startDate: '',
+    endDate: '',
+    newsLink: '',
   });
 
   const handleChange = (e) => {
@@ -34,14 +34,15 @@ const CreateCompetitionPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("/api/competition", form)
+      .post('/api/competition', form)
       .then((res) => {
+        console.log(res);
         if (res.status === 200) {
-          props.history.push("/dashboard/competitions");
+          window.location.href = '/dashboard/competitions';
         }
       })
       .catch((err) => {
-        console.log("CreateCompetitionPage Submit:", err);
+        console.log('CreateCompetitionPage Submit:', err);
       });
   };
 
@@ -59,65 +60,35 @@ const CreateCompetitionPage = (props) => {
             Тайлбар
           </label>
 
-          <input
-            type="text"
-            id="description"
-            name="description"
-            className={styles.input}
-            onChange={handleChange}
-          />
+          <input type="text" id="description" name="description" className={styles.input} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="location" className={styles.inputLabel}>
             Байршил
           </label>
 
-          <input
-            type="text"
-            id="location"
-            name="location"
-            className={styles.input}
-            onChange={handleChange}
-          />
+          <input type="text" id="location" name="location" className={styles.input} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="startDate" className={styles.inputLabel}>
             Эхлэх огноо
           </label>
 
-          <input
-            type="date"
-            id="startDate"
-            name="startDate"
-            className={styles.input}
-            onChange={handleChange}
-          />
+          <input type="date" id="startDate" name="startDate" className={styles.input} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="endDate" className={styles.inputLabel}>
             Дуусах огноо
           </label>
 
-          <input
-            type="date"
-            id="endDate"
-            name="endDate"
-            className={styles.input}
-            onChange={handleChange}
-          />
+          <input type="date" id="endDate" name="endDate" className={styles.input} onChange={handleChange} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="newsLink" className={styles.inputLabel}>
             Зургийн Линк
           </label>
 
-          <input
-            type="text"
-            id="newsLink"
-            name="newsLink"
-            className={styles.input}
-            onChange={handleChange}
-          />
+          <input type="text" id="newsLink" name="newsLink" className={styles.input} onChange={handleChange} />
         </div>
       </form>
     </main>
