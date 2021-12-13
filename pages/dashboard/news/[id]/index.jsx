@@ -1,19 +1,20 @@
 //Next, React (core node_modules) imports must be placed here
-import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import { useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 
-import styled from 'styled-components';
-import { Close } from '@styled-icons/evaicons-solid/Close';
-import { Upload } from '@styled-icons/heroicons-outline/Upload';
+import styled from "styled-components";
+import { Close } from "@styled-icons/evaicons-solid/Close";
+import { Upload } from "@styled-icons/heroicons-outline/Upload";
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
-import DashboardLayout from '@/layouts/Dashboard';
+import DashboardLayout from "@/layouts/Dashboard";
 
 //import VIEWS from '@/views'
 
@@ -22,11 +23,11 @@ import DashboardLayout from '@/layouts/Dashboard';
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
-import Notification from '@/components/Notification';
+import Notification from "@/components/Notification";
 
-import styles from './Article.module.scss';
+import styles from "./Article.module.scss";
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const StyledCloseIcon = styled(Close)`
   width: 3.6rem;
@@ -39,6 +40,10 @@ const StyledUploadIcon = styled(Upload)`
 `;
 
 const EditArticle = () => {
+  const { data: session, status } = useSession();
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
+  
   const [isFetched, setIsFetched] = useState(false);
 
   const router = useRouter();
@@ -46,14 +51,14 @@ const EditArticle = () => {
   const { id } = router.query;
 
   const [notification, setNotification] = useState({
-    message: '',
+    message: "",
     success: false,
   });
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    photolink: '',
+    title: "",
+    description: "",
+    photolink: "",
     photoUpload: null,
     preview: null,
   });
@@ -76,7 +81,7 @@ const EditArticle = () => {
         setIsFetched(true);
       })
       .catch((err) => {
-        console.log('/dashboard/news/[id] fetch aborted', err);
+        console.log("/dashboard/news/[id] fetch aborted", err);
       });
 
     return () => controller.abort();
@@ -87,7 +92,7 @@ const EditArticle = () => {
 
     const timer = setTimeout(() => {
       setNotification({
-        message: '',
+        message: "",
         success: false,
       });
     }, 3000);
@@ -127,12 +132,15 @@ const EditArticle = () => {
     e.preventDefault();
 
     const imageForm = new FormData();
-    imageForm.append('upload_preset', 'keymaster');
-    imageForm.append('file', formData['photoUpload']);
-    const data = await fetch('https://api.cloudinary.com/v1_1/keymaster123/image/upload', {
-      method: 'POST',
-      body: imageForm,
-    }).then((r) => r.json());
+    imageForm.append("upload_preset", "keymaster");
+    imageForm.append("file", formData["photoUpload"]);
+    const data = await fetch(
+      "https://api.cloudinary.com/v1_1/keymaster123/image/upload",
+      {
+        method: "POST",
+        body: imageForm,
+      }
+    ).then((r) => r.json());
 
     formData.photoLink = data.url;
 
@@ -146,28 +154,31 @@ const EditArticle = () => {
         if (res.status === 200) {
           router.push(
             {
-              pathname: '/dashboard/news',
+              pathname: "/dashboard/news",
               query: {
-                message: 'Мэдээ амжилттай засагдлаа',
+                message: "Мэдээ амжилттай засагдлаа",
                 success: true,
               },
             },
-            '/dashboard/news'
+            "/dashboard/news"
           );
         }
       })
       .catch((err) => {
         setNotification({
-          message: 'Мэдээ засахад алдаа гарлаа',
+          message: "Мэдээ засахад алдаа гарлаа",
           success: false,
         });
-        console.log('Edit Article handleSubmit', err);
+        console.log("Edit Article handleSubmit", err);
       });
   };
 
   return (
     <main className={styles.container}>
-      <Notification message={notification.message} success={notification.success} />
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
 
       {isFetched && (
         <form className={styles.form}>
@@ -190,11 +201,21 @@ const EditArticle = () => {
 
           <div className={styles.imageContainer}>
             {formData.photolink && (
-              <Image src={formData.photolink} layout="fill" objectFit="cover" alt="article image" />
+              <Image
+                src={formData.photolink}
+                layout="fill"
+                objectFit="cover"
+                alt="article image"
+              />
             )}
 
             {formData.photoUpload && (
-              <Image src={formData.preview} layout="fill" objectFit="cover" alt="uploaded image" />
+              <Image
+                src={formData.preview}
+                layout="fill"
+                objectFit="cover"
+                alt="uploaded image"
+              />
             )}
 
             {formData.photoUpload && (
@@ -219,10 +240,13 @@ const EditArticle = () => {
             <label
               htmlFor="photoUpload"
               className={
-                !formData.photoUpload ? styles.labelFileSend : `${styles.labelFileSend} ${styles.labelFileSendActive}`
+                !formData.photoUpload
+                  ? styles.labelFileSend
+                  : `${styles.labelFileSend} ${styles.labelFileSendActive}`
               }
             >
-              <StyledUploadIcon /> Зураг {(formData.photoUpload && 'засах') || 'өөрчлөх'}
+              <StyledUploadIcon /> Зураг{" "}
+              {(formData.photoUpload && "засах") || "өөрчлөх"}
             </label>
 
             <input
@@ -237,12 +261,21 @@ const EditArticle = () => {
           </div>
 
           <div className={styles.formGroupFile}>
-            <button type="submit" className={styles.postButton} onClick={handleSubmit}>
+            <button
+              type="submit"
+              className={styles.postButton}
+              onClick={handleSubmit}
+            >
               Засах
             </button>
           </div>
 
-          <ReactQuill className={styles.formEditor} theme="snow" value={formData.description} onChange={handleQuill} />
+          <ReactQuill
+            className={styles.formEditor}
+            theme="snow"
+            value={formData.description}
+            onChange={handleQuill}
+          />
         </form>
       )}
     </main>

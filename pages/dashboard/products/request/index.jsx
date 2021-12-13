@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -39,6 +40,9 @@ const StyledNotStatusIcon = styled(MoneyOff)`
 `;
 
 const ProductRequestPage = (props) => {
+  const { data: session, status } = useSession();
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
   const [isFilteredByStatus, setIsFilteredByStatus] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [productRequests, setProductRequests] = useState([]);

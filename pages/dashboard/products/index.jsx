@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,6 +21,9 @@ import Notification from "@/components/Notification";
 import styles from "./Products.module.scss";
 
 const ProductsPage = (props) => {
+  const { data: session, status } = useSession();
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
   const router = useRouter();
   const { query } = router;
   const [isFetched, setIsFetched] = useState(false);
