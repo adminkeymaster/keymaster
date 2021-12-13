@@ -34,9 +34,6 @@ const StyledUploadIcon = styled(Upload)`
 const SendRecordPage = (props) => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  if (status === "loading") return null;
-
-  if (!session) return null;
 
   const [isFetched, setIsFetched] = useState(false);
   const [notification, setNotification] = useState({
@@ -80,6 +77,9 @@ const SendRecordPage = (props) => {
 
     return () => clearTimeout(timer);
   }, [notification]);
+
+  if (status === "loading") return null;
+  if (!session) return null;
 
   const handleInputFormData = (e) => {
     setFormData({

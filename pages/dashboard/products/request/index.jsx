@@ -41,8 +41,7 @@ const StyledNotStatusIcon = styled(MoneyOff)`
 
 const ProductRequestPage = (props) => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
+
   const [isFilteredByStatus, setIsFilteredByStatus] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [productRequests, setProductRequests] = useState([]);
@@ -81,6 +80,9 @@ const ProductRequestPage = (props) => {
       );
     }
   };
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const toggleStatus = (e) => {
     productRequests.map((productRequest) => {

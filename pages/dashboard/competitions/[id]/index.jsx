@@ -19,10 +19,8 @@ import axios from "axios";
 
 const EditCompetitionPage = (props) => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
-
   const router = useRouter();
+
   const { id } = router.query;
 
   const [form, setForm] = useState({
@@ -50,6 +48,9 @@ const EditCompetitionPage = (props) => {
 
     return () => controller.abort();
   }, [id]);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleChange = (e) => {
     setForm({

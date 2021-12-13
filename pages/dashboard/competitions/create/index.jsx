@@ -18,8 +18,6 @@ import axios from "axios";
 
 const CreateCompetitionPage = (props) => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
 
   const [form, setForm] = useState({
     description: "",
@@ -28,6 +26,9 @@ const CreateCompetitionPage = (props) => {
     endDate: "",
     newsLink: "",
   });
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleChange = (e) => {
     setForm({

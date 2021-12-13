@@ -2,7 +2,6 @@
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
 import styled from "styled-components";
 import { Upload } from "@styled-icons/heroicons-outline/Upload";
@@ -32,10 +31,6 @@ const StyledUploadIcon = styled(Upload)`
 `;
 const UserPage = (props) => {
   const { data: session, status } = useSession();
-  const router = useRouter();
-  if (status === "loading") return null;
-
-  if (!session) return null;
 
   const [notification, setNotification] = useState({
     message: "",
@@ -50,6 +45,7 @@ const UserPage = (props) => {
     email: "",
     phoneNumber: "",
     password: "",
+    passwordConfirm: "",
     photoUpload: null,
     preview: null,
     photoLink: null,
@@ -91,6 +87,9 @@ const UserPage = (props) => {
     return () => clearTimeout(timer);
   }, [notification]);
 
+  if (status === "loading") return null;
+  if (!session) return null;
+
   const handleInputFormData = (e) => {
     setFormData({
       ...formData,
@@ -114,6 +113,22 @@ const UserPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("formData", formData);
+
+    if (formData.password.length < 8) {
+      return setNotification({
+        message: "Нууц үг 8 тэмдэгтээс бага байна",
+        success: false,
+      });
+    }
+
+    if (formData.password !== formData.passwordConfirm) {
+      return setNotification({
+        message: "Нууц үг таарахгүй байна",
+        success: false,
+      });
+    }
 
     const imageForm = new FormData();
 
@@ -165,9 +180,8 @@ const UserPage = (props) => {
       <h2>Хэрэглэгчийн мэдээлэл</h2>
 
       {isFetched && (
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.imageContainer}>
-            {console.log(formData)}
             {formData.photoLink && (
               <Image
                 src={formData.photoLink}
@@ -222,7 +236,6 @@ const UserPage = (props) => {
               id="photoUpload"
               accept="image/png, image/jpeg"
               onChange={handleFileInput}
-              required
             />
           </div>
           <div className={styles.details}>
@@ -232,7 +245,8 @@ const UserPage = (props) => {
               name="firstName"
               onChange={handleInputFormData}
               defaultValue={formData.firstName}
-              required
+              minLength={2}
+              maxLength={35}
             />
             <input
               type="text"
@@ -240,7 +254,8 @@ const UserPage = (props) => {
               name="lastName"
               onChange={handleInputFormData}
               defaultValue={formData.lastName}
-              required
+              minLength={2}
+              maxLength={35}
             />
             <input
               type="email"
@@ -248,7 +263,7 @@ const UserPage = (props) => {
               name="email"
               onChange={handleInputFormData}
               defaultValue={formData.email}
-              required
+              minLength={2}
             />
             <input
               type="tel"
@@ -256,7 +271,7 @@ const UserPage = (props) => {
               name="phoneNumber"
               onChange={handleInputFormData}
               defaultValue={formData.phoneNumber}
-              required
+              minLength={2}
             />
             <input
               type="password"
@@ -264,26 +279,24 @@ const UserPage = (props) => {
               onChange={handleInputFormData}
               name="password"
               placeholder="Нууц үг"
-              required
+              minLength={8}
             />
             <input
               type="password"
-              id="passwordconfirm"
-              name="passwordconfirm"
+              id="passwordConfirm"
+              name="passwordConfirm"
               placeholder="Нууц үгээ дахин хийнэ үү"
-              required
+              minLength={8}
+              onChange={handleInputFormData}
             />
-            <button
-              className={styles.button}
-              type="submit"
-              onClick={handleSubmit}
-            >
+            <button className={styles.button} type="submit">
               Мэдээлэл солих
             </button>
           </div>
         </form>
       )}
       <button
+        type="button"
         className={styles.button}
         onClick={() => {
           signOut();

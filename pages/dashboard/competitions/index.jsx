@@ -19,8 +19,6 @@ import styles from "./Competitions.module.scss";
 
 const CompetitionsPage = (props) => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
 
   const [isFetched, setIsFetched] = useState(false);
   const [competitions, setCompetitions] = useState([]);
@@ -41,6 +39,9 @@ const CompetitionsPage = (props) => {
 
     return () => controller.abort();
   }, []);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleDelete = (e) => {
     e.preventDefault();

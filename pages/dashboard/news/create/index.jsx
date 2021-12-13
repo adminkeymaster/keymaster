@@ -24,8 +24,7 @@ const StyledUploadIcon = styled(Upload)`
 
 const CreateArticle = () => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
+
   const router = useRouter();
   const [notification, setNotification] = useState({
     message: "",
@@ -51,6 +50,9 @@ const CreateArticle = () => {
 
     return () => clearTimeout(timer);
   }, [notification]);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleInputFormData = (e) => {
     setFormData({

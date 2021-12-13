@@ -36,9 +36,7 @@ const StyledUploadIcon = styled(Upload)`
 
 const EditProduct = () => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
-  
+
   const [isFetched, setIsFetched] = useState(false);
   const [notification, setNotification] = useState({
     message: "",
@@ -96,6 +94,9 @@ const EditProduct = () => {
 
     return () => clearTimeout(timer);
   }, [notification]);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleInputFormData = (e) => {
     setFormData({

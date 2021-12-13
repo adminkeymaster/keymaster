@@ -36,9 +36,7 @@ const StyledUploadIcon = styled(Upload)`
 
 const CreateProductPage = () => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
-  
+
   const router = useRouter();
   const [currentColor, setCurrentColor] = useState("#000000");
   const [colorInputs, setColorInputs] = useState([]);
@@ -83,6 +81,9 @@ const CreateProductPage = () => {
       />,
     ]);
   }, []);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleInputFormData = (e) => {
     setFormData({

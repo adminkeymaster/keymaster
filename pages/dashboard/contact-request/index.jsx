@@ -18,9 +18,7 @@ import styles from "./ContactRequest.module.scss";
 
 const ContactRequestPage = (props) => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
-  
+
   const [isFetched, setIsFetched] = useState(false);
   const [contactRequests, setContactRequests] = useState([]);
 
@@ -41,6 +39,9 @@ const ContactRequestPage = (props) => {
 
     return () => controller.abort();
   }, []);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   return (
     <main className={styles.container}>

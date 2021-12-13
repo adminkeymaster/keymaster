@@ -41,9 +41,7 @@ const StyledUploadIcon = styled(Upload)`
 
 const EditArticle = () => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
-  
+
   const [isFetched, setIsFetched] = useState(false);
 
   const router = useRouter();
@@ -99,6 +97,9 @@ const EditArticle = () => {
 
     return () => clearTimeout(timer);
   }, [notification]);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleInputFormData = (e) => {
     setFormData({

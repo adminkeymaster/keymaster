@@ -22,8 +22,7 @@ import styles from "./Products.module.scss";
 
 const ProductsPage = (props) => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
+
   const router = useRouter();
   const { query } = router;
   const [isFetched, setIsFetched] = useState(false);
@@ -68,6 +67,9 @@ const ProductsPage = (props) => {
 
     return () => clearTimeout(timer);
   }, [notification]);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleDelete = (e) => {
     axios

@@ -33,9 +33,7 @@ const StyledCrossIcon = styled(Cross)`
 
 const RecordRequestPage = (props) => {
   const { data: session, status } = useSession();
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
-  
+
   const [isFetched, setIsFetched] = useState(false);
   const [recordRequests, setRecordRequests] = useState([]);
   const [notification, setNotification] = useState({
@@ -72,6 +70,9 @@ const RecordRequestPage = (props) => {
 
     return () => clearTimeout(timer);
   }, [notification]);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
 
   const handleApprove = (id) => {
     axios
