@@ -45,7 +45,7 @@ const Menu = (props) => {
       <li>
         <Link href="/videos">
           <a className={route == '/videos' ? `${styles.isActive} ${styles.link}` : styles.link} onClick={props.onClick}>
-            Keymaster
+          Видео
           </a>
         </Link>
       </li>

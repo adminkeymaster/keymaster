@@ -100,7 +100,7 @@ const CheckoutPage = (props) => {
       if (res.status === 201) {
         // addOrder(filteredProducts);
         // deleteOrder();
-        router.push("/checkout/success");
+        router.push("/success");
       }
     })
     .catch((err) => {

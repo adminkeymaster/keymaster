@@ -3,6 +3,7 @@ import users from '@/models/users'
 import { promises as fs } from "fs";
 import formidable from "formidable";
 import { getSession } from "next-auth/react"
+import { hashPassword } from "@/utils/auth";
 
 dbConnect();
 
@@ -29,56 +30,17 @@ const requestModHandler = async (req, res) => {
 
             case "POST":
                 try {
-                    const form = new formidable.IncomingForm({ keepExtensions: true });
-
-                    const formParsePhotoSuccess = await new Promise((resolve, reject) => {
-                        form.parse(req, async (err, fields, files) => {
-
-                            if (err) {
-                                reject(err);
-                                return;
-                            }
-
-                            const dateNow = new Date();
-
-                            const photoUpload = {
-                                oldpath: files.photoUpload.filepath,
-                                link: `/assets/images/users/${dateNow.getTime()}-${files.photoUpload.originalFilename
-                                    }`,
-                                newpath: `./public/assets/images/users/${dateNow.getTime()}-${files.photoUpload.originalFilename
-                                    }`,
-                            };
-
-                            resolve(photoUpload);
-                        })
-                    }).then(async (photoUpload) => {
-                        let isSuccess = false;
-
-                        await fs.rename(photoUpload.oldpath, photoUpload.newpath, (err) => {
-                            if (err) {
-                                console.log(err)
-                                throw err;
-                            }
-                        }).then(async () => {
-                            isSuccess = true;
-                            await users.updateOne({ _id: id }, { photoLink: photoUpload.link });
-                        });
-
-                        return isSuccess;
-                    });
-
-
-
-                    if (formParsePhotoSuccess) {
-                        return res.status(200).json({ success: true, msg: "Successfully added/changed photo" });
-                    } else {
-                        return res.status(200).json({ success: false, msg: "Error occured while uploading files" });
-                    }
-
-
-
-
-
+                    const { firstName, lastName, email, phoneNumber, password } = req.body;
+                    const hashedPass = await hashPassword(password);
+                    const myUser = {
+                        firstName,
+                        lastName,
+                        email,
+                        phoneNumber,
+                        password: hashedPass,
+                    };
+                    await users.updateOne({ _id: id }, myUser);
+                    res.status(200).json({ success: true, msg: 'Medeeg amjilttai soliloo' });
                 } catch (error) {
                     console.log(error)
                     res.status(400).json({ success: false })
@@ -95,12 +57,6 @@ const requestModHandler = async (req, res) => {
 
 
 
-};
-
-export const config = {
-    api: {
-        bodyParser: false,
-    },
 };
 
 export default requestModHandler;

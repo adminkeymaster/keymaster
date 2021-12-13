@@ -68,7 +68,7 @@ const ProductCard = ({
         <Image
           src={photoLinks[0]}
           layout="fill"
-          objectFit="cover"
+          objectFit="contain"
           alt="product image"
         />
         <StyledMediaIcon />

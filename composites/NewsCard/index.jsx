@@ -71,7 +71,7 @@ const NewsComp = ({ title, description, src, date, id, ...props }) => {
         <h3 className={styles.heading} data-date={dateDiff(date)}>
           {title}
         </h3>
-        <p>{truncateText(description, 116)}</p>
+        <p>{truncateText(description, 100)}</p>
       </a>
     </Link>
   );

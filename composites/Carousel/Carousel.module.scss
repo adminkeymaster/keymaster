@@ -108,11 +108,11 @@
 .embla {
     padding: 2rem;
     position: relative;
-    max-width: 50rem;
+    max-width: 25rem;
     margin-left: auto;
     margin-right: auto;
     @include respondMax(sm){
-      max-width: 30rem;
+      max-width: 25rem;
     }
   }
   
@@ -148,12 +148,12 @@
   .emblaSlideInner {
     position: relative;
     overflow: hidden;
-    height: 50rem;
+    height: 25rem;
     display: flex;
     justify-content: center;
     align-items: center;
     @include respondMax(sm){
-      height: 30rem
+      height: 25rem
     }
   }
   
@@ -168,11 +168,11 @@
     max-width: none;
     transform: translate(-50%, -50%);
     background-color: #220831;
-    width: 50rem;
-    height: 50rem;
+    width: 25rem;
+    height: 25rem;
     @include respondMax(sm){
-      width: 30rem;
-      height: 30rem;
+      width: 25rem;
+      height: 25rem;
     }
   }
   
@@ -226,10 +226,10 @@
   }
   .image{
     position: relative;
-    height: 50rem;
-    width: 50rem;
+    height: 25rem;
+    width: 25rem;
     @include respondMax(sm){
-      height: 30rem;
-      width: 30rem;
+      height: 25rem;
+      width: 25rem;
     }
 }

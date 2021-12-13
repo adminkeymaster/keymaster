@@ -27,19 +27,7 @@ const ContactForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, phoneNumber, description } = formData;
-    router.push(
-      {
-        pathname: "/checkout",
-        query: {
-          firstName,
-          lastName,
-          email,
-          phoneNumber,
-          description,
-        },
-      },
-      "/checkout"
-    );
+    router.push("/success");
   };
   return (
     <div className={styles.container}>

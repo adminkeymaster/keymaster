@@ -15,14 +15,13 @@ import LandingLayout from '@/layouts/Landing';
 //import COMPONENT from '@/components'
 import { CheckmarkCircle2Outline } from "@styled-icons/evaicons-outline";
 import styles from './Success.module.scss'
-
 const StyledCheckmarkCircle = styled(CheckmarkCircle2Outline)`
   width: 72px;
   color: #159900;
   padding: 0;
 `;
 const SuccessPage = (props) => {
-    return (
+	 return (
         <motion.main exit={{ opacity: 0 }}
 		initial={{ opacity: 0 }}
 		animate={{ opacity: 1 }}
@@ -37,7 +36,7 @@ const SuccessPage = (props) => {
                 <Link href="/">Нүүр хуудас руу буцах</Link>
             </div>
         </motion.main>
-    )
+	)
 };
 SuccessPage.Layout = LandingLayout;
 export default SuccessPage;

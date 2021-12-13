@@ -79,7 +79,7 @@ const SidePanel = ({ handler, isOpen, ...props }) => {
               }
               onClick={props.onClick}
             >
-              Keymaster
+              Видео
             </a>
           </Link>
         </li>
