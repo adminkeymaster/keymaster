@@ -29,10 +29,8 @@ const SuccessPage = (props) => {
         className={styles.container}>
             <div className={styles.success}>
                 <StyledCheckmarkCircle />
-                <h4>Таны хүсэлт амжилттай илгээгдлээ</h4>
-                <p><span>Бид таны хүсэлтийг 48 цагийн дотор</span>
-                <span>шалгаад эргээд холбогдоно.</span>
-                <span>Баярлалаа</span></p>
+                <h4>Хүсэлт амжилттай</h4>
+                <p><span>Таны мэдээлэл амжилттай солигдлоо!</span></p>
                 <Link href="/">Нүүр хуудас руу буцах</Link>
             </div>
         </motion.main>
