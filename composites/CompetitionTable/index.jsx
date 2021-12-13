@@ -35,14 +35,14 @@ const CompetitionTable = (props) => {
           <div className={`${styles.tableHeaderCol} ${styles.nameCol}`}>
             Тэмцээн
           </div>
+          <div className={`${styles.tableHeaderCol} ${styles.locationCol}`}>
+            Байршил
+          </div>
           <div className={`${styles.tableHeaderCol} ${styles.startCol}`}>
             Эхлэх огноо
           </div>
           <div className={`${styles.tableHeaderCol} ${styles.endCol}`}>
             Дуусах огноо
-          </div>
-          <div className={`${styles.tableHeaderCol} ${styles.locationCol}`}>
-            Байршил
           </div>
         </div>
         <div className={styles.tableBody}>

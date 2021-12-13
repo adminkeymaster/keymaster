@@ -43,14 +43,14 @@ const CompetitionCard = ({
         <span className={`${styles.tableBodyCol} ${styles.nameCol}`}>
           {truncateText(name, 100)}
         </span>
+        <span className={`${styles.tableBodyCol} ${styles.locationCol}`}>
+          {location}
+        </span>
         <span className={`${styles.tableBodyCol} ${styles.startCol}`}>
           {startDate}
         </span>
         <span className={`${styles.tableBodyCol} ${styles.endCol}`}>
           {endDate}
-        </span>
-        <span className={`${styles.tableBodyCol} ${styles.locationCol}`}>
-          {location}
         </span>
       </a>
     </Link>
