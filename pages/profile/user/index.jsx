@@ -46,17 +46,10 @@ const UserPage = (props) => {
   const [formData, setFormData] = useState({
     firstName: null,
     lastName: null,
-<<<<<<< HEAD
     email: '',
     phoneNumber: '',
     password: '',
     photoUpload: null,
-=======
-    email: "",
-    phoneNumber: "",
-    password: "",
-    // photoLink: null,
->>>>>>> cb519c88b26e463fdda550c02e0bb03853726031
   });
 
   useEffect(() => {
@@ -79,11 +72,7 @@ const UserPage = (props) => {
       });
 
     return () => controller.abort();
-<<<<<<< HEAD
-  }, [_id]);
-=======
   }, []);
->>>>>>> cb519c88b26e463fdda550c02e0bb03853726031
 
   useEffect(() => {
     if (!notification.message) return;
@@ -164,8 +153,7 @@ const UserPage = (props) => {
     <main className={styles.container}>
       <Notification message={notification.message} success={notification.success} />
       <h2>Хэрэглэгчийн мэдээлэл</h2>
-<<<<<<< HEAD
-      <form className={styles.form}>
+      {isFetched && <form className={styles.form}>
       <div className={styles.imageContainer}>
             {formData.photolink && (
               <Image src={formData.photolink} layout="fill" objectFit="cover" alt="profile image" />
@@ -220,70 +208,8 @@ const UserPage = (props) => {
         <button className={styles.button} type="submit" onClick={handleSubmit}>Мэдээлэл солих</button>
         </div>
       </form>
+}
       <button className={styles.button}
-=======
-      {isFetched && (
-        <form onSubmit={handleSubmit}>
-          <input
-            className={styles.inputFileSend}
-            type="file"
-            name="photoUpload"
-            id="photoUpload"
-            accept="image/png, image/jpeg"
-          />
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            onChange={handleInputFormData}
-            defaultValue={formData.firstName}
-            required
-          />
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            onChange={handleInputFormData}
-            defaultValue={formData.lastName}
-            required
-          />
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={handleInputFormData}
-            defaultValue={formData.email}
-            required
-          />
-          <input
-            type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
-            onChange={handleInputFormData}
-            defaultValue={formData.phoneNumber}
-            required
-          />
-          <input
-            type="password"
-            id="password"
-            onChange={handleInputFormData}
-            name="password"
-            placeholder="Password"
-            required
-          />
-          <input
-            type="password"
-            id="passwordconfirm"
-            name="passwordconfirm"
-            placeholder="Confirm Password"
-            required
-          />
-          <button type="submit">Мэдээлэл солих</button>
-        </form>
-      )}
-
-      <button
->>>>>>> cb519c88b26e463fdda550c02e0bb03853726031
         onClick={() => {
           signOut();
         }}
