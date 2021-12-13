@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -34,6 +35,10 @@ const StyledUploadIcon = styled(Upload)`
 `;
 
 const EditProduct = () => {
+  const { data: session, status } = useSession();
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
+  
   const [isFetched, setIsFetched] = useState(false);
   const [notification, setNotification] = useState({
     message: "",

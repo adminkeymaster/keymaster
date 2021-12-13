@@ -1,0 +1,17 @@
+@import "global";
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  main {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: has(md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

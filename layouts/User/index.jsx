@@ -1,6 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 //import STORE from '@/store'
 
 //import VIEWS from '@/views'
@@ -9,11 +9,11 @@ import { useRouter } from "next/router";
 
 //import COMPOSITES from '@/composites'
 import Navbar from "@/composites/Navbar";
-import DashboardNavbar from "@/composites/DashboardNavbar";
+import UserNavbar from "@/composites/UserNavbar";
 //import COMPONENT from '@/components'
-import styles from "./Dashboard.module.scss";
+import styles from "./User.module.scss";
 
-const DashboardLayout = ({ children, ...props }) => {
+const UserLayout = ({ children, ...props }) => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -21,7 +21,7 @@ const DashboardLayout = ({ children, ...props }) => {
     return null;
   }
 
-  if (!session || !session.user.isAdmin) {
+  if (!session || session.user.isAdmin) {
     router.push("/auth/login");
     return null;
   }
@@ -29,10 +29,10 @@ const DashboardLayout = ({ children, ...props }) => {
   return (
     <div className={styles.container}>
       <Navbar />
-      <DashboardNavbar />
-      {children}
+      {session && <UserNavbar />}
+      {session && children}
     </div>
   );
 };
 
-export default DashboardLayout;
+export default UserLayout;

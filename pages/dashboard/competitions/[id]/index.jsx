@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 //import STORE from '@/store'
@@ -17,6 +18,10 @@ import styles from "./EditCompetition.module.scss";
 import axios from "axios";
 
 const EditCompetitionPage = (props) => {
+  const { data: session, status } = useSession();
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
+
   const router = useRouter();
   const { id } = router.query;
 

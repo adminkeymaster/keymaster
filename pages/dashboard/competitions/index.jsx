@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -17,6 +18,10 @@ import DashboardLayout from "@/layouts/Dashboard";
 import styles from "./Competitions.module.scss";
 
 const CompetitionsPage = (props) => {
+  const { data: session, status } = useSession();
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
+
   const [isFetched, setIsFetched] = useState(false);
   const [competitions, setCompetitions] = useState([]);
 

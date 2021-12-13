@@ -1,7 +1,5 @@
 import dbConnect from '@/utils/database'
 import users from '@/models/users'
-import { promises as fs } from "fs";
-import formidable from "formidable";
 import { getSession } from "next-auth/react"
 import { hashPassword } from "@/utils/auth";
 
@@ -30,13 +28,14 @@ const requestModHandler = async (req, res) => {
 
             case "POST":
                 try {
-                    const { firstName, lastName, email, phoneNumber, password } = req.body;
+                    const { firstName, lastName, photoLink, email, phoneNumber, password } = req.body;
                     const hashedPass = await hashPassword(password);
                     const myUser = {
                         firstName,
                         lastName,
                         email,
                         phoneNumber,
+                        photoLink,
                         password: hashedPass,
                     };
                     await users.updateOne({ _id: id }, myUser);
