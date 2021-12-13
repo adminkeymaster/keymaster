@@ -47,6 +47,10 @@ const requestModHandler = async (req, res) => {
             try {
                 const { firstName, lastName, birthDate, gender, email, phoneNumber, password } = req.body;
 
+                if(password == null || password.equals("") || password.trim().equals("")) {
+                    return res.status(400).success({ success: true, msg: 'password can not be empty' });
+                }
+
                 const user = await users.findOne({ email: email });
                 if (user)
                     return res.status(200).json({ success: false, msg: "User already exist" });
@@ -54,7 +58,7 @@ const requestModHandler = async (req, res) => {
                 const hashedPass = await hashPassword(password);
 
                 const myRequest = {
-                    firstName, lastName, birthDate, gender, email, phoneNumber, password: hashedPass
+                    firstName, lastName, birthDate, gender, email, phoneNumber, password: hashedPass, photoLink: ""
                 };
 
                 await users.create(myRequest);

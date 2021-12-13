@@ -29,6 +29,10 @@ const requestModHandler = async (req, res) => {
             case "POST":
                 try {
                     const { firstName, lastName, photoLink, email, phoneNumber, password } = req.body;
+                    if(password == null || password.equals("") || password.trim().equals("")) {
+                        return res.status(400).success({ success: true, msg: 'password can not be empty' });
+                    }
+                    
                     const hashedPass = await hashPassword(password);
                     const myUser = {
                         firstName,
@@ -38,7 +42,10 @@ const requestModHandler = async (req, res) => {
                         photoLink,
                         password: hashedPass,
                     };
-                    await users.updateOne({ _id: id }, myUser);
+
+                    console.log(myUser);
+
+                    // await users.updateOne({ _id: id }, myUser);
                     res.status(200).json({ success: true, msg: 'Medeeg amjilttai soliloo' });
                 } catch (error) {
                     console.log(error)
