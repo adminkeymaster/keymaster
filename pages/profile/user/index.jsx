@@ -1,11 +1,12 @@
 //Next, React (core node_modules) imports must be placed here
-import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import styled from 'styled-components';
-import { Upload } from '@styled-icons/heroicons-outline/Upload';
-import { Close } from '@styled-icons/evaicons-solid/Close';
+import styled from "styled-components";
+import { Upload } from "@styled-icons/heroicons-outline/Upload";
+import { Close } from "@styled-icons/evaicons-solid/Close";
 
 //import STORE from '@/store'
 
@@ -18,7 +19,7 @@ import UserLayout from "@/layouts/User";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
-import Notification from '@/components/Notification';
+import Notification from "@/components/Notification";
 import styles from "./User.module.scss";
 
 const StyledCloseIcon = styled(Close)`
@@ -46,10 +47,12 @@ const UserPage = (props) => {
   const [formData, setFormData] = useState({
     firstName: null,
     lastName: null,
-    email: '',
-    phoneNumber: '',
-    password: '',
+    email: "",
+    phoneNumber: "",
+    password: "",
     photoUpload: null,
+    preview: null,
+    photoLink: null,
   });
 
   useEffect(() => {
@@ -59,11 +62,12 @@ const UserPage = (props) => {
       .get(`/api/user/${session.user._id}`, { signal: controller.signal })
       .then(({ data }) => {
         setFormData({
+          ...formData,
           firstName: data.data.firstName,
           lastName: data.data.lastName,
           email: data.data.email,
           phoneNumber: data.data.phoneNumber,
-          photolink: data.data.photoLink,
+          photoLink: data.data.photoLink,
         });
         setIsFetched(true);
       })
@@ -92,14 +96,14 @@ const UserPage = (props) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    console.log(formData);
   };
+
   const handleFileInput = (e) => {
     const objectURL = URL.createObjectURL(e.target.files[0]);
 
     setFormData({
       ...formData,
-      [e.target.name]: e.target.files[0],
+      photoUpload: e.target.files[0],
       preview: objectURL,
     });
 
@@ -110,13 +114,19 @@ const UserPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const imageForm = new FormData();
-    imageForm.append('upload_preset', 'keymaster');
-    imageForm.append('file', formData['photoUpload']);
-    const data = await fetch('https://api.cloudinary.com/v1_1/keymaster123/image/upload', {
-      method: 'POST',
-      body: imageForm,
-    }).then((r) => r.json());
+
+    imageForm.append("upload_preset", "keymaster");
+    imageForm.append("file", formData["photoUpload"]);
+
+    const data = await fetch(
+      "https://api.cloudinary.com/v1_1/keymaster123/image/upload",
+      {
+        method: "POST",
+        body: imageForm,
+      }
+    ).then((r) => r.json());
 
     formData.photoLink = data.url;
 
@@ -131,14 +141,10 @@ const UserPage = (props) => {
       })
       .then((res) => {
         if (res.status === 200) {
-          router.push(            {
-            pathname: '/profile/user',
-            query: {
-              message: 'Мэдээлэл амжилттай засагдлаа',
-              success: true,
-            },
-          },
-          '/profile/user');
+          setNotification({
+            message: "Таны мэдээлэл амжилттай засагдлаа",
+            success: true,
+          });
         }
       })
       .catch((err) => {
@@ -151,16 +157,33 @@ const UserPage = (props) => {
   };
   return (
     <main className={styles.container}>
-      <Notification message={notification.message} success={notification.success} />
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
+
       <h2>Хэрэглэгчийн мэдээлэл</h2>
-      {isFetched && <form className={styles.form}>
-      <div className={styles.imageContainer}>
-            {formData.photolink && (
-              <Image src={formData.photolink} layout="fill" objectFit="cover" alt="profile image" />
+
+      {isFetched && (
+        <form className={styles.form}>
+          <div className={styles.imageContainer}>
+            {console.log(formData)}
+            {formData.photoLink && (
+              <Image
+                src={formData.photoLink}
+                layout="fill"
+                objectFit="cover"
+                alt="profile image"
+              />
             )}
 
             {formData.photoUpload && (
-              <Image src={formData.preview} layout="fill" objectFit="cover" alt="uploaded image" />
+              <Image
+                src={formData.preview}
+                layout="fill"
+                objectFit="cover"
+                alt="uploaded image"
+              />
             )}
 
             {formData.photoUpload && (
@@ -179,13 +202,17 @@ const UserPage = (props) => {
                 <StyledCloseIcon />
               </button>
             )}
+
             <label
               htmlFor="photoUpload"
               className={
-                !formData.photoUpload ? styles.labelFileSend : `${styles.labelFileSend} ${styles.labelFileSendActive}`
+                !formData.photoUpload
+                  ? styles.labelFileSend
+                  : `${styles.labelFileSend} ${styles.labelFileSendActive}`
               }
             >
-              <StyledUploadIcon /> Зураг {(formData.photoUpload && 'засах') || 'өөрчлөх'}
+              <StyledUploadIcon /> Зураг{" "}
+              {(formData.photoUpload && "засах") || "өөрчлөх"}
             </label>
 
             <input
@@ -197,19 +224,67 @@ const UserPage = (props) => {
               onChange={handleFileInput}
               required
             />
-          </div>  
+          </div>
           <div className={styles.details}>
-        <input type="text" id="firstName" name="firstName" onChange={handleInputFormData} defaultValue={formData.firstName} required/>
-        <input type="text" id="lastName" name="lastName" onChange={handleInputFormData} defaultValue={formData.lastName} required />
-        <input type="email" id="email" name="email" onChange={handleInputFormData} defaultValue={formData.email} required />
-        <input type="tel" id="phoneNumber" name="phoneNumber" onChange={handleInputFormData} defaultValue={formData.phoneNumber} required/>
-        <input type="password" id="password" onChange={handleInputFormData} name="password" placeholder="Нууц үг" required />
-        <input type="password" id="passwordconfirm" name="passwordconfirm" placeholder="Нууц үгээ дахин хийнэ үү" required />
-        <button className={styles.button} type="submit" onClick={handleSubmit}>Мэдээлэл солих</button>
-        </div>
-      </form>
-}
-      <button className={styles.button}
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              onChange={handleInputFormData}
+              defaultValue={formData.firstName}
+              required
+            />
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              onChange={handleInputFormData}
+              defaultValue={formData.lastName}
+              required
+            />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={handleInputFormData}
+              defaultValue={formData.email}
+              required
+            />
+            <input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              onChange={handleInputFormData}
+              defaultValue={formData.phoneNumber}
+              required
+            />
+            <input
+              type="password"
+              id="password"
+              onChange={handleInputFormData}
+              name="password"
+              placeholder="Нууц үг"
+              required
+            />
+            <input
+              type="password"
+              id="passwordconfirm"
+              name="passwordconfirm"
+              placeholder="Нууц үгээ дахин хийнэ үү"
+              required
+            />
+            <button
+              className={styles.button}
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Мэдээлэл солих
+            </button>
+          </div>
+        </form>
+      )}
+      <button
+        className={styles.button}
         onClick={() => {
           signOut();
         }}
