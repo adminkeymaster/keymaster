@@ -76,7 +76,7 @@ const Article = () => {
   return (
     <main className={styles.container}>
       <motion.div className={styles.imageContainer} ref={ref} style={{ y: y }}>
-        {article?.photoLink && (
+         {article?.photoLink && (
           <Image
             src={article?.photoLink}
             layout="fill"
@@ -84,12 +84,12 @@ const Article = () => {
             alt="article image"
           />
         )}
-        <div className={styles.overlay}></div>
-        <h1 className={styles.heading} data-date={dateDiff(article?.date)}>
-          {article?.title}
-        </h1>
+       <div className={styles.overlay}></div>
       </motion.div>
       <article className={styles.content}>
+      <h1 className={styles.heading} data-date={dateDiff(article?.date)}>
+          {article?.title}
+        </h1>
         {ReactHtmlParser(article?.description)}
       </article>
     </main>
