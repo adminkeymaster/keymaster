@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 //import STORE from '@/store'
@@ -16,6 +17,10 @@ import DashboardLayout from "@/layouts/Dashboard";
 import styles from "./ContactRequest.module.scss";
 
 const ContactRequestPage = (props) => {
+  const { data: session, status } = useSession();
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
+  
   const [isFetched, setIsFetched] = useState(false);
   const [contactRequests, setContactRequests] = useState([]);
 
