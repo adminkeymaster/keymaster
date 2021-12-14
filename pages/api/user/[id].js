@@ -34,15 +34,6 @@ const requestModHandler = async (req, res) => {
             phoneNumber,
             password,
           } = req.body;
-          if (
-            password == null ||
-            password.equals("") ||
-            password.trim().equals("")
-          ) {
-            return res
-              .status(400)
-              .success({ success: true, msg: "password can not be empty" });
-          }
 
           const hashedPass = await hashPassword(password);
           const myUser = {

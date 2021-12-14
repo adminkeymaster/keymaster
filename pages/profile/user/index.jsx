@@ -114,7 +114,7 @@ const UserPage = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("formData", formData);
+    // console.log("formData", formData);
 
     if (formData.password.length < 8) {
       return setNotification({
@@ -142,9 +142,9 @@ const UserPage = (props) => {
         body: imageForm,
       }
     ).then((r) => r.json());
-
+    console.log(data);
     formData.photoLink = data.url;
-
+    
     axios
       .post(`/api/user/${session.user._id}`, {
         firstName: formData.firstName,

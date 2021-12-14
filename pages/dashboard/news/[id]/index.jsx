@@ -149,6 +149,7 @@ const EditArticle = () => {
       .post(`/api/news/${id}`, {
         title: formData.title,
         description: formData.description,
+        photoID: data.public_id,
         photoLink: formData.photoLink,
       })
       .then((res) => {

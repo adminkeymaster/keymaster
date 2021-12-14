@@ -1,5 +1,3 @@
-import { promises as fs } from 'fs';
-import formidable from 'formidable';
 import news from '@/models/news';
 import dbConnect from '@/utils/database';
 import { getSession } from 'next-auth/react';
@@ -24,11 +22,12 @@ const requestModHandler = async (req, res) => {
     case 'POST':
       try {
         if (session.user.isAdmin) {
-          const { photoLink, title, description } = req.body;
+          const { photoLink, title, description , photoID} = req.body;
           const myNews = {
             photoLink,
             title,
             description,
+            photoID,
             date: new Date(),
           };
           await news.create(myNews);

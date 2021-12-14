@@ -36,6 +36,7 @@ const CreateArticle = () => {
     description: "",
     photoLink: "",
     photoUpload: null,
+    photoID: ""
   });
 
   useEffect(() => {
@@ -88,14 +89,16 @@ const CreateArticle = () => {
         body: imageForm,
       }
     ).then((r) => r.json());
-
+    
+    formData.photoID = data.public_id;
     formData.photoLink = data.url;
-    console.log(formData);
+
     await axios
       .post("/api/news", {
         title: formData.title,
         description: formData.description,
         photoLink: formData.photoLink,
+        photoID: formData.photoID
       })
       .then((res) => {
         if (res.status === 201) {
