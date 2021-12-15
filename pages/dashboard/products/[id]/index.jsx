@@ -1,7 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
@@ -72,9 +72,10 @@ const EditProduct = () => {
         setFormData({
           productName: data.data.productName,
           photoIDs: data.data.photoIDs,
-          photoLink: data.data.photoLink,
+          photoLinks: data.data.photoLinks,
           productPrice: data.data.productPrice,
-          hexColor: data.data.hexColor,
+          description: data.data.description,
+          hexColor: [],
           type: data.data.type,
         });
         setIsFetched(true);
@@ -85,7 +86,7 @@ const EditProduct = () => {
 
     return () => controller.abort();
   }, [id]);
-console.log(formData);
+  console.log(formData);
   useEffect(() => {
     if (!notification.message) return;
 
@@ -106,7 +107,7 @@ console.log(formData);
         type="color"
         name="hexColor"
         id="hexColor"
-        defaultValue={currentColor}
+        defaultValue={formData.hexColor[0]}
         className={styles.inputHexColor}
         onChange={handleColorChange}
         key={colorInputs.length}
@@ -130,7 +131,15 @@ console.log(formData);
     }
 
     axios
-      .post(`/api/product/${id}`, form)
+      .post(`/api/product/${id}`, {
+        productName: formData.productName,
+        hexColor: formData.hexColor,
+        type: formData.type,
+        description: formData.description,
+        photoLinks: formData.photoLinks,
+        photoIDs: formData.photoIDs,
+        productPrice: formData.productPrice
+      })
       .then((res) => {
         if (res.status === 200) {
           router.push(
@@ -214,6 +223,12 @@ console.log(formData);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.photoUpload) {
+      setIsReadyToSend(true);
+
+      return
+    }
+
     Promise.all(
       formData.photoUpload.map(async (imageUpload) => {
         const imageForm = new FormData();
@@ -255,6 +270,8 @@ console.log(formData);
         photoIDs: photoIDs,
       });
 
+      console.log(formData);
+
       setIsReadyToSend(true);
     });
   };
@@ -284,14 +301,18 @@ console.log(formData);
         </div>
 
         <div className={styles.imageContainer}>
-          {isFetched && formData.photoLink && (
+
+
+          {formData.photoLinks[0] && (
             <Image
-              src={formData.photoLink}
+              src={formData.photoLinks[0]}
               layout="fill"
               objectFit="cover"
-              alt="product image"
+              alt="article image"
             />
           )}
+
+
 
           {formData.photoUpload && (
             <Image
@@ -339,6 +360,7 @@ console.log(formData);
             name="photoUpload"
             id="photoUpload"
             accept="image/png, image/jpeg"
+            multiple
             onChange={handleFileInput}
             required
           />
@@ -349,21 +371,27 @@ console.log(formData);
             Бүтээгдэхүүний өнгө
           </label>
           <div className={styles.inputColorContainer}>
+            {colorInputs.map((input, index) => {
+              return <Fragment key={index}>{input}</Fragment>;
+            })}
+            <button type="button" onClick={handleColorAdd}>
+              +
+            </button>
+
+          </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label className={styles.inputLabel} htmlFor="description">
+            Бүтээгдэхүүний тайлбар
+          </label>
+          <div className={styles.inputColorContainer}>
             <input
               type="text"
-              name="color"
-              id="color"
-              defaultValue={formData.color}
-              className={styles.inputColor}
-              onChange={handleInputFormData}
-              required
-            />
-            <input
-              type="color"
-              name="hexColor"
-              id="hexColor"
-              defaultValue={formData.hexColor}
-              className={styles.inputHexColor}
+              name="description"
+              id="description"
+              defaultValue={formData.description}
+              className={styles.input}
               onChange={handleInputFormData}
               required
             />

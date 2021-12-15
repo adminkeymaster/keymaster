@@ -65,9 +65,7 @@ const requestModHandler = async (req, res) => {
             myProduct.photoLinks = photoLinks;
           }         
 
-
-          console.log(myProduct);
-
+          await product.updateOne({ _id: id }, myProduct)
           res.status(200).json({ success: true })
 
         } else {
