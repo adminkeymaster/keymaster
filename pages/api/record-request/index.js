@@ -11,7 +11,7 @@ const requestModHandler = async (req, res) => {
   const { method } = req;
   const session = await getSession({ req });
 
-  if (session.user.isAdmin) {
+  if (session.user.email) {
     switch (method) {
       case 'GET':
         try {

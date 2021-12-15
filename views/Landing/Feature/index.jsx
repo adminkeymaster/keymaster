@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAnimation, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import axios from "axios";
 //import STORE from '@/store'
 
 //import COMPOSITES from '@/composites'
@@ -15,6 +16,7 @@ import CompetitionTable from "@/composites/CompetitionTable";
 import styles from "./Feature.module.scss";
 
 const Feature = (props) => {
+
   const { ref, inView } = useInView({
     threshold: 0.8,
     triggerOnce: false,
@@ -54,7 +56,7 @@ const Feature = (props) => {
       {/* <SendVideoHome /> */}
       <h2>Тэмцээний мэдээллүүд</h2>
       <div className={styles.content}>
-        {/* <AthleteCard src="/Profile.jpg" /> */}
+        <AthleteCard />
         <CompetitionTable />
       </div>
       <div className={styles.circle}>

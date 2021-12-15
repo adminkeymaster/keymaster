@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Key } from "@styled-icons/boxicons-regular/Key";
 import { Star } from "@styled-icons/bootstrap/Star";
 import { User } from "@styled-icons/fa-solid/User";
+import { useState, useEffect } from "react";
+import axios from "axios";
 //import STORE from '@/store'
 
 //import COMPONENT from '@/components'
@@ -35,6 +37,36 @@ const AthleteCard = ({
   recNine,
   ...props
 }) => {
+  const [isFetched, setIsFetched] = useState(false);
+  const [athlete, setAthlete] = useState([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    axios
+      .get("/api/topuser", { signal: signal })
+      .then(({ data }) => {
+        console.log(data.data);
+        setAthlete(data.data);
+        setIsFetched(true);
+      })
+      .catch((err) => {
+        console.log("AthleteCard Fetch Aborted", err);
+      });
+
+    return () => controller.abort();
+    const calculateAge = (birthdate) => {
+      const today = new Date();
+      const birthDate = new Date(birthdate);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    };
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
