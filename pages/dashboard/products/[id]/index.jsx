@@ -37,6 +37,8 @@ const StyledUploadIcon = styled(Upload)`
 const EditProduct = () => {
   const { data: session, status } = useSession();
 
+  const [currentColor, setCurrentColor] = useState("#000000");
+  const [colorInputs, setColorInputs] = useState([]);
   const [isFetched, setIsFetched] = useState(false);
   const [isReadyToSend, setIsReadyToSend] = useState(false);
   const [notification, setNotification] = useState({
@@ -48,12 +50,13 @@ const EditProduct = () => {
   const [formData, setFormData] = useState({
     productName: "",
     photoUpload: null,
-    preview: null,
-    price: "",
-    color: "",
-    hexColor: "",
+    productPrice: "",
+    hexColor: [],
     type: "",
-    photoLink: "",
+    preview: "",
+    description: "",
+    photoLinks: [],
+    photoIDs: [],
   });
 
   useEffect(() => {
@@ -68,9 +71,9 @@ const EditProduct = () => {
       .then(({ data }) => {
         setFormData({
           productName: data.data.productName,
+          photoIDs: data.data.photoIDs,
           photoLink: data.data.photoLink,
           productPrice: data.data.productPrice,
-          color: data.data.color,
           hexColor: data.data.hexColor,
           type: data.data.type,
         });
@@ -82,7 +85,7 @@ const EditProduct = () => {
 
     return () => controller.abort();
   }, [id]);
-
+console.log(formData);
   useEffect(() => {
     if (!notification.message) return;
 
@@ -96,6 +99,21 @@ const EditProduct = () => {
     return () => clearTimeout(timer);
   }, [notification]);
 
+  useEffect(() => {
+    setColorInputs([
+      ...colorInputs,
+      <input
+        type="color"
+        name="hexColor"
+        id="hexColor"
+        defaultValue={currentColor}
+        className={styles.inputHexColor}
+        onChange={handleColorChange}
+        key={colorInputs.length}
+        required
+      />,
+    ]);
+  }, []);
   useEffect(() => {
     if (!isReadyToSend) {
       return;
@@ -145,6 +163,31 @@ const EditProduct = () => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+  const handleColorChange = (e) => {
+    setCurrentColor(e.target.value);
+  };
+
+  const handleColorAdd = (e) => {
+    setColorInputs([
+      ...colorInputs,
+      <input
+        type="color"
+        name="hexColor"
+        id="hexColor"
+        value={currentColor}
+        className={styles.inputHexColor}
+        key={colorInputs.length}
+        readOnly
+        onClick={(e) => {
+          e.preventDefault();
+        }}
+      />,
+    ]);
+    setFormData({
+      ...formData,
+      hexColor: [...formData.hexColor, currentColor],
     });
   };
 
