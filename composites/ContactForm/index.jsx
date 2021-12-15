@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 //import STORE from '@/store'
@@ -26,12 +27,21 @@ const ContactForm = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, phoneNumber, description } = formData;
-    router.push("/success");
+    axios
+      .post("/api/contact", formData)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 201) {
+          router.push("/success");
+        }
+      })
+      .catch((err) => {
+        console.log("ContactForm Submit:", err);
+      });
   };
   return (
     <div className={styles.container}>
-      <form action="POST">
+      <form onSubmit={handleSubmit}>
         <div className={styles.firstLine}>
           <div className={styles.firstName}>
             <label htmlFor="firstName">Овог</label>
@@ -90,7 +100,7 @@ const ContactForm = (props) => {
             required
           ></textarea>
         </div>
-        <button onClick={handleSubmit} type="submit">
+        <button type="submit">
           Илгээх
         </button>
       </form>
