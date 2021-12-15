@@ -8,7 +8,7 @@ import axios from "axios";
 
 //import COMPOSITES from '@/composites'
 // import LeaderboardTable from "@/composites/LeaderboardTable";
-import AthleteCard from "@/composites/AthleteCard";
+// import AthleteCard from "@/composites/AthleteCard";
 import CompetitionTable from "@/composites/CompetitionTable";
 // import CompetitionCard from "@/composites/CompetitionCard";
 //import COMPONENT from '@/components'
@@ -56,7 +56,7 @@ const Feature = (props) => {
       {/* <SendVideoHome /> */}
       <h2>Тэмцээний мэдээллүүд</h2>
       <div className={styles.content}>
-        <AthleteCard />
+        {/* <AthleteCard /> */}
         <CompetitionTable />
       </div>
       <div className={styles.circle}>

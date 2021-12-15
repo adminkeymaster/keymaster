@@ -28,15 +28,7 @@ const StyledStarIcon = styled(Star)`
   height: 2rem;
 `;
 
-const AthleteCard = ({
-  src,
-  name,
-  lastCompetition,
-  recFive,
-  recSeven,
-  recNine,
-  ...props
-}) => {
+const AthleteCard = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [athlete, setAthlete] = useState([]);
 
@@ -48,7 +40,14 @@ const AthleteCard = ({
       .get("/api/topuser", { signal: signal })
       .then(({ data }) => {
         console.log(data.data);
-        setAthlete(data.data);
+        setAthlete({
+          name: `${data.data.firstName} ${data.data.lastName}`,
+          photoLink: data.data.photoLink,
+          recFive: data.data.record[0].time,
+          recSeven: data.data.record[1].time,
+          recNine: data.data.record[2].time,
+          lastCompetition: data.data.lastComp[0].description,
+        });
         setIsFetched(true);
       })
       .catch((err) => {
@@ -56,30 +55,20 @@ const AthleteCard = ({
       });
 
     return () => controller.abort();
-    const calculateAge = (birthdate) => {
-      const today = new Date();
-      const birthDate = new Date(birthdate);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    };
   }, []);
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
-        {(src && <Image src={src} layout="fill" objectFit="cover" alt="athlete profile" />) || (
+        {(athlete.photoLink && <Image src={athlete.photoLink} layout="fill" objectFit="cover" alt="athlete profile" />) || (
           <StyledUserIcon />
         )}
       </div>
       <div className={styles.profile}>
         <span className={styles.profileName}>
-          {(name && name) || "Хэрэглэгчийн нэр"}
+          {(isFetched && athlete.name) || "Хэрэглэгчийн нэр"}
         </span>
         <span className={styles.highlight}>Сүүлд оролцсон тэмцээн</span>
-        <span>{(lastCompetition && lastCompetition) || "Тэмцээний нэр"}</span>
+        <span>{(isFetched && athlete.lastCompetition) || "Тэмцээний нэр"}</span>
       </div>
       <div className={styles.record}>
         <span className={styles.recordHeader}>Хувийн үзүүлэлт</span>
@@ -96,13 +85,13 @@ const AthleteCard = ({
         </div>
         <div className={styles.row}>
           <span className={`${styles.col} ${styles.time}`}>
-            {(recFive && recFive) || "-"}
+            {(isFetched && athlete.recFive) || "-"}
           </span>
           <span className={`${styles.col} ${styles.time}`}>
-            {(recSeven && recSeven) || "-"}
+            {(isFetched && athlete.recSeven) || "-"}
           </span>
           <span className={`${styles.col} ${styles.time}`}>
-            {(recNine && recNine) || "-"}
+            {(isFetched && athlete.recNine) || "-"}
           </span>
         </div>
       </div>

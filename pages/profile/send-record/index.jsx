@@ -34,7 +34,7 @@ const StyledUploadIcon = styled(Upload)`
 const SendRecordPage = (props) => {
   const { data: session, status } = useSession();
   const router = useRouter();
-
+console.log(session.user._id);
   const [isFetched, setIsFetched] = useState(false);
   const [notification, setNotification] = useState({
     message: "",
@@ -48,6 +48,7 @@ const SendRecordPage = (props) => {
     videoID: "",
     keymasterType: "",
     time: "",
+    userID: "",
   });
 
   useEffect(() => {
@@ -121,15 +122,6 @@ const SendRecordPage = (props) => {
       }
     ).then((r) => r.json());
 
-
-
-    
-    form.append("userID", session.user._id);
-    form.append("videoLink", data.url);
-    form.append("videoID" , data.public_id);
-    console.log(formData);
-
-
     for (const key in formData) {
       if (!formData[key]) {
         setNotification({
@@ -144,7 +136,12 @@ const SendRecordPage = (props) => {
 
 
     await axios
-      .post("/api/record-request", form)
+      .post("/api/record-request", {
+      userID: session.user._id,
+      videoLink: data.url,
+      videoID: data.public_id,
+      keymasterType: formData.keymasterType,
+      time: formData.time,})
       .then((res) => {
         if (res.status === 200) {
           router.push("/");
