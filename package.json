@@ -5,11 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "ws": "bin/workspace/ws.sh",
-    "bews": "bin/workspace/bews.sh",
-    "fews": "bin/workspace/fews.sh",
-    "generate": "bin/generate.sh"
+    "lint": "next lint"
   },
   "dependencies": {
     "@typescript-eslint/parser": "^5.6.0",

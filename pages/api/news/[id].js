@@ -5,8 +5,8 @@ import { getSession } from 'next-auth/react';
 import cloudinary from 'cloudinary';
 // const cloudinary = require('cloudinary');
 
-cloudinary.config({ 
-  cloud_name: "keymaster123", 
+cloudinary.config({
+  cloud_name: "keymaster123",
   api_key: "357121876529977",
   api_secret: "iFHdaY3pUNhl3Di1m-gS2KlrOVk"
 });
@@ -39,10 +39,18 @@ const requestModHandler = async (req, res) => {
         if (session.user.isAdmin) {
           const { photoLink, title, description, photoID } = req.body;
 
+          console.log(title);
+          console.log(description);
+          console.log(photoID);
+          console.log(photoLink);
+
+          // get previous photo link
+          const currentNews = await news.findOne({ _id: id });
+
           if (photoLink && photoID) {
-            await cloudinary.uploader.destroy(singleNews.photoID);
-          }          
-  
+            await cloudinary.uploader.destroy(currentNews.photoID);
+          }
+
           const myNews = {
             photoLink,
             title,

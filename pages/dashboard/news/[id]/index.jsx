@@ -42,6 +42,7 @@ const StyledUploadIcon = styled(Upload)`
 const EditArticle = () => {
   const { data: session, status } = useSession();
 
+  const [isReadyToSend, setIsReadyToSend] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
 
   const router = useRouter();
@@ -56,9 +57,10 @@ const EditArticle = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    photolink: "",
+    photoLink: "",
     photoUpload: null,
     preview: null,
+    photoID: "",
   });
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const EditArticle = () => {
         setFormData({
           title: data.data.title,
           description: data.data.description,
-          photolink: data.data.photoLink,
+          photoLink: data.data.photoLink,
         });
         setIsFetched(true);
       })
@@ -97,6 +99,37 @@ const EditArticle = () => {
 
     return () => clearTimeout(timer);
   }, [notification]);
+
+  useEffect(() => {
+    if (!isReadyToSend) {
+      return;
+    }
+
+    axios
+      .post(`/api/news/${id}`, formData)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push(
+            {
+              pathname: "/dashboard/news",
+              query: {
+                message: "Мэдээ амжилттай засагдлаа",
+                success: true,
+              },
+            },
+            "/dashboard/news"
+          );
+        }
+      })
+      .catch((err) => {
+        setNotification({
+          message: "Мэдээ засахад алдаа гарлаа",
+          success: false,
+        });
+        console.log("Edit Article handleSubmit", err);
+      });
+
+  }, [isReadyToSend, formData])
 
   if (status === "loading") return null;
   if (!session || !session.user.isAdmin) return null;
@@ -135,44 +168,15 @@ const EditArticle = () => {
     const imageForm = new FormData();
     imageForm.append("upload_preset", "keymaster");
     imageForm.append("file", formData["photoUpload"]);
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/keymaster123/image/upload",
-      {
-        method: "POST",
-        body: imageForm,
-      }
-    ).then((r) => r.json());
 
-    formData.photoLink = data.url;
-
-    axios
-      .post(`/api/news/${id}`, {
-        title: formData.title,
-        description: formData.description,
+    axios.post("https://api.cloudinary.com/v1_1/keymaster123/image/upload", imageForm).then(({ data }) => {
+      setFormData({
+        ...formData,
+        photoLink: data.secure_url,
         photoID: data.public_id,
-        photoLink: formData.photoLink,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          router.push(
-            {
-              pathname: "/dashboard/news",
-              query: {
-                message: "Мэдээ амжилттай засагдлаа",
-                success: true,
-              },
-            },
-            "/dashboard/news"
-          );
-        }
-      })
-      .catch((err) => {
-        setNotification({
-          message: "Мэдээ засахад алдаа гарлаа",
-          success: false,
-        });
-        console.log("Edit Article handleSubmit", err);
       });
+      setIsReadyToSend(true);
+    })
   };
 
   return (
@@ -202,9 +206,9 @@ const EditArticle = () => {
           </div>
 
           <div className={styles.imageContainer}>
-            {formData.photolink && (
+            {formData.photoLink && (
               <Image
-                src={formData.photolink}
+                src={formData.photoLink}
                 layout="fill"
                 objectFit="cover"
                 alt="article image"
