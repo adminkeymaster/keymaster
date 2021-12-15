@@ -33,8 +33,8 @@ const StyledUploadIcon = styled(Upload)`
 
 const SendRecordPage = (props) => {
   const { data: session, status } = useSession();
+
   const router = useRouter();
-console.log(session.user._id);
   const [isFetched, setIsFetched] = useState(false);
   const [notification, setNotification] = useState({
     message: "",
@@ -57,7 +57,7 @@ console.log(session.user._id);
       .get("/api/keymasterTypes", { signal: controller.signal })
       .then(({ data }) => {
         setTypes(data.data);
-        setFormData({ ...formData, keymasterType: data.data[0].keymasterType });
+        setFormData({ ...formData, keymasterType: data.data[0].keymasterType, userID: session.user._id });
         setIsFetched(true);
       })
       .catch((err) => {
@@ -109,7 +109,6 @@ console.log(session.user._id);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const form = new FormData();
     const videoForm = new FormData();
     videoForm.append("upload_preset", "keymaster");
     videoForm.append("file", formData["videoUpload"]);
@@ -122,6 +121,12 @@ console.log(session.user._id);
       }
     ).then((r) => r.json());
 
+    formData.videoID = data.public_id;
+    formData.videoLink = data.url;
+
+    console.log(data);
+
+
     for (const key in formData) {
       if (!formData[key]) {
         setNotification({
@@ -130,18 +135,17 @@ console.log(session.user._id);
         });
         return;
       }
-      form.append(key, formData[key]);
     }
 
-
-
     await axios
-      .post("/api/record-request", {
-      userID: session.user._id,
-      videoLink: data.url,
-      videoID: data.public_id,
-      keymasterType: formData.keymasterType,
-      time: formData.time,})
+      .post("/api/record-request",
+        {
+          videoID: formData.videoID,
+          videoLink: formData.videoLink,
+          userID: formData.userID,
+          time: formData.time,
+          keymasterType: formData.keymasterType
+        })
       .then((res) => {
         if (res.status === 200) {
           router.push("/");

@@ -27,9 +27,7 @@ const requestModHandler = async (req, res) => {
               };
             })
           );
-
-          console.log(data);
-
+          
           res.status(200).json({ success: true, data: data });
 
         } else {
@@ -46,28 +44,23 @@ const requestModHandler = async (req, res) => {
 
         if (session.user.email) {
 
+          const {
+            userID,
+            videoLink,
+            videoID,
+            keymasterType,
+            time } = req.body;
 
-          const form = new formidable.IncomingForm({ keepExtensions: true });
+          const newReq = {
+            userID,
+            videoLink,
+            videoID,
+            keymasterType,
+            time
+          };
 
-          form.parse(req, async (err, fields, files) => {
-            if (err) {
-              reject(err);
-              return;
-            }
-
-            console.log(fields)
-
-            const newReq = {
-              userID: fields.userID,
-              videoLink: fields.videoLink,
-              videoID: fields.videoID,
-              keymasterType: fields.keymasterType,
-              time: fields.time,
-            };
-
-            await recordRequest.create(newReq);
-            return res.status(200).json({ success: true, msg: 'Successfully sent record request' });
-          });
+          await recordRequest.create(newReq);
+          return res.status(200).json({ success: true, msg: 'Successfully sent record request' });
 
         } else {
           return res.status(401).json({ success: false, msg: 'You dont have a access' });
@@ -86,10 +79,5 @@ const requestModHandler = async (req, res) => {
 
 };
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 export default requestModHandler;
