@@ -38,6 +38,7 @@ const EditProduct = () => {
   const { data: session, status } = useSession();
 
   const [isFetched, setIsFetched] = useState(false);
+  const [isReadyToSend, setIsReadyToSend] = useState(false);
   const [notification, setNotification] = useState({
     message: "",
     success: false,
@@ -95,38 +96,19 @@ const EditProduct = () => {
     return () => clearTimeout(timer);
   }, [notification]);
 
-  if (status === "loading") return null;
-  if (!session || !session.user.isAdmin) return null;
-
-  const handleInputFormData = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFileInput = (e) => {
-    const objectURL = URL.createObjectURL(e.target.files[0]);
-
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.files[0],
-      preview: objectURL,
-    });
-
-    e.target.value = null;
-
-    return () => URL.revokeObjectURL(objectUrl);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const form = new FormData();
+  useEffect(() => {
+    if (!isReadyToSend) {
+      return;
+    }
 
     for (const key in formData) {
-      if (!formData[key] && key !== "photoUpload" && key !== "preview") return;
-      form.append(key, formData[key]);
+      if (!formData[key]) {
+        setNotification({
+          message: "Бүх талбаруудыг бөглөнө үү!",
+          success: false,
+        });
+        return;
+      }
     }
 
     axios
@@ -152,6 +134,86 @@ const EditProduct = () => {
         });
         console.log("Edit Product handleSubmit:", err);
       });
+
+    setIsReadyToSend(false);
+  }, [isReadyToSend, formData]);
+
+  if (status === "loading") return null;
+  if (!session || !session.user.isAdmin) return null;
+
+  const handleInputFormData = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleFileInput = async (e) => {
+    const objectURL = URL.createObjectURL(e.target.files[0]);
+
+    const files = await Promise.all(
+      [...e.target.files].map(async (file) => {
+        return file;
+      })
+    );
+
+    await setFormData({
+      ...formData,
+      preview: objectURL,
+      photoUpload: [...files],
+    });
+
+    e.target.value = null;
+
+    return () => URL.revokeObjectURL(objectUrl);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    Promise.all(
+      formData.photoUpload.map(async (imageUpload) => {
+        const imageForm = new FormData();
+        imageForm.append("upload_preset", "keymaster");
+        imageForm.append("file", imageUpload);
+
+        const photoLinkObject = await axios
+          .post(
+            `https://api.cloudinary.com/v1_1/keymaster123/image/upload`,
+            imageForm
+          )
+          .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              return {
+                link: res.data.secure_url,
+                id: res.data.public_id,
+              };
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        return photoLinkObject;
+      })
+    ).then((photoLinkObjects) => {
+      const photoLinks = photoLinkObjects.map((photoLinkObject) => {
+        return photoLinkObject.link;
+      });
+
+      const photoIDs = photoLinkObjects.map((photoLinkObject) => {
+        return photoLinkObject.id;
+      });
+
+      setFormData({
+        ...formData,
+        photoLinks: photoLinks,
+        photoIDs: photoIDs,
+      });
+
+      setIsReadyToSend(true);
+    });
   };
 
   return (

@@ -40,6 +40,7 @@ const CreateProductPage = () => {
   const router = useRouter();
   const [currentColor, setCurrentColor] = useState("#000000");
   const [colorInputs, setColorInputs] = useState([]);
+  const [isReadyToSend, setIsReadyToSend] = useState(false);
   const [formData, setFormData] = useState({
     productName: "",
     photoUpload: null,
@@ -84,6 +85,50 @@ const CreateProductPage = () => {
       />,
     ]);
   }, []);
+
+  useEffect(() => {
+    if (!isReadyToSend) {
+      return;
+    }
+
+    for (const key in formData) {
+      if (!formData[key]) {
+        setNotification({
+          message: "Бүх талбаруудыг бөглөнө үү!",
+          success: false,
+        });
+        return;
+      }
+    }
+
+    axios
+      .post("/api/product/", formData)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          router.push(
+            {
+              pathname: "/dashboard/products",
+              query: {
+                success: true,
+                message: "Бүтээгдэхүүн амжилттай нэмэгдлээ",
+              },
+            },
+            "/dashboard/products"
+          );
+        }
+      })
+      .catch((err) => {
+        console.log("CreateProductPage handleSubmit", err);
+        setNotification({
+          ...notification,
+          message: "Бүтээгдэхүүн үүсгэх явцад алдаа гарлаа",
+          success: false,
+        });
+      });
+
+    setIsReadyToSend(false);
+  }, [isReadyToSend, formData]);
 
   if (status === "loading") return null;
   if (!session || !session.user.isAdmin) return null;
@@ -145,16 +190,6 @@ const CreateProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    for (const key in formData) {
-      if (!formData[key]) {
-        setNotification({
-          message: "Бүх талбаруудыг бөглөнө үү!",
-          success: false,
-        });
-        return;
-      }
-    }
-
     Promise.all(
       formData.photoUpload.map(async (imageUpload) => {
         const imageForm = new FormData();
@@ -181,49 +216,23 @@ const CreateProductPage = () => {
 
         return photoLinkObject;
       })
-    )
-      .then(async (photoLinkObjects) => {
-        const photoLinks = photoLinkObjects.map((photoLinkObject) => {
-          return photoLinkObject.link;
-        });
-
-        const photoIDs = photoLinkObjects.map((photoLinkObject) => {
-          return photoLinkObject.id;
-        });
-
-        await setFormData({
-          ...formData,
-          photoLinks: photoLinks,
-          photoIDs: photoIDs,
-        });
-      })
-      .then(async () => {
-        axios
-          .post("/api/product/", await formData)
-          .then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-              router.push(
-                {
-                  pathname: "/dashboard/products",
-                  query: {
-                    success: true,
-                    message: "Бүтээгдэхүүн амжилттай нэмэгдлээ",
-                  },
-                },
-                "/dashboard/products"
-              );
-            }
-          })
-          .catch((err) => {
-            console.log("CreateProductPage handleSubmit", err);
-            setNotification({
-              ...notification,
-              message: "Бүтээгдэхүүн үүсгэх явцад алдаа гарлаа",
-              success: false,
-            });
-          });
+    ).then((photoLinkObjects) => {
+      const photoLinks = photoLinkObjects.map((photoLinkObject) => {
+        return photoLinkObject.link;
       });
+
+      const photoIDs = photoLinkObjects.map((photoLinkObject) => {
+        return photoLinkObject.id;
+      });
+
+      setFormData({
+        ...formData,
+        photoLinks: photoLinks,
+        photoIDs: photoIDs,
+      });
+
+      setIsReadyToSend(true);
+    });
   };
 
   return (
