@@ -5,7 +5,6 @@ dbConnect();
 
 function compare( a, b ) {
 
-
   let totalTime_a = 0;
   a.record.map( (some) => {
     totalTime_a += some.time;
@@ -25,8 +24,6 @@ function compare( a, b ) {
   }
   return 0;
 }
-
-// objs.sort( compare );
 
 const requestModHandler = async (req, res) => {
   const { method } = req;

@@ -198,6 +198,7 @@ const CreateProductPage = () => {
         });
       })
       .then(async () => {
+        console.log(await formData);
         axios
           .post("/api/product/", await formData)
           .then((res) => {
