@@ -3,6 +3,34 @@ import dbConnect from "@/utils/database";
 
 dbConnect();
 
+function compare( a, b ) {
+
+
+  let totalTime_a = 0;
+  a.record.map( (some) => {
+    totalTime_a += some.time;
+  })
+  totalTime_a = totalTime_a / a.record.length;
+  let totalTime_b = 0
+  b.record.map( (some) => {
+    totalTime_b += some.time
+  })
+  totalTime_b = totalTime_b / a.record.length;
+
+
+  console.log(totalTime_a, totalTime_b);
+
+  if ( totalTime_a < totalTime_b ){
+    return -1;
+  }
+  if ( totalTime_a > totalTime_b ){
+    return 1;
+  }
+  return 0;
+}
+
+// objs.sort( compare );
+
 const requestModHandler = async (req, res) => {
   const { method } = req;
 
@@ -10,7 +38,7 @@ const requestModHandler = async (req, res) => {
     case "GET":
       try {
         const data = await users.find({ record: { $exists: true, $not: {$size: 0} } });
-        
+        data.sort( compare );
         res.status(200).json({ success: true, data: data[0] })
 
       } catch (error) {
