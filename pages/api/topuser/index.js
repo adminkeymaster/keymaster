@@ -9,7 +9,8 @@ const requestModHandler = async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        const data = await users.find({}).sort({ "record.time": 1});
+        const data = await users.find({ record: { $exists: true, $not: {$size: 0} } });
+        
         res.status(200).json({ success: true, data: data[0] })
 
       } catch (error) {

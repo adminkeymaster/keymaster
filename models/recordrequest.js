@@ -7,12 +7,21 @@ const recordRequest = new mongoose.Schema({
   },
   videoLink: {
     type: String,
+    required: true
+  },
+  videoID: {
+    type: String,
+    required: true
+
   },
   keymasterType: {
     type: String,
+    required: true
+
   },
   time: {
     type: Number,
+    required: true
   },
 });
 
