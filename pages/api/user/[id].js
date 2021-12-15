@@ -2,6 +2,14 @@ import dbConnect from "@/utils/database";
 import users from "@/models/users";
 import { getSession } from "next-auth/react";
 import { hashPassword } from "@/utils/auth";
+import cloudinary from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: "keymaster123",
+  api_key: "357121876529977",
+  api_secret: "iFHdaY3pUNhl3Di1m-gS2KlrOVk"
+});
+
 
 dbConnect();
 
@@ -11,12 +19,12 @@ const requestModHandler = async (req, res) => {
     query: { id },
   } = req;
   const session = await getSession({ req });
+  const user = await users.findOne({ _id: id });
 
   if (session.user.email) {
     switch (method) {
       case "GET":
         try {
-          const user = await users.findOne({ _id: id });
           res.status(200).json({ success: true, data: user });
         } catch (error) {
           console.log(error);
@@ -30,10 +38,15 @@ const requestModHandler = async (req, res) => {
             firstName,
             lastName,
             photoLink,
+            photoID,
             email,
             phoneNumber,
             password,
           } = req.body;
+
+          if (photoLink && photoID && user.photoLink) {
+            await cloudinary.uploader.destroy(user.photoID);
+          }
 
           const hashedPass = await hashPassword(password);
           const myUser = {
@@ -42,12 +55,12 @@ const requestModHandler = async (req, res) => {
             email,
             phoneNumber,
             photoLink,
+            photoID,
             password: hashedPass,
           };
 
-          console.log(myUser);
-
-          // await users.updateOne({ _id: id }, myUser);
+  
+          await users.updateOne({ _id: id }, myUser);
           res
             .status(200)
             .json({ success: true, msg: "Medeeg amjilttai soliloo" });

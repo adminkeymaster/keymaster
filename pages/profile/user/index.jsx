@@ -49,6 +49,7 @@ const UserPage = (props) => {
     photoUpload: null,
     preview: null,
     photoLink: null,
+    photoID: ""
   });
 
   useEffect(() => {
@@ -142,15 +143,16 @@ const UserPage = (props) => {
         body: imageForm,
       }
     ).then((r) => r.json());
-    console.log(data);
     formData.photoLink = data.url;
-    
+    formData.photoID = data.public_id;
+
     axios
       .post(`/api/user/${session.user._id}`, {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
         phoneNumber: formData.phoneNumber,
+        photoID: formData.photoID,
         password: formData.password,
         photoLink: formData.photoLink,
       })

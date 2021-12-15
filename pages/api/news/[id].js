@@ -39,7 +39,7 @@ const requestModHandler = async (req, res) => {
         if (session.user.isAdmin) {
           const { photoLink, title, description, photoID } = req.body;
 
-          if (photoLink) {
+          if (photoLink && photoID) {
             await cloudinary.uploader.destroy(singleNews.photoID);
           }          
   
