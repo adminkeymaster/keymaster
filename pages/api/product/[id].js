@@ -3,6 +3,15 @@ import dbConnect from "@/utils/database";
 import { promises as fs } from "fs";
 import formidable from "formidable";
 import { getSession } from "next-auth/react"
+import cloudinary from 'cloudinary';
+// const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: "keymaster123",
+  api_key: "357121876529977",
+  api_secret: "iFHdaY3pUNhl3Di1m-gS2KlrOVk"
+});
+
 
 dbConnect();
 
@@ -12,11 +21,12 @@ const requestModHandler = async (req, res) => {
     query: { id },
   } = req;
   const session = await getSession({ req });
-  
+  const singleProduct = await product.findOne({ _id: id });
+
+
   switch (method) {
     case "GET":
       try {
-        const singleProduct = await product.findOne({ _id: id });
         res.status(200).json({ success: true, data: singleProduct });
       } catch (error) {
         console.log(error);
@@ -30,79 +40,35 @@ const requestModHandler = async (req, res) => {
 
         if (session.user.isAdmin) {
 
-          const form = new formidable.IncomingForm({ keepExtensions: true });
+          const { productName,
+            productPrice,
+            hexColor,
+            type,
+            description,
+            photoLinks,
+            photoIDs
+          } = req.body;
 
-          const formParsePhotoSuccess = await new Promise((resolve, reject) => {
-            form.parse(req, async (err, fields, files) => {
-              if (err) {
-                reject(err);
-                return;
-              }
-              const dateNow = new Date();
-              let productInfo = {
-                fields,
-              };
-
-              if (files.photoUpload) {
-                productInfo.oldpath = files.photoUpload.filepath;
-                productInfo.link = `/assets/images/products/${dateNow.getTime()}-${files.photoUpload.originalFilename
-                  }`;
-                productInfo.newpath = `./public/assets/images/products/${dateNow.getTime()}-${files.photoUpload.originalFilename
-                  }`;
-              } else {
-                await product.updateOne(
-                  { _id: id },
-                  {
-                    productName: fields.productName,
-                    color: fields.color,
-                    hexColor: fields.hexColor,
-                    type: fields.type,
-                    productPrice: fields.productPrice,
-                  }
-                );
-                return res
-                  .status(200)
-                  .json({ success: true, msg: "amjilttai edit hiile" });
-              }
-
-              resolve(productInfo);
-            });
-          }).then(async (productInfo) => {
-            let isSuccess = false;
-
-            await fs
-              .rename(productInfo.oldpath, productInfo.newpath, (err) => {
-                if (err) {
-                  console.log(err);
-                  throw err;
-                }
-              })
-              .then(async () => {
-                isSuccess = true;
-
-                const newProduct = {
-                  productName: productInfo.fields.productName,
-                  color: productInfo.fields.color,
-                  hexColor: productInfo.fields.hexColor,
-                  type: productInfo.fields.type,
-                  photoLink: productInfo.link,
-                  productPrice: productInfo.fields.productPrice,
-                };
-                await product.updateOne({ _id: id }, newProduct);
-              });
-
-            return isSuccess;
-          });
-
-          if (formParsePhotoSuccess) {
-            return res
-              .status(200)
-              .json({ success: true, msg: "Successfully added a new product" });
-          } else {
-            return res
-              .status(200)
-              .json({ success: false, msg: "Error adding product" });
+          let myProduct = {
+            productName,
+            productPrice,
+            hexColor,
+            type,
+            description,
           }
+
+          if (photoIDs && photoLinks) {
+            singleProduct.photoIDs.map(async (singlePhoto) => {
+              await cloudinary.uploader.destroy(singlePhoto)
+            })
+            myProduct.photoIDs = photoIDs;
+            myProduct.photoLinks = photoLinks;
+          }         
+
+
+          console.log(myProduct);
+
+          res.status(200).json({ success: true })
 
         } else {
           return res.status(401).json({ success: false, msg: "You dont have a access" });
@@ -118,9 +84,13 @@ const requestModHandler = async (req, res) => {
     case "DELETE":
       try {
 
-
         if (session.user.isAdmin) {
+          singleProduct.photoIDs.map(async (singlePhoto) => {
+            await cloudinary.uploader.destroy(singlePhoto)
+          })
+
           await product.deleteOne({ _id: id });
+
           res.status(200).json({ success: true, msg: "Successfully deleted" });
         } else {
           return res.status(401).json({ success: false, msg: "You dont have a access" });
@@ -137,12 +107,6 @@ const requestModHandler = async (req, res) => {
       res.status(400).json({ success: false });
       break;
   }
-};
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
 };
 
 export default requestModHandler;

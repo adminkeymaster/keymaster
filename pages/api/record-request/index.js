@@ -1,6 +1,5 @@
 import recordRequest from '@/models/recordrequest';
 import dbConnect from '@/utils/database';
-import { promises as fs } from 'fs';
 import formidable from 'formidable';
 import user from '@/models/users';
 import { getSession } from 'next-auth/react';

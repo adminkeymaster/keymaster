@@ -123,23 +123,23 @@ const SendRecordPage = (props) => {
 
 
 
-
+    
     form.append("userID", session.user._id);
     form.append("videoLink", data.url);
     form.append("videoID" , data.public_id);
     console.log(formData);
 
 
-    // for (const key in formData) {
-    //   if (!formData[key]) {
-    //     setNotification({
-    //       message: "Бүх талбаруудыг бөглөнө үү!",
-    //       success: false,
-    //     });
-    //     return;
-    //   }
-    //   form.append(key, formData[key]);
-    // }
+    for (const key in formData) {
+      if (!formData[key]) {
+        setNotification({
+          message: "Бүх талбаруудыг бөглөнө үү!",
+          success: false,
+        });
+        return;
+      }
+      form.append(key, formData[key]);
+    }
 
 
 

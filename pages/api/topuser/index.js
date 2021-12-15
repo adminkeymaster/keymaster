@@ -3,8 +3,7 @@ import dbConnect from "@/utils/database";
 
 dbConnect();
 
-function compare( a, b ) {
-
+function sortByTime( a, b ) {
 
   let totalTime_a = 0;
   a.record.map( (some) => {
@@ -26,7 +25,15 @@ function compare( a, b ) {
   return 0;
 }
 
-// objs.sort( compare );
+function sortByType( a, b ) {
+  if ( a.keymasterType < b.keymasterType ){
+    return -1;
+  }
+  if ( a.keymasterType > b.keymasterType ){
+    return 1;
+  }
+  return 0;
+}
 
 const requestModHandler = async (req, res) => {
   const { method } = req;
@@ -35,7 +42,8 @@ const requestModHandler = async (req, res) => {
     case "GET":
       try {
         const data = await users.find({ record: { $exists: true, $not: {$size: 0} } });
-        data.sort( compare );
+        data.sort( sortByTime );
+        data[0].record.sort( sortByType )
         res.status(200).json({ success: true, data: data[0] })
 
       } catch (error) {
