@@ -17,9 +17,6 @@ function compare( a, b ) {
   })
   totalTime_b = totalTime_b / a.record.length;
 
-
-  console.log(totalTime_a, totalTime_b);
-
   if ( totalTime_a < totalTime_b ){
     return -1;
   }
