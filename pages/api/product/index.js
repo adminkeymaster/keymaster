@@ -49,7 +49,6 @@ const requestModHandler = async (req, res) => {
           photoIDs
         }
 
-        // console.log(myProduct);
         await product.create(myProduct);
         res.status(200).json({ success: true });
 

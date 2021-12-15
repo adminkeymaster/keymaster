@@ -6,8 +6,8 @@ import { getSession } from "next-auth/react"
 import cloudinary from 'cloudinary';
 // const cloudinary = require('cloudinary');
 
-cloudinary.config({ 
-  cloud_name: "keymaster123", 
+cloudinary.config({
+  cloud_name: "keymaster123",
   api_key: "357121876529977",
   api_secret: "iFHdaY3pUNhl3Di1m-gS2KlrOVk"
 });
@@ -23,7 +23,7 @@ const requestModHandler = async (req, res) => {
   const session = await getSession({ req });
   const singleProduct = await product.findOne({ _id: id });
 
-  
+
   switch (method) {
     case "GET":
       try {
@@ -48,17 +48,26 @@ const requestModHandler = async (req, res) => {
             photoLinks,
             photoIDs
           } = req.body;
-  
-          const myProduct = {
+
+          let myProduct = {
             productName,
             productPrice,
             hexColor,
             type,
             description,
-            photoLinks,
-            photoIDs
           }
+
+          if (photoIDs && photoLinks) {
+            singleProduct.photoIDs.map(async (singlePhoto) => {
+              await cloudinary.uploader.destroy(singlePhoto)
+            })
+            myProduct.photoIDs = photoIDs;
+            myProduct.photoLinks = photoLinks;
+          }         
+
+
           console.log(myProduct);
+
           res.status(200).json({ success: true })
 
         } else {
@@ -75,13 +84,13 @@ const requestModHandler = async (req, res) => {
     case "DELETE":
       try {
 
-
         if (session.user.isAdmin) {
-          // singleProduct.photoIDs.
-
+          singleProduct.photoIDs.map(async (singlePhoto) => {
+            await cloudinary.uploader.destroy(singlePhoto)
+          })
 
           await product.deleteOne({ _id: id });
-          
+
           res.status(200).json({ success: true, msg: "Successfully deleted" });
         } else {
           return res.status(401).json({ success: false, msg: "You dont have a access" });
