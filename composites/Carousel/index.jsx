@@ -28,6 +28,7 @@ const Carousel = ({
   productPrice,
   hexColor,
   _id,
+  description,
   ...props
 }) => {
   const { orders, addOrder, deleteOrder } = useContext(CartContext);
@@ -114,6 +115,7 @@ const Carousel = ({
         <div className={styles.information}>
           <h2>{productName}</h2>
           <p>Үнэ: {productPrice}₮</p>
+          <p>Тайлбар: {description}</p>
           <p className={styles.colorContainer}>
             Өнгө:
             {hexColor.map((color, index) => {

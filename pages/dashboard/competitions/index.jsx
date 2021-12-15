@@ -1,5 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -14,7 +15,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
-
+import Notification from "@/components/Notification";
 import styles from "./Competitions.module.scss";
 
 const CompetitionsPage = (props) => {
@@ -23,7 +24,20 @@ const CompetitionsPage = (props) => {
   const [isFetched, setIsFetched] = useState(false);
   const [competitions, setCompetitions] = useState([]);
 
+  const router = useRouter();
+  const { query } = router;
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
   useEffect(() => {
+    if (query) {
+      setNotification({
+        ...notification,
+        message: query.message,
+        success: query.success,
+      });
+    }
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -64,6 +78,10 @@ const CompetitionsPage = (props) => {
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Тэмцээн</h1>
         <Link href="/dashboard/competitions/create">

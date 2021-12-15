@@ -77,6 +77,7 @@ const Store = (props) => {
                 productPrice={product.productPrice}
                 color={product.color}
                 hexColor={product.hexColor}
+                description={product.description}
               />
             );
           })}

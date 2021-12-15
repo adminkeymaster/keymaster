@@ -5,8 +5,8 @@
     display: flex;
     width: 90%;
     max-width: max-content;
+    flex-direction: column;
     @include respondMax(md){
-        flex-direction: column;
         margin: 1em 1em;
     }
     margin: 2em 1em;

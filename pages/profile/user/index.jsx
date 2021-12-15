@@ -184,6 +184,7 @@ const UserPage = (props) => {
       {isFetched && (
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.imageContainer}>
+          <div className={styles.image}>
             {formData.photoLink && (
               <Image
                 src={formData.photoLink}
@@ -239,6 +240,7 @@ const UserPage = (props) => {
               accept="image/png, image/jpeg"
               onChange={handleFileInput}
             />
+          </div>
           </div>
           <div className={styles.details}>
             <input

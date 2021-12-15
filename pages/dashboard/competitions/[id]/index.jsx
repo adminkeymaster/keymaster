@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import axios from "axios";
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -13,9 +14,10 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./EditCompetition.module.scss";
-import axios from "axios";
+
 
 const EditCompetitionPage = (props) => {
   const { data: session, status } = useSession();
@@ -29,6 +31,10 @@ const EditCompetitionPage = (props) => {
     startDate: "",
     endDate: "",
     newsLink: "",
+  });
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
   });
 
   useEffect(() => {
@@ -48,6 +54,19 @@ const EditCompetitionPage = (props) => {
 
     return () => controller.abort();
   }, [id]);
+
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   if (status === "loading") return null;
   if (!session || !session.user.isAdmin) return null;
@@ -85,12 +104,20 @@ const EditCompetitionPage = (props) => {
         }
       })
       .catch((err) => {
+        setNotification({
+          message: "Тэмцээний мэдээлэл нэмэхэд алдаа гарлаа.",
+          success: false,
+        });
         console.log("/dashboard/competitions/[id] Submit:", err);
       });
   };
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.headingContainer}>
           <h1 className={styles.heading}>Тэмцээн нэмэх</h1>

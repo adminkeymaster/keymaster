@@ -30,6 +30,7 @@ const DashboardPage = (props) => {
     >
       <h1>Админий хэсэгт тавтай морилно уу!</h1>
       <button
+      className={styles.button}
         onClick={() => {
           signOut();
         }}

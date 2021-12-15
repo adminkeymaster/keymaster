@@ -1,6 +1,8 @@
 //Next, React (core node_modules) imports must be placed here
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -12,11 +14,14 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Notification from "@/components/Notification";
 
 import styles from "./Create.module.scss";
 import axios from "axios";
 
 const CreateCompetitionPage = (props) => {
+  const router = useRouter();
+
   const { data: session, status } = useSession();
 
   const [form, setForm] = useState({
@@ -26,6 +31,24 @@ const CreateCompetitionPage = (props) => {
     endDate: "",
     newsLink: "",
   });
+
+  const [notification, setNotification] = useState({
+    message: "",
+    success: false,
+  });
+
+  useEffect(() => {
+    if (!notification.message) return;
+
+    const timer = setTimeout(() => {
+      setNotification({
+        message: "",
+        success: false,
+      });
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   if (status === "loading") return null;
   if (!session || !session.user.isAdmin) return null;
@@ -44,16 +67,33 @@ const CreateCompetitionPage = (props) => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          window.location.href = "/dashboard/competitions";
+          router.push(
+            {
+              pathname: "/dashboard/competitions",
+              query: {
+                success: true,
+                message: "Мэдээлэл амжилттай нэмэгдлээ",
+              },
+            },
+            "/dashboard/competitions"
+          );
         }
       })
       .catch((err) => {
+        setNotification({
+          message: "Мэдээлэл нэмэхэд алдаа гарлаа.",
+          success: false,
+        });
         console.log("CreateCompetitionPage Submit:", err);
       });
   };
 
   return (
     <main className={styles.container}>
+      <Notification
+        message={notification.message}
+        success={notification.success}
+      />
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.headingContainer}>
           <h1 className={styles.heading}>Тэмцээн нэмэх</h1>
