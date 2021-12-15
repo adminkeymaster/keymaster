@@ -22,7 +22,7 @@ const UserNavbar = (props) => {
               }
               onClick={props.onClick}
             >
-              Рекорд илгээх
+              Рекорд илгээх.
             </a>
           </Link>
         </li>
