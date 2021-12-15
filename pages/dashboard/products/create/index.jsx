@@ -47,6 +47,9 @@ const CreateProductPage = () => {
     hexColor: [],
     type: "",
     preview: "",
+    description: "",
+    photoLinks: [],
+    photoIDs: [],
   });
   const [notification, setNotification] = useState({
     message: "",
@@ -142,16 +145,6 @@ const CreateProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formEvent = e.currentTarget;
-
-    const form = new FormData();
-    const imageForm = new FormData();
-
-    // const fileInput = Array.from(formEvent.elements).find(({ name }) => name === 'photoUpload');
-    // console.log(fileInput);
-
-    console.log(formData);
-
     for (const key in formData) {
       if (!formData[key]) {
         setNotification({
@@ -160,53 +153,76 @@ const CreateProductPage = () => {
         });
         return;
       }
-
-      if (key === "photoUpload") {
-        console.log(key);
-        formData[key].forEach((file, index) => {
-          form.append(index, file);
-          imageForm.append("file", file);
-        });
-      }
-
-      form.append(key, formData[key]);
     }
 
-    imageForm.append("upload_preset", "keymaster");
+    Promise.all(
+      formData.photoUpload.map(async (imageUpload) => {
+        const imageForm = new FormData();
+        imageForm.append("upload_preset", "keymaster");
+        imageForm.append("file", imageUpload);
 
-    const data = fetch(
-      "https://api.cloudinary.com/v1_1/dl9girfpg/image/upload",
-      {
-        method: "POST",
-        body: imageForm,
-      }
-    ).then((r) => r.json());
+        const photoLinkObject = await axios
+          .post(
+            `https://api.cloudinary.com/v1_1/keymaster123/image/upload`,
+            imageForm
+          )
+          .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              return {
+                link: res.data.secure_url,
+                id: res.data.public_id,
+              };
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
 
-    console.log(data);
-
-    axios
-      .post("/api/product/", form)
-      .then((res) => {
-        if (res.status === 200) {
-          router.push(
-            {
-              pathname: "/dashboard/products",
-              query: {
-                success: true,
-                message: "Бүтээгдэхүүн амжилттай нэмэгдлээ",
-              },
-            },
-            "/dashboard/products"
-          );
-        }
+        return photoLinkObject;
       })
-      .catch((err) => {
-        console.log("CreateProductPage handleSubmit", err);
-        setNotification({
-          ...notification,
-          message: "Бүтээгдэхүүн үүсгэх явцад алдаа гарлаа",
-          success: false,
+    )
+      .then(async (photoLinkObjects) => {
+        const photoLinks = photoLinkObjects.map((photoLinkObject) => {
+          return photoLinkObject.link;
         });
+
+        const photoIDs = photoLinkObjects.map((photoLinkObject) => {
+          return photoLinkObject.id;
+        });
+
+        await setFormData({
+          ...formData,
+          photoLinks: photoLinks,
+          photoIDs: photoIDs,
+        });
+      })
+      .then(async () => {
+        axios
+          .post("/api/product/", await formData)
+          .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              router.push(
+                {
+                  pathname: "/dashboard/products",
+                  query: {
+                    success: true,
+                    message: "Бүтээгдэхүүн амжилттай нэмэгдлээ",
+                  },
+                },
+                "/dashboard/products"
+              );
+            }
+          })
+          .catch((err) => {
+            console.log("CreateProductPage handleSubmit", err);
+            setNotification({
+              ...notification,
+              message: "Бүтээгдэхүүн үүсгэх явцад алдаа гарлаа",
+              success: false,
+            });
+          });
       });
   };
 
@@ -311,6 +327,23 @@ const CreateProductPage = () => {
               name="type"
               id="type"
               defaultValue={formData.type}
+              className={styles.input}
+              onChange={handleInputFormData}
+              required
+            />
+          </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label className={styles.inputLabel} htmlFor="description">
+            Бүтээгдэхүүний тайлбар
+          </label>
+          <div className={styles.inputColorContainer}>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              defaultValue={formData.description}
               className={styles.input}
               onChange={handleInputFormData}
               required

@@ -45,6 +45,7 @@ const SendRecordPage = (props) => {
   const [formData, setFormData] = useState({
     videoUpload: null,
     preview: null,
+    videoID: "",
     keymasterType: "",
     time: "",
   });
@@ -119,19 +120,28 @@ const SendRecordPage = (props) => {
         body: videoForm,
       }
     ).then((r) => r.json());
-    form.append("userID", session.user._id);
 
-    for (const key in formData) {
-      if (!formData[key]) {
-        setNotification({
-          message: "Бүх талбаруудыг бөглөнө үү!",
-          success: false,
-        });
-        return;
-      }
-      form.append(key, formData[key]);
-    }
+
+
+
+    form.append("userID", session.user._id);
     form.append("videoLink", data.url);
+    form.append("videoID" , data.public_id);
+    console.log(formData);
+
+
+    // for (const key in formData) {
+    //   if (!formData[key]) {
+    //     setNotification({
+    //       message: "Бүх талбаруудыг бөглөнө үү!",
+    //       success: false,
+    //     });
+    //     return;
+    //   }
+    //   form.append(key, formData[key]);
+    // }
+
+
 
     await axios
       .post("/api/record-request", form)

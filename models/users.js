@@ -14,6 +14,9 @@ const users = new mongoose.Schema({
   photoLink: {
     type: String,
   },
+  photoID: {
+    type: String,
+  },
   birthDate: {
     type: String,
     required: true,
