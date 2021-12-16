@@ -3,6 +3,10 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
+import styled from "styled-components";
+import { AddToQueue } from "@styled-icons/boxicons-solid/AddToQueue";
+import { Cross } from "@styled-icons/entypo/Cross";
+
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -19,6 +23,16 @@ import Notification from "@/components/Notification";
 import styles from "./Create.module.scss";
 import axios from "axios";
 
+const StyledAddToQueue = styled(AddToQueue)`
+  width: 1.6rem;
+  height: 1.6rem;
+`;
+
+const StyledCrossIcon = styled(Cross)`
+  width: 1.6rem;
+  height: 1.6rem;
+`;
+
 const CreateCompetitionPage = (props) => {
   const router = useRouter();
 
@@ -30,7 +44,13 @@ const CreateCompetitionPage = (props) => {
     startDate: "",
     endDate: "",
     newsLink: "",
+    compName: "",
+    type: [],
+    ageGroup: [],
   });
+
+  const [currentType, setCurrentType] = useState("");
+  const [currentAgeGroup, setCurrentAgeGroup] = useState("");
 
   const [notification, setNotification] = useState({
     message: "",
@@ -62,6 +82,16 @@ const CreateCompetitionPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    Object.keys(form).forEach((key) => {
+      if (!form[key]) {
+        setNotification({
+          message: `Бүх талбарыг бөглөнө үү`,
+          success: false,
+        });
+        return;
+      }
+    });
+    console.log(form);
     axios
       .post("/api/competition", form)
       .then((res) => {
@@ -72,7 +102,7 @@ const CreateCompetitionPage = (props) => {
               pathname: "/dashboard/competitions",
               query: {
                 success: true,
-                message: "Мэдээлэл амжилттай нэмэгдлээ",
+                message: "Тэмцээн амжилттай нэмэгдлээ",
               },
             },
             "/dashboard/competitions"
@@ -81,7 +111,7 @@ const CreateCompetitionPage = (props) => {
       })
       .catch((err) => {
         setNotification({
-          message: "Мэдээлэл нэмэхэд алдаа гарлаа.",
+          message: "Тэмцээн нэмэхэд алдаа гарлаа.",
           success: false,
         });
         console.log("CreateCompetitionPage Submit:", err);
@@ -101,6 +131,131 @@ const CreateCompetitionPage = (props) => {
             Нийтлэх
           </button>
         </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="compName" className={styles.inputLabel}>
+            Нэр
+          </label>
+
+          <input
+            type="text"
+            id="compName"
+            name="compName"
+            className={styles.input}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="ageGroup" className={styles.inputLabel}>
+            Насны ангилал
+          </label>
+
+          <input
+            type="text"
+            id="ageGroup"
+            name="ageGroup"
+            className={styles.input}
+            onChange={(e) => {
+              setCurrentAgeGroup(e.target.value);
+            }}
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setForm({
+                ...form,
+                ageGroup: [...form.ageGroup, currentAgeGroup],
+              });
+            }}
+            type="button"
+            className={styles.addButton}
+          >
+            <StyledAddToQueue />
+          </button>
+
+          {form.ageGroup.length > 0 && (
+            <ul className={styles.list}>
+              {form.ageGroup.map((age, index) => {
+                return (
+                  <li key={index}>
+                    {age}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setForm({
+                          ...form,
+                          ageGroup: form.ageGroup.filter(
+                            (item) => item !== age
+                          ),
+                        });
+                      }}
+                      className={styles.deleteButton}
+                    >
+                      <StyledCrossIcon />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="type" className={styles.inputLabel}>
+            Тэмцээний төрөл
+          </label>
+
+          <input
+            type="text"
+            id="type"
+            name="type"
+            className={styles.input}
+            onChange={(e) => {
+              setCurrentType(e.target.value);
+            }}
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setForm({
+                ...form,
+                type: [...form.type, currentType],
+              });
+            }}
+            className={styles.addButton}
+            type="button"
+          >
+            <StyledAddToQueue />
+          </button>
+
+          {form.type.length > 0 && (
+            <ul className={styles.list}>
+              {form.type.map((t, index) => {
+                return (
+                  <li key={index}>
+                    {t}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setForm({
+                          ...form,
+                          type: form.type.filter((type) => type !== t),
+                        });
+                      }}
+                      className={styles.deleteButton}
+                    >
+                      <StyledCrossIcon />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+
         <div className={styles.formGroup}>
           <label htmlFor="description" className={styles.inputLabel}>
             Тайлбар
@@ -114,6 +269,7 @@ const CreateCompetitionPage = (props) => {
             onChange={handleChange}
           />
         </div>
+
         <div className={styles.formGroup}>
           <label htmlFor="location" className={styles.inputLabel}>
             Байршил
@@ -127,6 +283,7 @@ const CreateCompetitionPage = (props) => {
             onChange={handleChange}
           />
         </div>
+
         <div className={styles.formGroup}>
           <label htmlFor="startDate" className={styles.inputLabel}>
             Эхлэх огноо
@@ -155,7 +312,7 @@ const CreateCompetitionPage = (props) => {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="newsLink" className={styles.inputLabel}>
-            Зургийн Линк
+            Мэдээнийы Линк
           </label>
 
           <input
