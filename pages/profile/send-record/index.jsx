@@ -57,7 +57,11 @@ const SendRecordPage = (props) => {
       .get("/api/keymasterTypes", { signal: controller.signal })
       .then(({ data }) => {
         setTypes(data.data);
-        setFormData({ ...formData, keymasterType: data.data[0].keymasterType, userID: session.user._id });
+        setFormData({
+          ...formData,
+          keymasterType: data.data[0].keymasterType,
+          userID: session.user._id,
+        });
         setIsFetched(true);
       })
       .catch((err) => {
@@ -126,7 +130,6 @@ const SendRecordPage = (props) => {
 
     console.log(data);
 
-
     for (const key in formData) {
       if (!formData[key]) {
         setNotification({
@@ -138,14 +141,13 @@ const SendRecordPage = (props) => {
     }
 
     await axios
-      .post("/api/record-request",
-        {
-          videoID: formData.videoID,
-          videoLink: formData.videoLink,
-          userID: formData.userID,
-          time: formData.time,
-          keymasterType: formData.keymasterType
-        })
+      .post("/api/record-request", {
+        videoID: formData.videoID,
+        videoLink: formData.videoLink,
+        userID: formData.userID,
+        time: formData.time,
+        keymasterType: formData.keymasterType,
+      })
       .then((res) => {
         if (res.status === 200) {
           router.push("/profile/send-record");

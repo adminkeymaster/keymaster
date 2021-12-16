@@ -1,5 +1,6 @@
 //Next, React (core node_modules) imports must be placed here
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
@@ -34,7 +35,7 @@ const StyledCrossIcon = styled(Cross)`
 
 const RecordRequestPage = (props) => {
   const { data: session, status } = useSession();
-
+  const router = useRouter();
   const [isFetched, setIsFetched] = useState(false);
   const [users, setUsers] = useState([]);
   const [notification, setNotification] = useState({
