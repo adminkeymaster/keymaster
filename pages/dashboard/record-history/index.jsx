@@ -20,7 +20,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPONENT from '@/components'
 import Notification from "@/components/Notification";
 
-import styles from "./RecordRequest.module.scss";
+import styles from "./RecordHistory.module.scss";
 
 const StyledCheckIcon = styled(Check)`
   width: 1.6rem;
@@ -36,8 +36,7 @@ const RecordRequestPage = (props) => {
   const { data: session, status } = useSession();
 
   const [isFetched, setIsFetched] = useState(false);
-  const [recordRequests, setRecordRequests] = useState([]);
-  const [lastComps, setLastComp] = useState([]);
+  const [users, setUsers] = useState([]);
   const [notification, setNotification] = useState({
     message: "",
     successs: false,
@@ -50,8 +49,8 @@ const RecordRequestPage = (props) => {
       .get("/api/record-history", { signal: controller.signal })
       .then(({ data }) => {
         // Reverse the array so the newest request is first
-        setRecordRequests(data.data.reverse());
-        setLastComp(data.data.lastComp);
+        console.log(data);
+        setUsers(data.data);
         setIsFetched(true);
       })
       .catch((err) => {
@@ -76,56 +75,6 @@ const RecordRequestPage = (props) => {
 
   if (status === "loading") return null;
   if (!session || !session.user.isAdmin) return null;
-
-  // const handleApprove = (id) => {
-  //   axios
-  //     .post(`/api/record-request/${id}`, { approval: true })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         const newRecordRequests = recordRequests.filter(
-  //           (request) => request._id !== id
-  //         );
-  //         setRecordRequests([...newRecordRequests]);
-
-  //         setNotification({
-  //           message: "Хүсэлтийг амжилттай зөвшөөрлөө",
-  //           success: true,
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       setNotification({
-  //         message: "Хүсэлтийг зөвшөөрөх явцад алдаа гарлаа",
-  //         success: false,
-  //       });
-  //       console.log("/dashboard/record-request", err);
-  //     });
-  // };
-
-  // const handleDeny = (id) => {
-  //   axios
-  //     .post(`/api/record-request/${id}`, { approval: false })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         const newRecordRequests = recordRequests.filter((request) => {
-  //           return request._id !== id;
-  //         });
-
-  //         setRecordRequests([...newRecordRequests]);
-  //         setNotification({
-  //           message: "Хүсэлт амжилттай устгагдлаа",
-  //           success: true,
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       setNotification({
-  //         message: "Хүсэлтийг устгах явцад алдаа гарлаа",
-  //         success: false,
-  //       });
-  //       console.log("/dashboard/record-request", err);
-  //     });
-  // };
 
   const calculateAgeByBirthday = (birthday) => {
     const today = new Date();
@@ -157,75 +106,82 @@ const RecordRequestPage = (props) => {
             Овог
           </div>
 
-          <div className={`${styles.tableHeadCol} ${styles.tableType}`}>
+          <div className={`${styles.tableHeadCol} ${styles.tableEmail}`}>
             Email
           </div>
 
           <div className={`${styles.tableHeadCol} ${styles.tableAge}`}>Нас</div>
 
-
           <div className={`${styles.tableHeadCol} ${styles.tableAction}`}>
             Тэмцээн
           </div>
-
         </div>
 
         <div className={styles.tableBody}>
           {isFetched &&
-            recordRequests.map((request, index) => {
+            users.map((user, index) => {
               return (
-                <div className={styles.tableRowContainer} key={request._id}>
+                <div className={styles.tableRowContainer} key={user._id}>
                   <div className={styles.tableRow}>
                     <div
                       className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
                     >
-                      {request.firstName}
+                      {user.firstName}
                     </div>
                     <div
                       className={`${styles.tableBodyCol} ${styles.tableLastName}`}
                     >
-                      {request.lastName}
+                      {user.lastName}
                     </div>
 
                     <div
-                      className={`${styles.tableBodyCol} ${styles.tableType}`}
+                      className={`${styles.tableBodyCol} ${styles.tableEmail}`}
                     >
-                      {request.email}
+                      {user.email}
                     </div>
-
 
                     <div
                       className={`${styles.tableBodyCol} ${styles.tableAge}`}
                     >
-                      {calculateAgeByBirthday(request.birthDate)}
+                      {calculateAgeByBirthday(user.birthDate)}
                     </div>
 
                     <div
                       className={`${styles.tableBodyCol} ${styles.tableAction}`}
                     >
-
-                      <Link href={`/dashboard/record-history/${request._id}`}>
+                      <Link href={`/dashboard/record-history/${user._id}`}>
                         <a className={styles.link}>Нэмэх</a>
                       </Link>
-
                     </div>
-
                   </div>
 
-                  {/* {isFetched && lastComps.map((request, index) => {
-                    return (
-                      <div className={styles.videoContainer}>
-
-                      <p>{request.firstName}</p>
-                      <p>asd</p>
-                      <p>asd</p>
-                      <p>asd</p>
-  
+                  {user.lastComp.length > 0 && (
+                    <div className={styles.cardContainer}>
+                      {user.lastComp.map((competition) => {
+                        return (
+                          <div
+                            className={styles.competitionCard}
+                            key={competition._id}
+                          >
+                            <button className={styles.cardDeleteButton}>
+                              <StyledCrossIcon />
+                            </button>
+                            <span>
+                              Тэмцээний нэр: {competition.competitionName}
+                            </span>
+                            <span>Насны ангилал: {competition.ageGroup}</span>
+                            <span>Тэмцээний төрөл: {competition.type}</span>
+                            {competition.record &&
+                              competition.record.map((record) => {
+                                <span key={record._id}>
+                                  {record.keymasterType} - {record.time}
+                                </span>;
+                              })}
+                          </div>
+                        );
+                      })}
                     </div>
-
-                    )
-                  })} */}
-
+                  )}
                 </div>
               );
             })}

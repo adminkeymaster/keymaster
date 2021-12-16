@@ -113,7 +113,7 @@
 .tableRow {
   width: 100%;
   padding: 1em;
-  height: 5rem;
+  height: 6rem;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -159,21 +159,9 @@
   align-items: center;
   text-transform: capitalize;
 }
-
-.tableGender {
-  max-width: 4em;
-
+.tableEmail {
   display: flex;
   align-items: center;
-  text-transform: capitalize;
-}
-
-.tableType {
-  max-width: 8em;
-
-  display: flex;
-  align-items: center;
-  text-transform: capitalize;
 }
 
 .tableAge {
@@ -184,35 +172,17 @@
   align-items: center;
 }
 
-.tableTime {
-  max-width: 4em;
-  min-width: 4em;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .tableAction {
   box-sizing: border-box;
   padding: 0 0.4em;
-  max-width: 3.6em;
-  min-width: 3.6em;
+  max-width: 6.4em;
+  min-width: 6.4em;
   text-align: center;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.tableLink {
-  color: $clr-primary;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .tableButton {
@@ -240,19 +210,52 @@
   }
 }
 
-.videoContainer {
+.competitionCard {
+  position: relative;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
+  align-items: flex-start;
   padding: 1em;
-  width: 100%;
+  margin: 1em;
+  background-color: $clr-neutral-8;
+  color: $clr-neutral-3;
 
-  video {
-    background-color: #000000;
+  border-radius: 1rem;
+
+  span {
+    display: block;
+    margin-bottom: 0.5em;
     width: 100%;
-    height: 24em;
-    border-radius: 2rem;
-    object-fit: contain;
+    min-width: max-content;
+  }
+}
+
+.cardContainer {
+  overflow-x: scroll;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.cardDeleteButton {
+  will-change: background-color, color;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(25%, -25%);
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  padding: 0;
+
+  background-color: $clr-neutral-8;
+  box-shadow: 0 0.5rem 1rem rgba($color: #000000, $alpha: 0.2);
+  color: $clr-neutral-3;
+
+  &:hover {
+    background-color: red;
+    color: $clr-neutral-8;
   }
 }
