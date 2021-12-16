@@ -14,19 +14,14 @@ const requestModHandler = async (req, res) => {
   } = req;
   const session = await getSession({ req })
 
-
-  const docID = "61b1b1dbca5fa2498b203074";
-
   switch (method) {
 
 
     case "GET":
       try {
 
-        const data = await competition.findOne({ _id: docID }).select({ competitions: { $elemMatch: { _id: id } } })
-        const simpleData = data.competitions[0];
-
-        res.status(200).json({ success: true, data: simpleData })
+        const data = await competition.findOne({ _id: id });
+        res.status(200).json({ success: true, data: data })
 
       } catch (error) {
         console.log(error);
@@ -121,9 +116,8 @@ const requestModHandler = async (req, res) => {
     case "DELETE":
       try {
         if (session.user.isAdmin) {
-          await competition.updateOne(
-            { _id: docID },
-            { $pull: { competitions: { _id: id } } }
+          await competition.deleteOne(
+            { _id: id },
           );
           return res.status(200).json({ success: true, msg: "Amjilttai ustgalaa" });
 
