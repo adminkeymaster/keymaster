@@ -12,30 +12,31 @@ const requestModHandler = async (req, res) => {
         query: { id },
     } = req;
     const session = await getSession({ req });
-    console.log(id);
-    // if (session.user.isAdmin) {
-    //     return res.status(401).json({ success: false, msg: "You dont have a access" });
+    if (!session.user.isAdmin) {
+        return res.status(401).json({ success: false, msg: "You dont have a access" });
 
-    // }
+    }
     switch (method) {
 
         case "POST":
             try {
-
                 const { compID } = req.body;
+
                 if (compID) {
 
                     await users.updateOne({ _id: id }, { $pull: { lastComp: { _id: compID } } });
                     return res.status(200).json({ success: true })
 
-                }
-                const { compName, type, ageGroup, record } = req.body;
-                const myComp = {
-                    compName, type, ageGroup, record
+                } else {
+                    const { compName, type, ageGroup, record } = req.body;
+                    const myComp = {
+                        compName, type, ageGroup, record
+                    }
+
+                    await users.updateOne({ _id: id }, { $push: { lastComp: myComp } });
+                    return res.status(200).json({ success: true, data: myComp })
                 }
 
-                await users.updateOne({ _id: id }, { $push: { lastComp: myComp } });
-                return res.status(200).json({ success: true, data: myComp })
             }
 
             catch (error) {
