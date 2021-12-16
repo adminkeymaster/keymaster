@@ -8,3 +8,16 @@
   align-items: center;
   justify-content: center;
 }
+.button {
+  background-color: $clr-primary;
+  padding: 1em 2em;
+  color: $clr-neutral-8;
+  border-radius: 0.5em;
+  margin: 1.5em 0em;
+  transition: 0.3s;
+  &:hover {
+      color: $clr-primary;
+      background-color: $clr-neutral-8;
+      box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
+  }
+}

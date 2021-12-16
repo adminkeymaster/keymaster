@@ -78,21 +78,6 @@ const DashboardMenu = (props) => {
           </a>
         </Link>
       </li>
-
-      <li>
-        <Link href="/dashboard/rules">
-          <a
-            className={
-              route == "/dashboard/rules"
-                ? `${styles.isActive} ${styles.link}`
-                : styles.link
-            }
-            onClick={props.onClick}
-          >
-            Дүрэм
-          </a>
-        </Link>
-      </li>
       <li>
         <Link href="/dashboard/contact-request">
           <a

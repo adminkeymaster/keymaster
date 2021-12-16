@@ -105,7 +105,7 @@ const SidePanel = ({ handler, isOpen, ...props }) => {
             </li>
           </Link>
         ) : (
-          <Link href="/dashboard">
+          <Link href="/profile">
             <li>
               <PrimaryButton>{session.user.firstName}</PrimaryButton>
             </li>

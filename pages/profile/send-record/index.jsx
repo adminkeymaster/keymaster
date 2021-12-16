@@ -148,7 +148,11 @@ const SendRecordPage = (props) => {
         })
       .then((res) => {
         if (res.status === 200) {
-          router.push("/");
+          router.push("/profile/send-record");
+          setNotification({
+            message: "Рекорд амжилттай илгээгдлээ",
+            success: true,
+          });
         }
       })
       .catch((err) => {

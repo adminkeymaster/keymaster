@@ -17,6 +17,12 @@
   justify-content: center;
 }
 .imageContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.image {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -28,7 +34,6 @@
   margin: 2em 0;
   border-radius: 50%;
   overflow: hidden;
-  transform: translate(50% , 0);
 }
 .labelFileSend {
   will-change: background-color;

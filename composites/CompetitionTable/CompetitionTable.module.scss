@@ -7,7 +7,7 @@
     height: 60rem;
     border-radius: 2rem;
     background-color: #fff;
-    box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
+    box-shadow: rgba(149, 157, 165, 0.15) 0px 8px 24px;
     display: flex;
     @include respondMax(md){
         overflow-x: scroll;
