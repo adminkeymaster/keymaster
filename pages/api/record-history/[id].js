@@ -13,35 +13,45 @@ const requestModHandler = async (req, res) => {
     } = req;
     const session = await getSession({ req });
     console.log(id);
-    if (session.user.isAdmin) {
-        switch (method) {
+    // if (session.user.isAdmin) {
+    //     return res.status(401).json({ success: false, msg: "You dont have a access" });
 
-            case "POST":
-                try {
+    // }
+    switch (method) {
 
-                    const { compName, type, ageGroup, record } = req.body;
-                    const myComp = {
-                        compName, type, ageGroup, record
-                    }
+        case "POST":
+            try {
 
-                    await users.updateOne({ _id: id }, { $push: { lastComp: myComp } });
-                    return res.status(200).json({ success: true, data: myComp })
+                const { compID } = req.body;
+                if (compID) {
+
+                    await users.updateOne({ _id: id }, { $pull: { lastComp: { _id: compID } } });
+                    return res.status(200).json({ success: true })
+
+                }
+                const { compName, type, ageGroup, record } = req.body;
+                const myComp = {
+                    compName, type, ageGroup, record
                 }
 
-                catch (error) {
-                    console.log(error);
-                    res.status(400).json({ success: false });
-                }
-                break;
+                await users.updateOne({ _id: id }, { $push: { lastComp: myComp } });
+                return res.status(200).json({ success: true, data: myComp })
+            }
 
-            default:
-                res.status(400).json({ success: false })
-                break;
-        }
+            catch (error) {
+                console.log(error);
+                res.status(400).json({ success: false });
+            }
+            break;
 
-    } else {
-        return res.status(401).json({ success: false, msg: "You dont have a access" });
+
+        default:
+            res.status(400).json({ success: false })
+            break;
     }
+
+
+
 
 
 
