@@ -12,25 +12,25 @@ const requestModHandler = async (req, res) => {
         query: { id },
     } = req;
     const session = await getSession({ req });
-
+    console.log(id);
     if (session.user.isAdmin) {
         switch (method) {
 
             case "POST":
                 try {
 
-                    const { type, ageGroup, record, competitionID, status } = req.body;
+                    const { type, ageGroup, record, competitionName, status } = req.body;
 
                     if (status) {
-                        const myCompDetial = { type, ageGroup, record, competitionID };
+                        const myCompDetial = { type, ageGroup, record, competitionName };
 
                         await users.updateOne({ _id: id }, { $push: { lastComp: myCompDetial } });
-                        return res.status(200).json({ success: true, data: description })
+                        return res.status(200).json({ success: true, data: myCompDetial })
                     } else {
-                        await users.updateOne(
-                            { _id: id },
-                            { $pull: { lastComp: { _id: competitionID } } }
-                        );
+                        // await users.updateOne(
+                        //     { _id: id },
+                        //     { $pull: { lastComp: { _id: competitionName } } }
+                        // );
                         return res.status(200).json({ success: true, msg: "amjilttai ustgalaa" });
                     }
 
