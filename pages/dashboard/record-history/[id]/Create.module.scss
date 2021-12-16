@@ -33,7 +33,7 @@
   text-transform: capitalize;
 
   &::before {
-    content: "/dashboard/competitions/create";
+    content: "/dashboard/record-history/[id]";
     display: block;
     text-transform: lowercase;
     background-color: $clr-neutral-7;
