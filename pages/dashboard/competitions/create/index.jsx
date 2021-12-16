@@ -128,7 +128,7 @@ const CreateCompetitionPage = (props) => {
         <div className={styles.headingContainer}>
           <h1 className={styles.heading}>Тэмцээн нэмэх</h1>
           <button type="submit" className={styles.button}>
-            Нийтлэх
+            Нэмэх
           </button>
         </div>
 
