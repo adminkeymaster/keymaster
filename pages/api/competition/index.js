@@ -26,7 +26,7 @@ const requestModHandler = async (req, res) => {
       try {
 
         if (session.user.isAdmin) {
-          const { endDate, startDate, description, location, newsLink, compID } = req.body;
+          const { compName, ageGroup, type, endDate, startDate, description, location, newsLink, compID } = req.body;
 
           const myComp = {
             endDate,
@@ -34,6 +34,7 @@ const requestModHandler = async (req, res) => {
             description,
             location,
             newsLink,
+            compName, ageGroup, type,
           };
 
           if (compID) {
@@ -49,6 +50,10 @@ const requestModHandler = async (req, res) => {
                   "competitions.$.description": description,
                   "competitions.$.location": location,
                   "competitions.$.newsLink": newsLink,
+                  "competitions.$.compName": compName,
+                  "competitions.$.ageGroup": ageGroup,
+                  "competitions.$.type": type,
+                  
                 },
               }
             );

@@ -52,9 +52,12 @@ const users = new mongoose.Schema({
   lastComp: [{
     type: { type: String },
     ageGroup: { type: String },
-    record: {
-      type: String
-    },
+    record: [
+      {
+        keymasterType: { type: String },
+        time: { type: Number },
+      },
+    ],
     competitionName: {
       type: String
     },
