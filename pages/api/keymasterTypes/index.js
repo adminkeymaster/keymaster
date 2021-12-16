@@ -5,6 +5,16 @@ import { getSession } from "next-auth/react"
 
 dbConnect();
 
+function sortByType( a, b ) {
+    if ( a.keymasterType < b.keymasterType ){
+      return -1;
+    }
+    if ( a.keymasterType > b.keymasterType ){
+      return 1;
+    }
+    return 0
+}
+
 const requestModHandler = async (req, res) => {
     const {
         method,
@@ -17,6 +27,7 @@ const requestModHandler = async (req, res) => {
         case "GET":
             try {
                 const data = await keymasterTypes.find({})
+                data.sort( sortByType );
                 res.status(200).json({ success: true, data: data })
 
             } catch (error) {
@@ -27,8 +38,6 @@ const requestModHandler = async (req, res) => {
 
         case "POST":
             try {
-
-
 
                 if (session.user.isAdmin) {
                     const { keymasterType } = req.body;

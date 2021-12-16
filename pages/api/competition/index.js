@@ -52,7 +52,6 @@ const requestModHandler = async (req, res) => {
         };
 
 
-
         await competition.create(myComp);
         res
           .status(200)
