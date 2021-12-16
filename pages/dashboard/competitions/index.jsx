@@ -44,7 +44,7 @@ const CompetitionsPage = (props) => {
     axios
       .get("/api/competition", { signal: signal })
       .then(({ data }) => {
-        setCompetitions(data.data.competitions);
+        setCompetitions(data.data);
         setIsFetched(true);
       })
       .catch((err) => {

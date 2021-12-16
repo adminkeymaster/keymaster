@@ -82,15 +82,24 @@ const CreateCompetitionPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Object.keys(form).forEach((key) => {
-      if (!form[key]) {
-        setNotification({
-          message: `Бүх талбарыг бөглөнө үү`,
-          success: false,
-        });
-        return;
-      }
-    });
+
+    if (
+      !form.compName ||
+      !form.description ||
+      !form.location ||
+      !form.startDate ||
+      !form.endDate ||
+      !form.newsLink ||
+      form.type.length === 0 ||
+      form.ageGroup === 0
+    ) {
+      setNotification({
+        message: "Бүх талбаруудыг бөглөнө үү!",
+        success: false,
+      });
+      return;
+    }
+
     console.log(form);
     axios
       .post("/api/competition", form)
