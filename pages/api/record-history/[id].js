@@ -25,7 +25,7 @@ const requestModHandler = async (req, res) => {
                     }
 
                     await users.updateOne({ _id: id }, { $push: { lastComp: myComp } });
-                    return res.status(200).json({ success: true, data: compID })
+                    return res.status(200).json({ success: true, data: myComp })
                 }
 
                 catch (error) {
