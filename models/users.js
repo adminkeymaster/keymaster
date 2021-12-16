@@ -58,7 +58,7 @@ const users = new mongoose.Schema({
         time: { type: Number },
       },
     ],
-    competitionName: {
+    compName: {
       type: String
     },
   }]
