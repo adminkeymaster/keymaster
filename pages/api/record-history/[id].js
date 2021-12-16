@@ -19,13 +19,11 @@ const requestModHandler = async (req, res) => {
             case "POST":
                 try {
 
-                    const { type, ageGroup, record, competitionName, status } = req.body;
+                    const { compID, status } = req.body;
 
                     if (status) {
-                        const myCompDetial = { type, ageGroup, record, competitionName };
-
-                        await users.updateOne({ _id: id }, { $push: { lastComp: myCompDetial } });
-                        return res.status(200).json({ success: true, data: myCompDetial })
+                        await users.updateOne({ _id: id }, { $push: { lastComp: compID } });
+                        return res.status(200).json({ success: true, data: compID })
                     } else {
                         // await users.updateOne(
                         //     { _id: id },
