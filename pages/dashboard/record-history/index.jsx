@@ -88,6 +88,37 @@ const RecordRequestPage = (props) => {
     return age;
   };
 
+  const handleRecordDelete = (e) => {
+    e.preventDefault();
+    console.log(e.currentTarget.dataset);
+    const userId = e.currentTarget.dataset.userId;
+    const competitionId = e.currentTarget.dataset.competitionId;
+
+    axios.post(`/api/record-history/${userId}`, competitionId).then((res) => {
+      if (res.status === 200) {
+        // remove competition from users
+        const newData = users.map((user) => {
+          if (user._id === userId) {
+            const newCompetitions = user.lastComp.filter(
+              (competition) => competition._id !== competitionId
+            );
+            user.lastComp = newCompetitions;
+          }
+          return user;
+        });
+
+        console.log(newData);
+
+        setUsers(newData);
+
+        setNotification({
+          message: "Хэрэглэгчийн мэдээлэл амжилттай устгагдлаа",
+          success: "true",
+        });
+      }
+    });
+  };
+
   return (
     <main className={styles.container}>
       <Notification
@@ -164,19 +195,24 @@ const RecordRequestPage = (props) => {
                             className={styles.competitionCard}
                             key={competition._id}
                           >
-                            <button className={styles.cardDeleteButton}>
+                            <button
+                              data-user-id={user._id}
+                              data-competition-id={competition._id}
+                              className={styles.cardDeleteButton}
+                              onClick={handleRecordDelete}
+                            >
                               <StyledCrossIcon />
                             </button>
-                            <span>
-                              Тэмцээний нэр: {competition.competitionName}
-                            </span>
+                            <span>Тэмцээний нэр: {competition.compName}</span>
                             <span>Насны ангилал: {competition.ageGroup}</span>
                             <span>Тэмцээний төрөл: {competition.type}</span>
-                            {competition.record &&
-                              competition.record.map((record) => {
-                                <span key={record._id}>
-                                  {record.keymasterType} - {record.time}
-                                </span>;
+                            {competition.record.length > 0 &&
+                              competition.record.map((record, index) => {
+                                return (
+                                  <span key={index}>
+                                    {record.keymasterType}: {record.time}с
+                                  </span>
+                                );
                               })}
                           </div>
                         );

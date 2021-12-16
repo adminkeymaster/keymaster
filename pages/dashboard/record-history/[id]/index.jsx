@@ -40,7 +40,7 @@ const CreateCompetitionPage = (props) => {
   const [competitions, setCompetitions] = useState([]);
   const [selectedCompetition, setSelectedCompetition] = useState(null);
   const [form, setForm] = useState({
-    competitionName: "",
+    compName: "",
     type: "",
     ageGroup: "",
     record: [],
@@ -177,7 +177,7 @@ const CreateCompetitionPage = (props) => {
                           setSelectedCompetition(competition);
                           setForm({
                             ...form,
-                            competitionName: competition.compName,
+                            compName: competition.compName,
                           });
                         }}
                       >
@@ -197,7 +197,7 @@ const CreateCompetitionPage = (props) => {
                   onClick={(e) => {
                     setSelectedCompetition(null);
                     setForm({
-                      competitionName: "",
+                      compName: "",
                       type: "",
                       ageGroup: "",
                       record: [],
