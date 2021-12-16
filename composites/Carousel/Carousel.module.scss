@@ -1,235 +1,236 @@
-@import 'global';
+@import "global";
 .container {
-    box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.2);
-    border-radius: 2rem;
-    display: flex;
-    width: 90%;
-    max-width: max-content;
-    flex-direction: column;
-    @include respondMax(md){
-        margin: 1em 1em;
-    }
-    margin: 2em 1em;
+  box-shadow: rgba(149, 157, 165, 0.15) 0px 8px 24px;
+  border-radius: 2rem;
+  display: flex;
+  width: 90%;
+  max-width: max-content;
+  flex-direction: column;
+  @include respondMax(md) {
+    margin: 1em 1em;
+  }
+  margin: 2em 1em;
 }
-.productInfo{
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.productInfo {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .information {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 2em;
-  
-    h2 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      margin-bottom: 0.5em;
-      text-transform: none;
-    }
-  
-    p {
-      text-transform: capitalize;
-      font-weight: 500;
-      &:not(:last-of-type) {
-        margin-bottom: 0.5em;
-      }
-    }
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2em;
+
+  h2 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 0.5em;
+    text-transform: none;
   }
-  
-  .colorContainer {
-    display: flex;
-    align-items: center;
-  
-    span {
-      display: inline-block;
-      width: 1.6rem;
-      height: 1.6rem;
-      border-radius: 50%;
-      margin-left: 0.5em;
-      box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.2);
-    }
-  }
-  
-  .actions {
-    box-sizing: border-box;
-    padding: 1em;
-    padding-top: 0;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-  
-    span {
-      box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
-      background-color: $clr-neutral-3;
-      color: $clr-neutral-8;
-      font-size: 1.6rem;
-      padding: 0.5em 1em;
-      border-radius: 0.5rem;
-    }
-  }
-  
-  .buttons {
-    display: flex;
-    align-items: center;
-    width: max-content;
-  }
-  
-  .cardButton {
-    will-change: box-shadow, transform, background-color;
-    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out,
-      background-color 0.2s ease-in-out;
-    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
-    background-color: $clr-neutral-8;
-    color: $clr-neutral-3;
-  
-    font-size: 1.6rem;
-    padding: 0.6em 0.7em;
-    border-radius: 0.5rem;
-    border: none;
-  
+
+  p {
+    text-transform: capitalize;
+    font-weight: 500;
     &:not(:last-of-type) {
-      margin-right: 0.5em;
-    }
-  
-    &:hover {
-      box-shadow: 0 0.1rem 0.5rem 0 rgba(0, 0, 0, 0.2);
-      transform: translateY(-0.2rem);
-    }
-  
-    &:active {
-      box-shadow: 0 0rem 0.5rem 0 rgba(0, 0, 0, 0.2);
-      transform: translateY(0);
-      background-color: rgba($color: #000000, $alpha: 0.1);
+      margin-bottom: 0.5em;
     }
   }
+}
+
+.colorContainer {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: inline-block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    margin-left: 0.5em;
+    box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.actions {
+  box-sizing: border-box;
+  padding: 1em;
+  padding-top: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+    background-color: $clr-neutral-3;
+    color: $clr-neutral-8;
+    font-size: 1.6rem;
+    padding: 0.5em 1em;
+    border-radius: 0.5rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  width: max-content;
+}
+
+.cardButton {
+  will-change: box-shadow, transform, background-color;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+  background-color: $clr-neutral-8;
+  color: $clr-neutral-3;
+
+  font-size: 1.6rem;
+  padding: 0.6em 0.7em;
+  border-radius: 0.5rem;
+  border: none;
+
+  &:not(:last-of-type) {
+    margin-right: 0.5em;
+  }
+
+  &:hover {
+    box-shadow: 0 0.1rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.2rem);
+  }
+
+  &:active {
+    box-shadow: 0 0rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    background-color: rgba($color: #000000, $alpha: 0.1);
+  }
+}
 .embla {
-    padding: 2rem;
-    position: relative;
+  padding: 2rem;
+  position: relative;
+  max-width: 25rem;
+  margin-left: auto;
+  margin-right: auto;
+  @include respondMax(sm) {
     max-width: 25rem;
-    margin-left: auto;
-    margin-right: auto;
-    @include respondMax(sm){
-      max-width: 25rem;
-    }
   }
-  
-  .emblaViewport {
-    overflow: hidden;
-    width: 100%;
-  }
-  
-  .emblaViewport .is-draggable {
-    cursor: move;
-    cursor: grab;
-  }
-  
-  .emblaViewport.is-dragging {
-    cursor: grabbing;
-  }
-  
-  .emblaContainer {
-    display: flex;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -khtml-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    margin-left: -10px;
-  }
-  
-  .emblaSlide {
-    padding-left: 10px;
-    min-width: 100%;
-    position: relative;
-  }
-  
-  .emblaSlideInner {
-    position: relative;
-    overflow: hidden;
+}
+
+.emblaViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.emblaViewport .is-draggable {
+  cursor: move;
+  cursor: grab;
+}
+
+.emblaViewport.is-dragging {
+  cursor: grabbing;
+}
+
+.emblaContainer {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: -10px;
+}
+
+.emblaSlide {
+  padding-left: 10px;
+  min-width: 100%;
+  position: relative;
+}
+
+.emblaSlideInner {
+  position: relative;
+  overflow: hidden;
+  height: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include respondMax(sm) {
     height: 25rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @include respondMax(sm){
-      height: 25rem
-    }
   }
-  
-  .emblaSlideImg {
-    position: absolute;
-    display: block;
-    top: 50%;
-    left: 50%;
-    width: auto;
-    min-height: 100%;
-    min-width: 100%;
-    max-width: none;
-    transform: translate(-50%, -50%);
-    background-color: #220831;
+}
+
+.emblaSlideImg {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  min-height: 100%;
+  min-width: 100%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  background-color: #220831;
+  width: 25rem;
+  height: 25rem;
+  @include respondMax(sm) {
     width: 25rem;
     height: 25rem;
-    @include respondMax(sm){
-      width: 25rem;
-      height: 25rem;
-    }
   }
-  
-  .emblaThumb {
-    padding-top: 0;
-    margin-top: -12px;
-  }
-  
-  .emblaContainerThumb {
-    cursor: default;
-    margin-left: -8px;
-    }
-  
-  .emblaSlideThumb {
-    padding-left: 8px;
-    min-width: 20%;
-  }
-  
-  .emblaSlideInnerThumb {
-    touch-action: manipulation;
-    cursor: pointer;
-    border: 0;
-    outline: 0;
-    margin: 0;
-    padding: 0;
-    height: 100px;
-    width: 100%;
-    background-color: transparent;
-    position: relative;
-    display: block;
-    overflow: hidden;
-  }
-  
-  .emblaSlideThumbnail {
-    position: absolute;
-    opacity: 0.2;
-    top: 0;
-    bottom: 0;
-    left: -10000%;
-    right: -10000%;
-    margin: auto;
-    min-width: 1000%;
-    min-height: 1000%;
-    max-width: none;
-    transform: scale(0.1);
-    transition: opacity 0.2s;
-  }
-  
-  .emblaSlideThumb.is-selected .emblaSlideThumbnail {
-    opacity: 1;
-  }
-  .image{
-    position: relative;
+}
+
+.emblaThumb {
+  padding-top: 0;
+  margin-top: -12px;
+}
+
+.emblaContainerThumb {
+  cursor: default;
+  margin-left: -8px;
+}
+
+.emblaSlideThumb {
+  padding-left: 8px;
+  min-width: 20%;
+}
+
+.emblaSlideInnerThumb {
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  width: 100%;
+  background-color: transparent;
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.emblaSlideThumbnail {
+  position: absolute;
+  opacity: 0.2;
+  top: 0;
+  bottom: 0;
+  left: -10000%;
+  right: -10000%;
+  margin: auto;
+  min-width: 1000%;
+  min-height: 1000%;
+  max-width: none;
+  transform: scale(0.1);
+  transition: opacity 0.2s;
+}
+
+.emblaSlideThumb.is-selected .emblaSlideThumbnail {
+  opacity: 1;
+}
+.image {
+  position: relative;
+  height: 25rem;
+  width: 25rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  @include respondMax(sm) {
     height: 25rem;
     width: 25rem;
-    @include respondMax(sm){
-      height: 25rem;
-      width: 25rem;
-    }
+  }
 }

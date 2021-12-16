@@ -27,6 +27,7 @@
   text-align: center;
   transform: translate(0, -5vh);
   h2 {
+    letter-spacing: -0.15rem;
     @include themify() {
       color: has(clr-bg-inverse);
     }
