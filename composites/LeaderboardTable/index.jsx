@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import Link from "next/link"
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -7,8 +8,9 @@ import axios from 'axios';
 //import COMPONENT from '@/components'
 
 import styles from './LeaderboardTable.module.scss';
+import { Ussunnah } from 'styled-icons/fa-brands';
 
-const LeaderboardTable = (props) => {
+const LeaderboardTable = (props, id) => {
   const [isFetched, setIsFetched] = useState(false);
   const [leaderboard, setLeaderboard] = useState([]);
   const [selectedType, setSelectedType] = useState('Keymaster 5');
@@ -31,7 +33,6 @@ const LeaderboardTable = (props) => {
       .catch((err) => {
         console.log('Leaderboard Fetch Aborted', err);
       });
-
     return () => controller.abort();
   }, []);
 
@@ -64,6 +65,7 @@ const LeaderboardTable = (props) => {
         name: `${user.lastName} ${user.firstName}`,
         // gender: user.gender,
         gender: user.gender === 'male' ? 'Эр' : 'Эм',
+        photoLink: user.photoLink,
         age: calculateAge(user.birthDate),
         // time: getTimeByType(user.record),
         time: Math.floor(Math.random() * 40 + 2),
@@ -171,16 +173,18 @@ const LeaderboardTable = (props) => {
             {isFetched &&
               filteredLeaderBoard.map((user, index) => {
                 return (
+                  <Link href={`/profile/user/${id}`}>
                   <div className={styles.tableRow} key={user._id}>
                     <div className={`${styles.tableBodyCol} ${styles.placementCol}`}>{index + 1}</div>
                     <div className={`${styles.tableBodyCol} ${styles.profileCol}`}>
-                      <Image src="/Profile.jpg" layout="fill" objectFit="cover" alt="profile" />
+                      <Image src={user.photoLink} layout="fill" objectFit="cover" alt="profile" />
                     </div>
                     <div className={`${styles.tableBodyCol} ${styles.nameCol}`}>{user.name}</div>
                     <div className={`${styles.tableBodyCol} ${styles.ageCol}`}>{user.age}</div>
                     <div className={`${styles.tableBodyCol} ${styles.genderCol}`}>{user.gender}</div>
                     <div className={`${styles.tableBodyCol} ${styles.timeCol}`}>{user.time}</div>
                   </div>
+                  </Link>
                 );
               })}
           </div>
