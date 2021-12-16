@@ -50,7 +50,15 @@ const users = new mongoose.Schema({
     default: false,
   },
   lastComp: [{
-    description: { type: String }
+    type: { type: String },
+    ageGroup: { type: String },
+    record: [{
+      keymasterType: { type: String },
+      time: { type: String }
+    }],
+    competitionID: {
+      type: String
+    },
   }]
 });
 
