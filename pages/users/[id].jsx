@@ -148,7 +148,7 @@ const UserPage = (props) => {
                         {competition.record.length > 0 &&
                           competition.record.map((r) => {
                             return (
-                              <div className={styles.recordContent}>
+                              <div className={styles.recordContent} key={r._id}>
                                 <div className={styles.recordType}>
                                   {r.keymasterType}
                                 </div>
