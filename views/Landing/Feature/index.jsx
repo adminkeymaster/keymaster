@@ -54,10 +54,10 @@ const Feature = (props) => {
     <div className={styles.container}>
       {/* <LeaderboardTable /> */}
       {/* <SendVideoHome /> */}
-      <h2>Тэмцээний мэдээллүүд</h2>
+      {/* <h2>Тэмцээний мэдээллүүд</h2> */}
       <div className={styles.content}>
         {/* <AthleteCard /> */}
-        <CompetitionTable />
+        {/* <CompetitionTable /> */}
       </div>
       <div className={styles.circle}>
         <Image
