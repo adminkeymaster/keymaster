@@ -98,6 +98,7 @@ const LeaderboardTable = (props, id) => {
 
       setAgeGroups(selectedCompetition.ageGroup);
       setCompetitionTypes(selectedCompetition.type);
+      setSelectedCompetitionType(selectedCompetition.type[0]);
       setLeaderboard(usersByCompetition);
     }
   }, [isFetched, isOnline, selectedCompetition, selectedCompetitionType]);
