@@ -1,8 +1,12 @@
 //Next, React (core node_modules) imports must be placed here
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useRouter } from "next/router";
+
+import styled from "styled-components";
+import { AddToQueue } from "@styled-icons/boxicons-solid/AddToQueue";
+import { Cross } from "@styled-icons/entypo/Cross";
+
 //import STORE from '@/store'
 
 //import LAYOUT from '@/layouts'
@@ -17,21 +21,38 @@ import DashboardLayout from "@/layouts/Dashboard";
 import Notification from "@/components/Notification";
 
 import styles from "./EditCompetition.module.scss";
+import axios from "axios";
 
+const StyledAddToQueue = styled(AddToQueue)`
+  width: 1.6rem;
+  height: 1.6rem;
+`;
+
+const StyledCrossIcon = styled(Cross)`
+  width: 1.6rem;
+  height: 1.6rem;
+`;
 
 const EditCompetitionPage = (props) => {
-  const { data: session, status } = useSession();
   const router = useRouter();
-
   const { id } = router.query;
 
+  const { data: session, status } = useSession();
+  const [isFetched, setIsFetched] = useState(false);
   const [form, setForm] = useState({
     description: "",
     location: "",
     startDate: "",
     endDate: "",
     newsLink: "",
+    compName: "",
+    type: [],
+    ageGroup: [],
   });
+
+  const [currentType, setCurrentType] = useState("");
+  const [currentAgeGroup, setCurrentAgeGroup] = useState("");
+
   const [notification, setNotification] = useState({
     message: "",
     success: false,
@@ -40,20 +61,16 @@ const EditCompetitionPage = (props) => {
   useEffect(() => {
     if (!id) return;
 
-    const controller = new AbortController();
-    const signal = controller.signal;
     axios
-      .get(`/api/competition/${id}`, { signal: signal })
+      .get(`/api/competition/${id}`)
       .then(({ data }) => {
-        // console.log(data.data);
         setForm(data.data);
+        setIsFetched(true);
       })
       .catch((err) => {
-        console.log("EditCompetitionPage Fetch Aborted", err);
+        console.log(err);
       });
-
-    return () => controller.abort();
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     if (!notification.message) return;
@@ -80,23 +97,34 @@ const EditCompetitionPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (
+      !form.compName ||
+      !form.description ||
+      !form.location ||
+      !form.startDate ||
+      !form.endDate ||
+      !form.newsLink ||
+      form.type.length === 0 ||
+      form.ageGroup === 0
+    ) {
+      setNotification({
+        message: "Бүх талбаруудыг бөглөнө үү!",
+        success: false,
+      });
+      return;
+    }
+
     axios
-      .post("/api/competition", {
-        compID: id,
-        description: form.description,
-        location: form.location,
-        startDate: form.startDate,
-        endDate: form.endDate,
-        newsLink: form.newsLink,
-      })
+      .post(`/api/competition/${id}`, form)
       .then((res) => {
         if (res.status === 200) {
           router.push(
             {
               pathname: "/dashboard/competitions",
               query: {
-                message: "Тэмцээний мэдээлэл амжилттай засагдлаа",
                 success: true,
+                message: "Тэмцээн амжилттай нэмэгдлээ",
               },
             },
             "/dashboard/competitions"
@@ -105,10 +133,10 @@ const EditCompetitionPage = (props) => {
       })
       .catch((err) => {
         setNotification({
-          message: "Тэмцээний мэдээлэл нэмэхэд алдаа гарлаа.",
+          message: "Тэмцээн засахад алдаа гарлаа.",
           success: false,
         });
-        console.log("/dashboard/competitions/[id] Submit:", err);
+        console.log("EditCompetitionPage Submit:", err);
       });
   };
 
@@ -118,86 +146,214 @@ const EditCompetitionPage = (props) => {
         message={notification.message}
         success={notification.success}
       />
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.headingContainer}>
-          <h1 className={styles.heading}>Тэмцээн нэмэх</h1>
-          <button type="submit" className={styles.button}>
-            Хадгалах
-          </button>
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="description" className={styles.inputLabel}>
-            Тайлбар
-          </label>
+      {isFetched && (
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.headingContainer}>
+            <h1 className={styles.heading}>Тэмцээн Засах</h1>
+            <button type="submit" className={styles.button}>
+              Засах
+            </button>
+          </div>
 
-          <textarea
-            type="text"
-            id="description"
-            name="description"
-            className={styles.inputArea}
-            onChange={handleChange}
-            defaultValue={form.description}
-            spellCheck="false"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="location" className={styles.inputLabel}>
-            Байршил
-          </label>
+          <div className={styles.formGroup}>
+            <label htmlFor="compName" className={styles.inputLabel}>
+              Нэр
+            </label>
 
-          <textarea
-            type="text"
-            id="location"
-            name="location"
-            className={styles.inputArea}
-            onChange={handleChange}
-            defaultValue={form.location}
-            spellCheck="false"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="startDate" className={styles.inputLabel}>
-            Эхлэх огноо
-          </label>
+            <input
+              type="text"
+              id="compName"
+              name="compName"
+              defaultValue={form.compName}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="date"
-            id="startDate"
-            name="startDate"
-            className={styles.input}
-            defaultValue={form.startDate}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="endDate" className={styles.inputLabel}>
-            Дуусах огноо
-          </label>
+          <div className={styles.formGroup}>
+            <label htmlFor="ageGroup" className={styles.inputLabel}>
+              Насны ангилал
+            </label>
 
-          <input
-            type="date"
-            id="endDate"
-            name="endDate"
-            defaultValue={form.endDate}
-            className={styles.input}
-            onChange={handleChange}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="newsLink" className={styles.inputLabel}>
-            Мэдээний Линк
-          </label>
+            <input
+              type="text"
+              id="ageGroup"
+              name="ageGroup"
+              className={styles.input}
+              onChange={(e) => {
+                setCurrentAgeGroup(e.target.value);
+              }}
+            />
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setForm({
+                  ...form,
+                  ageGroup: [...form.ageGroup, currentAgeGroup],
+                });
+              }}
+              type="button"
+              className={styles.addButton}
+            >
+              <StyledAddToQueue />
+            </button>
 
-          <input
-            type="text"
-            id="newsLink"
-            name="newsLink"
-            className={styles.input}
-            defaultValue={form.newsLink}
-            onChange={handleChange}
-          />
-        </div>
-      </form>
+            {form.ageGroup.length > 0 && (
+              <ul className={styles.list}>
+                {form.ageGroup.map((age, index) => {
+                  return (
+                    <li key={index}>
+                      {age}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setForm({
+                            ...form,
+                            ageGroup: form.ageGroup.filter(
+                              (item) => item !== age
+                            ),
+                          });
+                        }}
+                        className={styles.deleteButton}
+                      >
+                        <StyledCrossIcon />
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="type" className={styles.inputLabel}>
+              Тэмцээний төрөл
+            </label>
+
+            <input
+              type="text"
+              id="type"
+              name="type"
+              className={styles.input}
+              onChange={(e) => {
+                setCurrentType(e.target.value);
+              }}
+            />
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setForm({
+                  ...form,
+                  type: [...form.type, currentType],
+                });
+              }}
+              className={styles.addButton}
+              type="button"
+            >
+              <StyledAddToQueue />
+            </button>
+
+            {form.type.length > 0 && (
+              <ul className={styles.list}>
+                {form.type.map((t, index) => {
+                  return (
+                    <li key={index}>
+                      {t}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setForm({
+                            ...form,
+                            type: form.type.filter((type) => type !== t),
+                          });
+                        }}
+                        className={styles.deleteButton}
+                      >
+                        <StyledCrossIcon />
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="description" className={styles.inputLabel}>
+              Тайлбар
+            </label>
+
+            <input
+              type="text"
+              id="description"
+              name="description"
+              defaultValue={form.description}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="location" className={styles.inputLabel}>
+              Байршил
+            </label>
+
+            <input
+              type="text"
+              id="location"
+              name="location"
+              defaultValue={form.location}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="startDate" className={styles.inputLabel}>
+              Эхлэх огноо
+            </label>
+
+            <input
+              type="date"
+              id="startDate"
+              name="startDate"
+              defaultValue={form.startDate}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="endDate" className={styles.inputLabel}>
+              Дуусах огноо
+            </label>
+
+            <input
+              type="date"
+              id="endDate"
+              name="endDate"
+              defaultValue={form.endDate}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="newsLink" className={styles.inputLabel}>
+              Мэдээнийы Линк
+            </label>
+
+            <input
+              type="text"
+              id="newsLink"
+              name="newsLink"
+              defaultValue={form.newsLink}
+              className={styles.input}
+              onChange={handleChange}
+            />
+          </div>
+        </form>
+      )}
     </main>
   );
 };
