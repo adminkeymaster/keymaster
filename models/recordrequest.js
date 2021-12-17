@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const recordRequest = new mongoose.Schema({
   userID: {
@@ -7,24 +7,21 @@ const recordRequest = new mongoose.Schema({
   },
   videoLink: {
     type: String,
-    required: true
+    required: true,
   },
   videoID: {
     type: String,
-    required: true
-
+    required: true,
   },
   keymasterType: {
     type: String,
-    required: true
-
+    required: true,
   },
   time: {
     type: Number,
-    required: true
+    required: true,
   },
 });
 
-module.exports =
-  mongoose.models.recordRequest ||
+export default mongoose.models?.recordRequest ||
   mongoose.model("recordRequest", recordRequest);

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const users = new mongoose.Schema({
   firstName: {
@@ -49,19 +49,21 @@ const users = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  lastComp: [{
-    type: { type: String },
-    ageGroup: { type: String },
-    record: [
-      {
-        keymasterType: { type: String },
-        time: { type: Number },
+  lastComp: [
+    {
+      type: { type: String },
+      ageGroup: { type: String },
+      record: [
+        {
+          keymasterType: { type: String },
+          time: { type: Number },
+        },
+      ],
+      compName: {
+        type: String,
       },
-    ],
-    compName: {
-      type: String
     },
-  }]
+  ],
 });
 
-module.exports = mongoose.models.users || mongoose.model("users", users);
+export default mongoose.models?.users || mongoose.model("users", users);

@@ -7,7 +7,7 @@ import axios from "axios";
 //import STORE from '@/store'
 
 //import COMPOSITES from '@/composites'
-// import LeaderboardTable from "@/composites/LeaderboardTable";
+import LeaderboardTable from "@/composites/LeaderboardTable";
 // import AthleteCard from "@/composites/AthleteCard";
 import CompetitionTable from "@/composites/CompetitionTable";
 // import CompetitionCard from "@/composites/CompetitionCard";
@@ -16,7 +16,6 @@ import CompetitionTable from "@/composites/CompetitionTable";
 import styles from "./Feature.module.scss";
 
 const Feature = (props) => {
-
   const { ref, inView } = useInView({
     threshold: 0.8,
     triggerOnce: false,
@@ -52,12 +51,12 @@ const Feature = (props) => {
   };
   return (
     <div className={styles.container}>
-      {/* <LeaderboardTable /> */}
+      <LeaderboardTable />
       {/* <SendVideoHome /> */}
       {/* <h2>Тэмцээний мэдээллүүд</h2> */}
       <div className={styles.content}>
         {/* <AthleteCard /> */}
-        {/* <CompetitionTable /> */}
+        <CompetitionTable />
       </div>
       <div className={styles.circle}>
         <Image

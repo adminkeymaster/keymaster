@@ -50,7 +50,6 @@ const RecordRequestPage = (props) => {
       .get("/api/record-history", { signal: controller.signal })
       .then(({ data }) => {
         // Reverse the array so the newest request is first
-        console.log(data);
         setUsers(data.data);
         setIsFetched(true);
       })
@@ -90,35 +89,34 @@ const RecordRequestPage = (props) => {
 
   const handleRecordDelete = (e) => {
     e.preventDefault();
-    console.log(e.currentTarget.dataset);
     const userId = e.currentTarget.dataset.userId;
     const competitionId = e.currentTarget.dataset.competitionId;
 
-    axios.post(`/api/record-history/${userId}`, {
-      compID: competitionId
-    }).then((res) => {
-      if (res.status === 200) {
-        // remove competition from users
-        const newData = users.map((user) => {
-          if (user._id === userId) {
-            const newCompetitions = user.lastComp.filter(
-              (competition) => competition._id !== competitionId
-            );
-            user.lastComp = newCompetitions;
-          }
-          return user;
-        });
+    axios
+      .post(`/api/record-history/${userId}`, {
+        compID: competitionId,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // remove competition from users
+          const newData = users.map((user) => {
+            if (user._id === userId) {
+              const newCompetitions = user.lastComp.filter(
+                (competition) => competition._id !== competitionId
+              );
+              user.lastComp = newCompetitions;
+            }
+            return user;
+          });
 
-        console.log(newData);
+          setUsers(newData);
 
-        setUsers(newData);
-
-        setNotification({
-          message: "Хэрэглэгчийн мэдээлэл амжилттай устгагдлаа",
-          success: "true",
-        });
-      }
-    });
+          setNotification({
+            message: "Хэрэглэгчийн мэдээлэл амжилттай устгагдлаа",
+            success: "true",
+          });
+        }
+      });
   };
 
   return (

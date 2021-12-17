@@ -1,12 +1,13 @@
-const mongoose = require('mongoose');
-
+import mongoose from "mongoose";
 
 const ageGroup = new mongoose.Schema({
-    
-    age: [{
-        type: Number,
-        required: true
-    }]
-})
+  age: [
+    {
+      type: Number,
+      required: true,
+    },
+  ],
+});
 
-module.exports = mongoose.models.ageGroup || mongoose.model('ageGroup', ageGroup);
+export default mongoose.models?.ageGroup ||
+  mongoose.model("ageGroup", ageGroup);
