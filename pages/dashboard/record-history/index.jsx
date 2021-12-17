@@ -94,7 +94,9 @@ const RecordRequestPage = (props) => {
     const userId = e.currentTarget.dataset.userId;
     const competitionId = e.currentTarget.dataset.competitionId;
 
-    axios.post(`/api/record-history/${userId}`, competitionId).then((res) => {
+    axios.post(`/api/record-history/${userId}`, {
+      compID: competitionId
+    }).then((res) => {
       if (res.status === 200) {
         // remove competition from users
         const newData = users.map((user) => {
