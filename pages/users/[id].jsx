@@ -118,33 +118,39 @@ const UserPage = (props) => {
                             style={{
                               display: "flex",
                               width: "100%",
+                              flexDirection: "column",
                               justifyContent: "center",
                             }}
                           >
-                            {competition.compName}
+                            <h4>Тэмцээний нэр</h4>
+                            <div>{competition.compName}</div>
                           </div>
                           <div
                             style={{
                               display: "flex",
                               width: "100%",
+                              flexDirection: "column",
                               justifyContent: "center",
                             }}
                           >
-                            {competition.ageGroup}
+                            <h4>Насны ангилал</h4>
+                            <div>{competition.ageGroup}</div>
                           </div>
                           <div
                             style={{
                               display: "flex",
                               width: "100%",
+                              flexDirection: "column",
                               justifyContent: "center",
                             }}
                           >
-                            {competition.type}
+                            <h4>Төрөл</h4>
+                            <div>{competition.type}</div>
                           </div>
                         </div>
                       }
                     >
-                      <div className={styles.records}>
+                      <div className={styles.compRecords}>
                         {competition.record.length > 0 &&
                           competition.record.map((r) => {
                             return (
