@@ -29,7 +29,6 @@ const ContactRequestPage = (props) => {
     axios
       .get("/api/contact", { signal: signal })
       .then(({ data }) => {
-        console.log(data.data);
         setContactRequests(data.data);
         setIsFetched(true);
       })

@@ -18,7 +18,7 @@ const requestModHandler = async (req, res) => {
         const userArray = await Promise.all(
           data.map(async (user) => {
             if (user.record.length) return user;
-            else return;
+            else return user;
           })
         );
         const filteredUserArray = userArray.filter((user) => {

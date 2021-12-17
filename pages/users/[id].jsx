@@ -24,7 +24,6 @@ const UserPage = (props) => {
   useEffect(() => {
     if (!id) return;
     axios.get(`/api/user/${id}`).then(({ data }) => {
-      console.log(data.data);
       setUserData(data.data);
       setIsFetched(true);
     });
@@ -154,7 +153,7 @@ const UserPage = (props) => {
                         {competition.record.length > 0 &&
                           competition.record.map((r) => {
                             return (
-                              <div className={styles.recordContent}>
+                              <div className={styles.recordContent} key={r._id}>
                                 <div className={styles.recordType}>
                                   {r.keymasterType}
                                 </div>

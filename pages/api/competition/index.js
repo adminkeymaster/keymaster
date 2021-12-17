@@ -21,8 +21,6 @@ const requestModHandler = async (req, res) => {
 
     case "POST":
       try {
-        console.log(req);
-
         if (!session.user.isAdmin) {
           return res
             .status(401)
@@ -51,12 +49,10 @@ const requestModHandler = async (req, res) => {
           type,
         };
 
-
         await competition.create(myComp);
         res
           .status(200)
           .json({ success: true, msg: "amjilttai temtseen nemlee" });
-
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

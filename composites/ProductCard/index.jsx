@@ -45,26 +45,34 @@ const ProductCard = ({
 
   const [showModal, setShowModal] = useState(false);
   const modalRef = useRef();
-  const closeModal = e => {
+  const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
-      console.log("clicked")
     }
   };
   return (
     <div className={styles.container} key={_id}>
-      {showModal ? (<div onClick={closeModal} ref={modalRef} className={styles.modalBackground}>
-        <div className={styles.modalImageContainer} showModal={showModal}>
-          <Image
-            src={photoLinks[0]}
-            layout="fill"
-            objectFit="cover"
-            alt="product image"
-            priority
-          />
+      {showModal ? (
+        <div
+          onClick={closeModal}
+          ref={modalRef}
+          className={styles.modalBackground}
+        >
+          <div className={styles.modalImageContainer} showModal={showModal}>
+            <Image
+              src={photoLinks[0]}
+              layout="fill"
+              objectFit="cover"
+              alt="product image"
+              priority
+            />
+          </div>
         </div>
-      </div>) : null}
-      <div className={styles.imageContainer} onClick={() => setShowModal(prev => !prev)}>
+      ) : null}
+      <div
+        className={styles.imageContainer}
+        onClick={() => setShowModal((prev) => !prev)}
+      >
         <Image
           src={photoLinks[0]}
           layout="fill"
@@ -78,16 +86,17 @@ const ProductCard = ({
         <h2>{productName}</h2>
         <p>Үнэ: {productPrice}₮</p>
         <p className={styles.colorContainer}>
-          Өнгө: {hexColor.map((color, index) => {
-              return (
-                <span
-                  key={index}
-                  style={{
-                    backgroundColor: color,
-                  }}
-                ></span>
-              );
-            })}
+          Өнгө:{" "}
+          {hexColor.map((color, index) => {
+            return (
+              <span
+                key={index}
+                style={{
+                  backgroundColor: color,
+                }}
+              ></span>
+            );
+          })}
         </p>
       </div>
       <div className={styles.actions}>

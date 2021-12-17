@@ -49,7 +49,7 @@ const UserPage = (props) => {
     photoUpload: null,
     preview: null,
     photoLink: null,
-    photoID: ""
+    photoID: "",
   });
 
   useEffect(() => {
@@ -114,8 +114,6 @@ const UserPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // console.log("formData", formData);
 
     if (formData.password.length < 8) {
       return setNotification({
@@ -184,63 +182,63 @@ const UserPage = (props) => {
       {isFetched && (
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.imageContainer}>
-          <div className={styles.image}>
-            {formData.photoLink && (
-              <Image
-                src={formData.photoLink}
-                layout="fill"
-                objectFit="cover"
-                alt="profile image"
-              />
-            )}
+            <div className={styles.image}>
+              {formData.photoLink && (
+                <Image
+                  src={formData.photoLink}
+                  layout="fill"
+                  objectFit="cover"
+                  alt="profile image"
+                />
+              )}
 
-            {formData.photoUpload && (
-              <Image
-                src={formData.preview}
-                layout="fill"
-                objectFit="cover"
-                alt="uploaded image"
-              />
-            )}
+              {formData.photoUpload && (
+                <Image
+                  src={formData.preview}
+                  layout="fill"
+                  objectFit="cover"
+                  alt="uploaded image"
+                />
+              )}
 
-            {formData.photoUpload && (
-              <button
-                className={styles.reset}
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setFormData({
-                    ...formData,
-                    photoUpload: null,
-                    preview: null,
-                  });
-                }}
+              {formData.photoUpload && (
+                <button
+                  className={styles.reset}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setFormData({
+                      ...formData,
+                      photoUpload: null,
+                      preview: null,
+                    });
+                  }}
+                >
+                  <StyledCloseIcon />
+                </button>
+              )}
+
+              <label
+                htmlFor="photoUpload"
+                className={
+                  !formData.photoUpload
+                    ? styles.labelFileSend
+                    : `${styles.labelFileSend} ${styles.labelFileSendActive}`
+                }
               >
-                <StyledCloseIcon />
-              </button>
-            )}
+                <StyledUploadIcon /> Зураг{" "}
+                {(formData.photoUpload && "засах") || "өөрчлөх"}
+              </label>
 
-            <label
-              htmlFor="photoUpload"
-              className={
-                !formData.photoUpload
-                  ? styles.labelFileSend
-                  : `${styles.labelFileSend} ${styles.labelFileSendActive}`
-              }
-            >
-              <StyledUploadIcon /> Зураг{" "}
-              {(formData.photoUpload && "засах") || "өөрчлөх"}
-            </label>
-
-            <input
-              className={styles.inputFileSend}
-              type="file"
-              name="photoUpload"
-              id="photoUpload"
-              accept="image/png, image/jpeg"
-              onChange={handleFileInput}
-            />
-          </div>
+              <input
+                className={styles.inputFileSend}
+                type="file"
+                name="photoUpload"
+                id="photoUpload"
+                accept="image/png, image/jpeg"
+                onChange={handleFileInput}
+              />
+            </div>
           </div>
           <div className={styles.details}>
             <input

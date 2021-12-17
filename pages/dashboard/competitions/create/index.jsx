@@ -99,8 +99,6 @@ const CreateCompetitionPage = (props) => {
       });
       return;
     }
-
-    console.log(form);
     axios
       .post("/api/competition", form)
       .then((res) => {
@@ -321,7 +319,7 @@ const CreateCompetitionPage = (props) => {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="newsLink" className={styles.inputLabel}>
-            Мэдээнийы Линк
+            Мэдээний Линк
           </label>
 
           <input

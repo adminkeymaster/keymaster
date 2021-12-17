@@ -24,8 +24,6 @@ const requestModHandler = async (req, res) => {
 
     case "POST":
       try {
-        console.log(req.body);
-
         if (!session.user.isAdmin) {
           return res
             .status(401)

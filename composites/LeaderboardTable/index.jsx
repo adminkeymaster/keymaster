@@ -8,26 +8,58 @@ import axios from "axios";
 //import COMPONENT from '@/components'
 
 import styles from "./LeaderboardTable.module.scss";
-import { Ussunnah } from "styled-icons/fa-brands";
 
 const LeaderboardTable = (props, id) => {
   const [isFetched, setIsFetched] = useState(false);
+  const [fetchedData, setFetchedData] = useState([]);
   const [leaderboard, setLeaderboard] = useState([]);
-  const [selectedType, setSelectedType] = useState("Keymaster 5");
+  const [filteredData, setFilteredData] = useState([]);
+  const [isOnline, setIsOnline] = useState(true);
+  const [ageGroups, setAgeGroups] = useState([
+    "4",
+    "5",
+    "6",
+    "7-8",
+    "9-11",
+    "12-14",
+    "15-17",
+    "18",
+  ]);
+  const [selectedType, setSelectedType] = useState({});
   const [selectedAgeGroup, setSelectedAgeGroup] = useState([]);
   const [filteredLeaderBoard, setFilteredLeaderBoard] = useState([]);
+  const [competitions, setCompetitions] = useState([]);
+  const [selectedCompetition, setSelectedCompetition] = useState("");
+  const [competitionTypes, setCompetitionTypes] = useState([]);
+  const [selectedCompetitionType, setSelectedCompetitionType] = useState("");
+  const [keymasterTypes, setKeymasterTypes] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
 
+    axios.get("/api/competition").then(({ data }) => {
+      setCompetitions(data.data);
+      setSelectedCompetition(data.data[0]);
+      setSelectedCompetitionType(data.data[0].type[0]);
+    });
+
+    axios
+      .get("/api/keymasterTypes", { signal: controller.signal })
+      .then(({ data }) => {
+        setKeymasterTypes(data.data);
+        setSelectedType(data.data[0].keymasterType);
+      });
+
     axios
       .get("/api/user", { signal: controller.signal })
       .then(({ data }) => {
-        if (!data.msg) {
-          setLeaderboard(data.data);
-        }
-
+        setFetchedData(data.data);
+        setFilteredData(
+          data.data.filter((user) => {
+            return user.lastComp.length > 0;
+          })
+        );
         setIsFetched(true);
       })
       .catch((err) => {
@@ -35,6 +67,40 @@ const LeaderboardTable = (props, id) => {
       });
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (!isFetched) return;
+
+    if (isOnline) {
+      const usersWithRecords = fetchedData.filter((user) => {
+        return user.record.length > 0;
+      });
+      setAgeGroups(["4", "5", "6", "7-8", "9-11", "12-14", "15-17", "18"]);
+      setSelectedAgeGroup("");
+      setLeaderboard(usersWithRecords);
+    } else {
+      setSelectedAgeGroup("");
+      const usersByCompetition = [];
+
+      filteredData.forEach((user) => {
+        user.lastComp.forEach((competition) => {
+          if (
+            competition.compName === selectedCompetition.compName &&
+            competition.type === selectedCompetitionType
+          ) {
+            usersByCompetition.push({
+              ...user,
+              record: competition.record,
+            });
+          }
+        });
+      });
+
+      setAgeGroups(selectedCompetition.ageGroup);
+      setCompetitionTypes(selectedCompetition.type);
+      setLeaderboard(usersByCompetition);
+    }
+  }, [isFetched, isOnline, selectedCompetition, selectedCompetitionType]);
 
   useEffect(() => {
     const typeFilteredLeaderBoard = leaderboard.map((user) => {
@@ -67,8 +133,7 @@ const LeaderboardTable = (props, id) => {
         gender: user.gender === "male" ? "Эр" : "Эм",
         photoLink: user.photoLink,
         age: calculateAge(user.birthDate),
-        // time: getTimeByType(user.record),
-        time: Math.floor(Math.random() * 40 + 2),
+        time: getTimeByType(user.record),
       };
 
       return newUser;
@@ -121,13 +186,18 @@ const LeaderboardTable = (props, id) => {
       setFilteredLeaderBoard(searchFilteredLeaderBoard);
       return;
     }
-  }, [isFetched, selectedType, search, selectedAgeGroup]);
+  }, [leaderboard, selectedType, search, selectedAgeGroup]);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
   const handleAgeGroup = (e) => {
+    if (e.target.value === "") {
+      setSelectedAgeGroup("");
+      return;
+    }
+
     const ageGroup = e.target.value.split("-");
     if (ageGroup.length === 1) {
       setSelectedAgeGroup([...ageGroup, ageGroup[0]]);
@@ -138,6 +208,20 @@ const LeaderboardTable = (props, id) => {
 
   const handleType = (e) => {
     setSelectedType(e.target.value);
+  };
+
+  const handleRecordType = (e) => {
+    setIsOnline(e.target.value === "true" ? true : false);
+  };
+
+  const handleCompetitions = (e) => {
+    setSelectedCompetition(
+      competitions.find((comp) => comp.compName === e.target.value)
+    );
+  };
+
+  const handleCompetitionTypes = (e) => {
+    setSelectedCompetitionType(e.target.value);
   };
 
   return (
@@ -154,28 +238,70 @@ const LeaderboardTable = (props, id) => {
             <select
               className={styles.tab}
               onChange={handleAgeGroup}
-              defaultValue=""
+              defaultValue={selectedAgeGroup.toString()}
             >
-              <option disabled value="">
-                Нас сонгох
-              </option>
-              <option value="4">4 нас</option>
-              <option value="5">5 нас</option>
-              <option value="6">6 нас</option>
-              <option value="7-8">7-8 нас</option>
-              <option value="9-11">9-11 нас</option>
-              <option value="12-14">12-14 нас</option>
-              <option value="15-17">15-17 нас</option>
-              <option value="18">18-аас дээш нас</option>
+              <option value="">Нас сонгох</option>
+              {ageGroups.map((ageGroup) => {
+                return (
+                  <option key={ageGroup} value={ageGroup.toString()}>
+                    {ageGroup}
+                  </option>
+                );
+              })}
             </select>
-            <select className={styles.tab}>
-              <option>Онлайн рекорд</option>
-              <option>Тэмцээний рекорд</option>
+            <select
+              defaultValue={isOnline}
+              className={styles.tab}
+              onChange={handleRecordType}
+            >
+              <option value={true}>Онлайн рекорд</option>
+              <option value={false}>Тэмцээний рекорд</option>
             </select>
-            <select className={styles.tab} onChange={handleType}>
-              <option>Keymaster 5</option>
-              <option>Keymaster 7</option>
-              <option>Keymaster 9</option>
+
+            {!isOnline && competitions.length > 0 && (
+              <select
+                className={styles.tab}
+                defaultValue={selectedCompetition.compName}
+                onChange={handleCompetitions}
+              >
+                {competitions.map((competition, index) => {
+                  return (
+                    <option key={index} value={competition.compName}>
+                      {competition.compName}
+                    </option>
+                  );
+                })}
+              </select>
+            )}
+
+            {!isOnline && competitionTypes.length > 0 && (
+              <select
+                className={styles.tab}
+                defaultValue={selectedCompetitionType}
+                onChange={handleCompetitionTypes}
+              >
+                {competitionTypes.map((type, index) => {
+                  return (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  );
+                })}
+              </select>
+            )}
+
+            <select
+              className={styles.tab}
+              onChange={handleType}
+              defaultValue={selectedCompetitionType}
+            >
+              {keymasterTypes.map((type) => {
+                return (
+                  <option key={type._id} value={type.keymasterType}>
+                    {type.keymasterType}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
@@ -214,12 +340,14 @@ const LeaderboardTable = (props, id) => {
                       <div
                         className={`${styles.tableBodyCol} ${styles.profileCol}`}
                       >
-                        <Image
-                          src={user.photoLink}
-                          layout="fill"
-                          objectFit="cover"
-                          alt="profile"
-                        />
+                        {user.photoLink && (
+                          <Image
+                            src={user.photoLink}
+                            layout="fill"
+                            objectFit="cover"
+                            alt="profile"
+                          />
+                        )}
                       </div>
                       <div
                         className={`${styles.tableBodyCol} ${styles.nameCol}`}

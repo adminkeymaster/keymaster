@@ -39,8 +39,6 @@ const RegisterPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    console.log("submit");
     axios
       .post("/api/user", formData)
       .then((res) => {
