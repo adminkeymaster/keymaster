@@ -321,7 +321,7 @@ const CreateCompetitionPage = (props) => {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="newsLink" className={styles.inputLabel}>
-            Мэдээнийы Линк
+            Мэдээний Линк
           </label>
 
           <input
