@@ -22,9 +22,9 @@
   max-width: 25rem;
   min-width: 25rem;
   height: 25rem;
-
+  background-color: $clr-neutral-8;
   margin-bottom: 1em;
-
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,8 +66,11 @@
   @include respondMax(sm){
     flex-direction: column;
   }
-  justify-content: space-between;
+  justify-content: center;
   align-items: space-between;
+  box-sizing: border-box;
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 .recordContent {
   width: 100%;
@@ -76,12 +79,19 @@
   align-items: center;
   flex-direction: column;
   text-align: center;
+  max-width: 20rem;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  &:not(:last-of-type) {
+    margin-right: 1em;
+  }
+  background-color: $clr-neutral-8;
 }
 .recordType {
   margin: 1em;
 }
 .recordTime {
-  margin-bottom: 1em;
+  margin: 1em 0;
 }
 .compHistory {
   width: 90%;
@@ -101,8 +111,10 @@
   background-color: $clr-neutral-8;
   margin: 0 1rem;
   padding: 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
   &:not(:last-of-type){
-    margin-bottom: 1em;
+    margin-bottom: 2em;
   }
   cursor: pointer;
   p {
@@ -111,7 +123,23 @@
       color: $clr-primary;
     }
   }
+  h4 {
+    margin-bottom: 1rem;
+  }
 }
 .closed {
   display: none;
+}
+.compRecords {
+  display: flex;
+  width: 100%;
+  margin-top: 2rem;
+  @include respondMax(sm){
+    flex-direction: column;
+  }
+  justify-content: flex-start;
+  align-items: space-between;
+  box-sizing: border-box;
+  padding: 1em;
+  border-radius: 0 0 1rem 1rem;
 }

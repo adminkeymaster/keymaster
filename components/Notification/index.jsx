@@ -1,7 +1,7 @@
 //Next, React (core node_modules) imports must be placed here
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { AlertOn } from "@styled-icons/fluentui-system-filled/AlertOn";
 import { ErrorCircle } from "@styled-icons/fluentui-system-filled/ErrorCircle";
 //import STORE from '@/store'
