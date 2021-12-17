@@ -45,7 +45,6 @@ const ProductsPage = (props) => {
       .get("/api/product", { signal: controller.signal })
       .then(({ data }) => {
         // Reverse the array so the newest news is first
-        console.log(data);
         setProducts(data.data.reverse());
         setIsFetched(true);
       })

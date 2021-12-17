@@ -30,7 +30,6 @@ const ContactForm = (props) => {
     axios
       .post("/api/contact", formData)
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
           router.push("/success");
         }
@@ -100,9 +99,7 @@ const ContactForm = (props) => {
             required
           ></textarea>
         </div>
-        <button type="submit">
-          Илгээх
-        </button>
+        <button type="submit">Илгээх</button>
       </form>
     </div>
   );

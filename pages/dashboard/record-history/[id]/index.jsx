@@ -119,11 +119,9 @@ const CreateCompetitionPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
     axios
       .post(`/api/record-history/${id}`, form)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           router.push(
             {

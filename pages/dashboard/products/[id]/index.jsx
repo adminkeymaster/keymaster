@@ -86,7 +86,7 @@ const EditProduct = () => {
 
     return () => controller.abort();
   }, [id]);
-  console.log(formData);
+
   useEffect(() => {
     if (!notification.message) return;
 
@@ -138,7 +138,7 @@ const EditProduct = () => {
         description: formData.description,
         photoLinks: formData.photoLinks,
         photoIDs: formData.photoIDs,
-        productPrice: formData.productPrice
+        productPrice: formData.productPrice,
       })
       .then((res) => {
         if (res.status === 200) {
@@ -226,7 +226,7 @@ const EditProduct = () => {
     if (!formData.photoUpload) {
       setIsReadyToSend(true);
 
-      return
+      return;
     }
 
     Promise.all(
@@ -241,7 +241,6 @@ const EditProduct = () => {
             imageForm
           )
           .then((res) => {
-            console.log(res);
             if (res.status === 200) {
               return {
                 link: res.data.secure_url,
@@ -269,8 +268,6 @@ const EditProduct = () => {
         photoLinks: photoLinks,
         photoIDs: photoIDs,
       });
-
-      console.log(formData);
 
       setIsReadyToSend(true);
     });
@@ -301,8 +298,6 @@ const EditProduct = () => {
         </div>
 
         <div className={styles.imageContainer}>
-
-
           {formData.photoLinks[0] && (
             <Image
               src={formData.photoLinks[0]}
@@ -311,8 +306,6 @@ const EditProduct = () => {
               alt="article image"
             />
           )}
-
-
 
           {formData.photoUpload && (
             <Image
@@ -377,7 +370,6 @@ const EditProduct = () => {
             <button type="button" onClick={handleColorAdd}>
               +
             </button>
-
           </div>
         </div>
 

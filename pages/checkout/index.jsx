@@ -95,29 +95,32 @@ const CheckoutPage = (props) => {
       }),
     };
 
-    axios.post("/api/productReq", productReq).then((res) => {
-      console.log(res)
-      if (res.status === 201) {
-        // addOrder(filteredProducts);
-        // deleteOrder();
-        router.push("/success");
-      }
-    })
-    .catch((err) => {
-      setNotification({
-        message: "Таны сагс хоосон байна.",
-        success: false,
+    axios
+      .post("/api/productReq", productReq)
+      .then((res) => {
+        if (res.status === 201) {
+          // addOrder(filteredProducts);
+          // deleteOrder();
+          router.push("/success");
+        }
+      })
+      .catch((err) => {
+        setNotification({
+          message: "Таны сагс хоосон байна.",
+          success: false,
+        });
+        console.log("ProductReq handleSubmit:", err);
       });
-      console.log("ProductReq handleSubmit:", err);
-    });
   };
 
   return (
-    <motion.main exit={{ opacity: 0 }}
-		initial={{ opacity: 0 }}
-		animate={{ opacity: 1 }}
-		transition={{ duration: 1 }}
-    className={styles.container}>
+    <motion.main
+      exit={{ opacity: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className={styles.container}
+    >
       <Notification
         message={notification.message}
         success={notification.success}
@@ -148,20 +151,20 @@ const CheckoutPage = (props) => {
               filteredProducts.map((product) => {
                 return (
                   <ProductCard
-                  key={product._id}
-                  _id={product._id}
-                  photoLinks={product.photoLinks}
-                  productName={product.productName}
-                  productPrice={product.productPrice}
-                  color={product.color}
-                  hexColor={product.hexColor}
+                    key={product._id}
+                    _id={product._id}
+                    photoLinks={product.photoLinks}
+                    productName={product.productName}
+                    productPrice={product.productPrice}
+                    color={product.color}
+                    hexColor={product.hexColor}
                   />
                 );
               })}
           </div>
           <button onClick={handleSubmit} className={styles.submitButton}>
-              Захиалгаа Баталгаажуулах
-         </button>
+            Захиалгаа Баталгаажуулах
+          </button>
         </div>
       </div>
     </motion.main>

@@ -128,8 +128,6 @@ const SendRecordPage = (props) => {
     formData.videoID = data.public_id;
     formData.videoLink = data.url;
 
-    console.log(data);
-
     for (const key in formData) {
       if (!formData[key]) {
         setNotification({

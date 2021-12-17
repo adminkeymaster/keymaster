@@ -24,7 +24,6 @@ const UserPage = (props) => {
   useEffect(() => {
     if (!id) return;
     axios.get(`/api/user/${id}`).then(({ data }) => {
-      console.log(data.data);
       setUserData(data.data);
       setIsFetched(true);
     });

@@ -99,8 +99,6 @@ const CreateCompetitionPage = (props) => {
       });
       return;
     }
-
-    console.log(form);
     axios
       .post("/api/competition", form)
       .then((res) => {
