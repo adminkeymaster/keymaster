@@ -39,7 +39,6 @@ const AthleteCard = () => {
     axios
       .get("/api/topuser", { signal: signal })
       .then(({ data }) => {
-        console.log(data.data);
         setAthlete({
           name: `${data.data.firstName} ${data.data.lastName}`,
           photoLink: data.data.photoLink,
@@ -59,9 +58,14 @@ const AthleteCard = () => {
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
-        {(athlete.photoLink && <Image src={athlete.photoLink} layout="fill" objectFit="cover" alt="athlete profile" />) || (
-          <StyledUserIcon />
-        )}
+        {(athlete.photoLink && (
+          <Image
+            src={athlete.photoLink}
+            layout="fill"
+            objectFit="cover"
+            alt="athlete profile"
+          />
+        )) || <StyledUserIcon />}
       </div>
       <div className={styles.profile}>
         <span className={styles.profileName}>
