@@ -38,7 +38,6 @@ const EditProduct = () => {
   const { data: session, status } = useSession();
 
   const [currentColor, setCurrentColor] = useState("#000000");
-  const [colorInputs, setColorInputs] = useState([]);
   const [isFetched, setIsFetched] = useState(false);
   const [isReadyToSend, setIsReadyToSend] = useState(false);
   const [notification, setNotification] = useState({
@@ -75,7 +74,7 @@ const EditProduct = () => {
           photoLinks: data.data.photoLinks,
           productPrice: data.data.productPrice,
           description: data.data.description,
-          hexColor: [],
+          hexColor: data.data.hexColor,
           type: data.data.type,
         });
         setIsFetched(true);
@@ -100,21 +99,6 @@ const EditProduct = () => {
     return () => clearTimeout(timer);
   }, [notification]);
 
-  useEffect(() => {
-    setColorInputs([
-      ...colorInputs,
-      <input
-        type="color"
-        name="hexColor"
-        id="hexColor"
-        defaultValue={formData.hexColor[0]}
-        className={styles.inputHexColor}
-        onChange={handleColorChange}
-        key={colorInputs.length}
-        required
-      />,
-    ]);
-  }, []);
   useEffect(() => {
     if (!isReadyToSend) {
       return;
@@ -178,22 +162,16 @@ const EditProduct = () => {
     setCurrentColor(e.target.value);
   };
 
+  const handleDeleteColor = (e) => {
+    setFormData({
+      ...formData,
+      hexColor: formData.hexColor.filter(
+        (color) => color !== e.currentTarget.dataset.color
+      ),
+    });
+  };
+
   const handleColorAdd = (e) => {
-    setColorInputs([
-      ...colorInputs,
-      <input
-        type="color"
-        name="hexColor"
-        id="hexColor"
-        value={currentColor}
-        className={styles.inputHexColor}
-        key={colorInputs.length}
-        readOnly
-        onClick={(e) => {
-          e.preventDefault();
-        }}
-      />,
-    ]);
     setFormData({
       ...formData,
       hexColor: [...formData.hexColor, currentColor],
@@ -225,7 +203,6 @@ const EditProduct = () => {
 
     if (!formData.photoUpload) {
       setIsReadyToSend(true);
-
       return;
     }
 
@@ -364,64 +341,81 @@ const EditProduct = () => {
             Бүтээгдэхүүний өнгө
           </label>
           <div className={styles.inputColorContainer}>
-            {colorInputs.map((input, index) => {
-              return <Fragment key={index}>{input}</Fragment>;
-            })}
-            <button type="button" onClick={handleColorAdd}>
-              +
-            </button>
+            {formData.hexColor.length > 0 &&
+              formData.hexColor.map((input, index) => {
+                return (
+                  <button
+                    type="button"
+                    onClick={handleDeleteColor}
+                    data-color={input}
+                    key={index}
+                    style={{ backgroundColor: input }}
+                    className={`${styles.inputHexColorAdded}`}
+                  ></button>
+                );
+              })}
           </div>
+          <input
+            type="color"
+            name="hexColor"
+            id="hexColor"
+            defaultValue={currentColor}
+            className={styles.inputHexColor}
+            onChange={handleColorChange}
+            required
+          />
+          <button
+            className={styles.hexColorAddButton}
+            type="button"
+            onClick={handleColorAdd}
+          >
+            +
+          </button>
         </div>
 
         <div className={styles.formGroup}>
           <label className={styles.inputLabel} htmlFor="description">
             Бүтээгдэхүүний тайлбар
           </label>
-          <div className={styles.inputColorContainer}>
-            <input
-              type="text"
-              name="description"
-              id="description"
-              defaultValue={formData.description}
-              className={styles.input}
-              onChange={handleInputFormData}
-              required
-            />
-          </div>
+          <input
+            type="text"
+            name="description"
+            id="description"
+            defaultValue={formData.description}
+            className={styles.input}
+            onChange={handleInputFormData}
+            required
+          />
         </div>
 
         <div className={styles.formGroup}>
           <label className={styles.inputLabel} htmlFor="type">
             Бүтээгдэхүүний төрөл
           </label>
-          <div className={styles.inputColorContainer}>
-            <input
-              type="text"
-              name="type"
-              id="type"
-              defaultValue={formData.type}
-              className={styles.input}
-              onChange={handleInputFormData}
-              required
-            />
-          </div>
+          <input
+            type="text"
+            name="type"
+            id="type"
+            defaultValue={formData.type}
+            className={styles.input}
+            onChange={handleInputFormData}
+            required
+          />
         </div>
 
         <div className={styles.formGroup}>
           <label className={styles.inputLabel} htmlFor="productPrice">
             Бүтээгдэхүүний үнэ (₮)
           </label>
-          <div className={styles.inputColorContainer}>
-            <input
-              type="text"
-              name="productPrice"
-              id="productPrice"
-              defaultValue={formData.productPrice}
-              className={styles.input}
-              onChange={handleInputFormData}
-              required
-            />
-          </div>
+          <input
+            type="text"
+            name="productPrice"
+            id="productPrice"
+            defaultValue={formData.productPrice}
+            className={styles.input}
+            onChange={handleInputFormData}
+            required
+          />
         </div>
 
         <div className={styles.formGroupFile}>

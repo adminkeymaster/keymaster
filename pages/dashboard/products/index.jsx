@@ -1,4 +1,5 @@
 //Next, React (core node_modules) imports must be placed here
+import { Fragment } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -160,7 +161,19 @@ const ProductsPage = (props) => {
                   <div
                     className={`${styles.tableBodyCol} ${styles.tableColor}`}
                   >
-                    {product.color}
+                    {product.hexColor.length > 0 &&
+                      product.hexColor.map((color, index) => {
+                        return (
+                          <Fragment key={index}>
+                            <span
+                              className={styles.hexColor}
+                              style={{
+                                backgroundColor: color,
+                              }}
+                            ></span>
+                          </Fragment>
+                        );
+                      })}
                   </div>
 
                   <div className={`${styles.tableBodyCol} ${styles.tableType}`}>

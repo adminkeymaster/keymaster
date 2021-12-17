@@ -141,7 +141,8 @@
 
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
 }
 
@@ -223,4 +224,11 @@
     transform: translateY(0rem);
     box-shadow: 0 0 0.5em 0 rgba($color: #000000, $alpha: 0.2);
   }
+}
+
+.hexColor {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  margin: 0.1rem;
 }
