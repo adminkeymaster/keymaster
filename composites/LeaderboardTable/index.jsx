@@ -80,6 +80,7 @@ const LeaderboardTable = (props, id) => {
       setLeaderboard(usersWithRecords);
     } else {
       setSelectedAgeGroup("");
+      console.log(selectedCompetitionType);
       const usersByCompetition = [];
 
       filteredData.forEach((user) => {
@@ -98,10 +99,18 @@ const LeaderboardTable = (props, id) => {
 
       setAgeGroups(selectedCompetition.ageGroup);
       setCompetitionTypes(selectedCompetition.type);
-      setSelectedCompetitionType(selectedCompetition.type[0]);
       setLeaderboard(usersByCompetition);
+      if (!competitionTypes.includes(selectedCompetitionType)) {
+        setSelectedCompetitionType(selectedCompetition.type[0]);
+      }
     }
-  }, [isFetched, isOnline, selectedCompetition, selectedCompetitionType]);
+  }, [
+    isFetched,
+    isOnline,
+    selectedCompetition,
+    competitionTypes,
+    selectedCompetitionType,
+  ]);
 
   useEffect(() => {
     const typeFilteredLeaderBoard = leaderboard.map((user) => {
