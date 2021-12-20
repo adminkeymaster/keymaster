@@ -31,7 +31,7 @@ const ContactForm = (props) => {
       .post("/api/contact", formData)
       .then((res) => {
         if (res.status === 201) {
-          router.push("/success");
+          router.push("/successful");
         }
       })
       .catch((err) => {
