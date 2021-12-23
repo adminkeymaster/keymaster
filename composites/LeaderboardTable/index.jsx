@@ -14,7 +14,13 @@ const LeaderboardTable = (props, id) => {
   const [fetchedData, setFetchedData] = useState([]);
   const [leaderboard, setLeaderboard] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [filteredLeaderBoard, setFilteredLeaderBoard] = useState([]);
   const [isOnline, setIsOnline] = useState(true);
+  const [competitions, setCompetitions] = useState([]);
+  const [selectedCompetition, setSelectedCompetition] = useState("");
+  const [keymasterTypes, setKeymasterTypes] = useState([]);
+  const [competitionTypes, setCompetitionTypes] = useState([]);
+  const [selectedType, setSelectedType] = useState({});
   const [ageGroups, setAgeGroups] = useState([
     "4",
     "5",
@@ -25,20 +31,15 @@ const LeaderboardTable = (props, id) => {
     "15-17",
     "18",
   ]);
-  const [selectedType, setSelectedType] = useState({});
   const [selectedAgeGroup, setSelectedAgeGroup] = useState([]);
-  const [filteredLeaderBoard, setFilteredLeaderBoard] = useState([]);
-  const [competitions, setCompetitions] = useState([]);
-  const [selectedCompetition, setSelectedCompetition] = useState("");
-  const [competitionTypes, setCompetitionTypes] = useState([]);
   const [selectedCompetitionType, setSelectedCompetitionType] = useState("");
-  const [keymasterTypes, setKeymasterTypes] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
 
     axios.get("/api/competition").then(({ data }) => {
+      if (data.data.length === 0) return;
       setCompetitions(data.data);
       setSelectedCompetition(data.data[0]);
       setSelectedCompetitionType(data.data[0].type[0]);
@@ -79,8 +80,9 @@ const LeaderboardTable = (props, id) => {
       setSelectedAgeGroup("");
       setLeaderboard(usersWithRecords);
     } else {
+      if (filteredData.length === 0) return;
+
       setSelectedAgeGroup("");
-      console.log(selectedCompetitionType);
       const usersByCompetition = [];
 
       filteredData.forEach((user) => {
@@ -152,6 +154,8 @@ const LeaderboardTable = (props, id) => {
     typeFilteredLeaderBoard.sort((a, b) => {
       return a.time - b.time;
     });
+
+    if (!isOnline && filteredData.length === 0) return;
 
     if (selectedAgeGroup.length === 0 && search.length === 0) {
       setFilteredLeaderBoard(typeFilteredLeaderBoard);
@@ -338,6 +342,7 @@ const LeaderboardTable = (props, id) => {
           </div>
           <div className={styles.tableBody}>
             {isFetched &&
+              isOnline &&
               filteredLeaderBoard.map((user, index) => {
                 return (
                   <Link href={`/users/${user._id}`} key={user._id}>
@@ -383,6 +388,11 @@ const LeaderboardTable = (props, id) => {
                   </Link>
                 );
               })}
+            {isFetched && !isOnline && filteredData.length === 0 && (
+              <div className={styles.tableRow}>
+                Одоогоор тэмцээний рекорд олдсонгүй
+              </div>
+            )}
           </div>
         </div>
       </div>
