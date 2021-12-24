@@ -18,9 +18,9 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
         <ActiveAnchorContextProvider>
           <ThemeContextProvider>
             <ThemeLayout>
-              <Layout>
+              {/* <Layout> */}
                 {/* <Component {...pageProps} /> */}
-              </Layout>
+              {/* </Layout> */}
             </ThemeLayout>
           </ThemeContextProvider>
         </ActiveAnchorContextProvider>
