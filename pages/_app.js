@@ -19,7 +19,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
           <ThemeContextProvider>
             <ThemeLayout>
               <Layout>
-                <Component {...pageProps} />
+                {/* <Component {...pageProps} /> */}
               </Layout>
             </ThemeLayout>
           </ThemeContextProvider>
