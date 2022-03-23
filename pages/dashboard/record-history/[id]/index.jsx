@@ -309,8 +309,8 @@ const CreateCompetitionPage = (props) => {
                 </label>
                 <input
                   type="number"
-                  min="0.1"
-                  step="0.1"
+                  min="0.01"
+                  step="0.01"
                   id={type.keymasterType}
                   name={type.keymasterType}
                   className={styles.input}
