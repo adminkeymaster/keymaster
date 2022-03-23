@@ -40,6 +40,7 @@ const LeaderboardTable = (props, id) => {
 
     axios.get("/api/competition").then(({ data }) => {
       if (data.data.length === 0) return;
+
       setCompetitions(data.data);
       setSelectedCompetition(data.data[0]);
       setSelectedCompetitionType(data.data[0].type[0]);
@@ -342,7 +343,6 @@ const LeaderboardTable = (props, id) => {
           </div>
           <div className={styles.tableBody}>
             {isFetched &&
-              isOnline &&
               filteredLeaderBoard.map((user, index) => {
                 return (
                   <Link href={`/users/${user._id}`} key={user._id}>
