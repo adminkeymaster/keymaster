@@ -19,7 +19,7 @@ const Navbar = (props) => {
   const { route } = useRouter();
 
   const handleNavigation = () => {
-    setMenuIsOpen(!menuIsOpen);
+    console.log(menuIsOpen);
   };
 
   return (

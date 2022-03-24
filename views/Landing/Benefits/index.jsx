@@ -61,7 +61,7 @@ const Benefits = (props) => {
               <Image
                 layout="fill"
                 objectFit="cover"
-                src="/BenefitsOne.png"
+                src="/detox.svg"
                 alt="benefit image"
               />
             </div>
@@ -72,7 +72,7 @@ const Benefits = (props) => {
               <Image
                 layout="fill"
                 objectFit="cover"
-                src="/BenefitsTwo.png"
+                src="/lovemind.svg"
                 alt="benefit image"
               />
             </div>
@@ -86,7 +86,7 @@ const Benefits = (props) => {
               <Image
                 layout="fill"
                 objectFit="cover"
-                src="/BenefitsThree.png"
+                src="/brain.svg"
                 alt="benefit image"
               />
             </div>
