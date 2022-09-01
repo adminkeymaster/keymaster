@@ -170,7 +170,7 @@ const RecordRequestPage = (props) => {
           {isFetched &&
             users
               .filter((user) => {
-                const hasSearchValue = user.name
+                const hasSearchValue = `${user.firstName} ${user.lastName}`
                   .toLowerCase()
                   .includes(searchValue.toLowerCase());
 
