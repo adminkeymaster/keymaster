@@ -20,6 +20,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 
 //import COMPONENT from '@/components'
 import Notification from "@/components/Notification";
+import Loader from "@/components/Loader";
 
 import styles from "./RecordHistory.module.scss";
 
@@ -167,7 +168,7 @@ const RecordRequestPage = (props) => {
         </div>
 
         <div className={styles.tableBody}>
-          {isFetched &&
+          {isFetched ? (
             users
               .filter((user) => {
                 const hasSearchValue = `${user.firstName} ${user.lastName}`
@@ -246,7 +247,10 @@ const RecordRequestPage = (props) => {
                     )}
                   </div>
                 );
-              })}
+              })
+          ) : (
+            <Loader />
+          )}
         </div>
       </div>
     </main>
