@@ -36,7 +36,7 @@ const LeaderboardTableRefactored = (props) => {
     "9-11",
     "12-14",
     "15-17",
-    "18",
+    "18++",
   ]);
   const [selectedAgeGroup, setSelectedAgeGroup] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -120,7 +120,7 @@ const LeaderboardTableRefactored = (props) => {
     setSelectedAgeGroup("");
     setAgeGroups(
       isOnlineRecord
-        ? ["3-6", "7-8", "9-11", "12-14", "15-17", "18"]
+        ? ["3-6", "7-8", "9-11", "12-14", "15-17", "18+"]
         : competitionList.find((competition) => {
             return competition.compName === selectedCompetitionName;
           }).ageGroup
@@ -312,8 +312,8 @@ const LeaderboardTableRefactored = (props) => {
                       : selectedAgeGroup.split("-").length > 1
                       ? user.age >= +selectedAgeGroup.split("-")[0] &&
                         user.age <= +selectedAgeGroup.split("-")[1]
-                      : ageGroups[ageGroups.length - 1] === selectedAgeGroup
-                      ? user.age >= +selectedAgeGroup
+                      : selectedAgeGroup.endsWith("+")
+                      ? user.age >= +selectedAgeGroup.slice(0, -1)
                       : user.age === +selectedAgeGroup;
 
                   return (
