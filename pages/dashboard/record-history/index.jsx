@@ -43,6 +43,8 @@ const RecordRequestPage = (props) => {
     successs: false,
   });
 
+  const [searchValue, setSearchValue] = useState("");
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -119,6 +121,11 @@ const RecordRequestPage = (props) => {
       });
   };
 
+  // Search Handler
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <main className={styles.container}>
       <Notification
@@ -127,6 +134,16 @@ const RecordRequestPage = (props) => {
       />
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Сүүлд оролцсон тэмцээн нэмэх</h1>
+      </div>
+
+      <div>
+        <input
+          className={styles.search}
+          placeholder="Овог/Нэр"
+          type="text"
+          value={searchValue}
+          onChange={handleSearchChange}
+        />
       </div>
 
       <div className={styles.table}>
@@ -151,77 +168,85 @@ const RecordRequestPage = (props) => {
 
         <div className={styles.tableBody}>
           {isFetched &&
-            users.map((user, index) => {
-              return (
-                <div className={styles.tableRowContainer} key={user._id}>
-                  <div className={styles.tableRow}>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
-                    >
-                      {user.firstName}
-                    </div>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableLastName}`}
-                    >
-                      {user.lastName}
+            users
+              .filter((user) => {
+                const hasSearchValue = user.name
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase());
+
+                return hasSearchValue;
+              })
+              .map((user, index) => {
+                return (
+                  <div className={styles.tableRowContainer} key={user._id}>
+                    <div className={styles.tableRow}>
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
+                      >
+                        {user.firstName}
+                      </div>
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableLastName}`}
+                      >
+                        {user.lastName}
+                      </div>
+
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableEmail}`}
+                      >
+                        {user.email}
+                      </div>
+
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableAge}`}
+                      >
+                        {calculateAgeByBirthday(user.birthDate)}
+                      </div>
+
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableAction}`}
+                      >
+                        <Link href={`/dashboard/record-history/${user._id}`}>
+                          <a className={styles.link}>Нэмэх</a>
+                        </Link>
+                      </div>
                     </div>
 
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableEmail}`}
-                    >
-                      {user.email}
-                    </div>
-
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableAge}`}
-                    >
-                      {calculateAgeByBirthday(user.birthDate)}
-                    </div>
-
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableAction}`}
-                    >
-                      <Link href={`/dashboard/record-history/${user._id}`}>
-                        <a className={styles.link}>Нэмэх</a>
-                      </Link>
-                    </div>
-                  </div>
-
-                  {user.lastComp.length > 0 && (
-                    <div className={styles.cardContainer}>
-                      {user.lastComp.map((competition) => {
-                        return (
-                          <div
-                            className={styles.competitionCard}
-                            key={competition._id}
-                          >
-                            <button
-                              data-user-id={user._id}
-                              data-competition-id={competition._id}
-                              className={styles.cardDeleteButton}
-                              onClick={handleRecordDelete}
+                    {user.lastComp.length > 0 && (
+                      <div className={styles.cardContainer}>
+                        {user.lastComp.map((competition) => {
+                          return (
+                            <div
+                              className={styles.competitionCard}
+                              key={competition._id}
                             >
-                              <StyledCrossIcon />
-                            </button>
-                            <span>Тэмцээний нэр: {competition.compName}</span>
-                            <span>Насны ангилал: {competition.ageGroup}</span>
-                            <span>Тэмцээний төрөл: {competition.type}</span>
-                            {competition.record.length > 0 &&
-                              competition.record.map((record, index) => {
-                                return (
-                                  <span key={index}>
-                                    {record.keymasterType}: {record.time}с
-                                  </span>
-                                );
-                              })}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                              <button
+                                data-user-id={user._id}
+                                data-competition-id={competition._id}
+                                className={styles.cardDeleteButton}
+                                onClick={handleRecordDelete}
+                              >
+                                <StyledCrossIcon />
+                              </button>
+                              <span>Тэмцээний нэр: {competition.compName}</span>
+                              <span>Насны ангилал: {competition.ageGroup}</span>
+                              <span>Тэмцээний төрөл: {competition.type}</span>
+                              {competition.record.length > 0 &&
+                                competition.record.map((record, index) => {
+                                  return (
+                                    <span key={index}>
+                                      {record.keymasterType}: {record.time}с
+                                    </span>
+                                  );
+                                })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
         </div>
       </div>
     </main>
