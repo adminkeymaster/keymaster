@@ -286,8 +286,6 @@ const LeaderboardTableRefactored = (props) => {
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
 
-                  console.log(selectedCompetitionType);
-
                   const hasCompetitionType = !isOnlineRecord
                     ? user.lastComp.hasOwnProperty(selectedCompetitionName)
                       ? user.lastComp[selectedCompetitionName].hasOwnProperty(
