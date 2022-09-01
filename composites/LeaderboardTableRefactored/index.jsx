@@ -31,9 +31,7 @@ const LeaderboardTableRefactored = (props) => {
   const [renderedData, setRenderedData] = useState([]);
   const [keyType, setKeyType] = useState("Keymaster 5");
   const [ageGroups, setAgeGroups] = useState([
-    "4",
-    "5",
-    "6",
+    "3-6",
     "7-8",
     "9-11",
     "12-14",
@@ -122,7 +120,7 @@ const LeaderboardTableRefactored = (props) => {
     setSelectedAgeGroup("");
     setAgeGroups(
       isOnlineRecord
-        ? ["4", "5", "6", "7-8", "9-11", "12-14", "15-17", "18"]
+        ? ["3-6", "7-8", "9-11", "12-14", "15-17", "18"]
         : competitionList.find((competition) => {
             return competition.compName === selectedCompetitionName;
           }).ageGroup
@@ -311,8 +309,12 @@ const LeaderboardTableRefactored = (props) => {
                   const isInAgeGroup =
                     selectedAgeGroup === ""
                       ? true
-                      : user.age >= +selectedAgeGroup.split("-")[0] &&
-                        user.age <= +selectedAgeGroup.split("-")[1];
+                      : selectedAgeGroup.split("-").length > 1
+                      ? user.age >= +selectedAgeGroup.split("-")[0] &&
+                        user.age <= +selectedAgeGroup.split("-")[1]
+                      : ageGroups[ageGroups.length - 1] === selectedAgeGroup
+                      ? user.age >= +selectedAgeGroup
+                      : user.age === +selectedAgeGroup;
 
                   return (
                     hasSearchValue &&
