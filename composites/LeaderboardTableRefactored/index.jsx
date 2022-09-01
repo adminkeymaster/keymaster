@@ -322,7 +322,17 @@ const LeaderboardTableRefactored = (props) => {
                   );
                 })
                 .sort((a, b) => {
-                  return a.record[keyType] - b.record[keyType];
+                  if (isOnlineRecord)
+                    return a.record[keyType] - b.record[keyType];
+
+                  return (
+                    a.lastComp[selectedCompetitionName][
+                      selectedCompetitionType
+                    ][keyType] -
+                    b.lastComp[selectedCompetitionName][
+                      selectedCompetitionType
+                    ][keyType]
+                  );
                 })
                 .map((user, index) => {
                   return (
