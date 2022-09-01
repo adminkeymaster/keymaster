@@ -3,8 +3,9 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import Loader from "@/components/Loader";
+
 import styles from "./LeaderboardTableRefactored.module.scss";
-import competition from "@/models/competition";
 
 const calculateAge = (birthdate) => {
   const today = new Date();
@@ -42,72 +43,76 @@ const LeaderboardTableRefactored = (props) => {
   const [selectedAgeGroup, setSelectedAgeGroup] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    axios
-      .get("/api/competition", { signal: controller.signal })
-      .then(({ data }) => {
-        if (data.data.length === 0) return;
-        setSelectedCompetitionName(data.data[0].compName);
-        setSelectedCompetitionType(data.data[0].type[0]);
-        setCompetitionList(data.data);
+  const fetchData = async (controller) => {
+    try {
+      const { data: competitionListRes } = await axios.get("/api/competition", {
+        signal: controller.signal,
       });
 
-    axios
-      .get("/api/user", { signal: controller.signal })
-      .then(({ data }) => {
-        const normalizedData = data.data.map((user) => {
+      if (competitionListRes.data.length === 0) return;
+      setSelectedCompetitionName(competitionListRes.data[0].compName);
+      setSelectedCompetitionType(competitionListRes.data[0].type[0]);
+      setCompetitionList(competitionListRes.data);
+
+      const { data } = await axios.get("/api/user", {
+        signal: controller.signal,
+      });
+
+      const normalizedData = await data.data.map((user) => {
+        return {
+          ...user,
+          name: `${user.lastName} ${user.firstName}`,
+          gender: user.gender === "male" ? "Эр" : "Эм",
+          age: calculateAge(user.birthDate),
+          record: user.record.reduce((prev, next) => {
+            return {
+              ...prev,
+              [next.keymasterType]: next.time,
+            };
+          }, {}),
+        };
+      });
+
+      const normalizedCompetitionData = await data.data
+        .filter((user) => user.lastComp.length > 0)
+        .map((user) => {
           return {
             ...user,
             name: `${user.lastName} ${user.firstName}`,
             gender: user.gender === "male" ? "Эр" : "Эм",
             age: calculateAge(user.birthDate),
-            record: user.record.reduce((prev, next) => {
+            lastComp: user.lastComp.reduce((prevLastComp, nextLastComp) => {
               return {
-                ...prev,
-                [next.keymasterType]: next.time,
+                ...prevLastComp,
+                [nextLastComp.compName]: {
+                  ...prevLastComp[nextLastComp.compName],
+                  [nextLastComp.type]: nextLastComp.record.reduce(
+                    (prevRecord, nextRecord) => {
+                      return {
+                        ...prevRecord,
+                        [nextRecord.keymasterType]: nextRecord.time,
+                      };
+                    },
+                    {}
+                  ),
+                },
               };
             }, {}),
           };
         });
 
-        const normalizedCompetitionData = data.data
-          .filter((user) => user.lastComp.length > 0)
-          .map((user) => {
-            return {
-              ...user,
-              name: `${user.lastName} ${user.firstName}`,
-              gender: user.gender === "male" ? "Эр" : "Эм",
-              age: calculateAge(user.birthDate),
-              lastComp: user.lastComp.reduce((prevLastComp, nextLastComp) => {
-                return {
-                  ...prevLastComp,
-                  [nextLastComp.compName]: {
-                    ...prevLastComp[nextLastComp.compName],
-                    [nextLastComp.type]: nextLastComp.record.reduce(
-                      (prevRecord, nextRecord) => {
-                        return {
-                          ...prevRecord,
-                          [nextRecord.keymasterType]: nextRecord.time,
-                        };
-                      },
-                      {}
-                    ),
-                  },
-                };
-              }, {}),
-            };
-          });
+      setOnlineData(normalizedData);
+      setCompetitionData(normalizedCompetitionData);
+      setRenderedData(normalizedData);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-        setOnlineData(normalizedData);
-        setCompetitionData(normalizedCompetitionData);
-        setRenderedData(normalizedData);
-      })
-      .catch((err) => {
-        console.log("Leaderboard Fetch Aborted", err);
-      });
-
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchData(controller);
     return () => controller.abort();
   }, []);
 
@@ -279,7 +284,8 @@ const LeaderboardTableRefactored = (props) => {
             </div>
           </div>
           <div className={styles.tableBody}>
-            {renderedData.length > 0 &&
+            {!isLoading ? (
+              renderedData.length > 0 &&
               renderedData
                 .filter((user) => {
                   const hasSearchValue = user.name
@@ -366,7 +372,10 @@ const LeaderboardTableRefactored = (props) => {
                       </div>
                     </Link>
                   );
-                })}
+                })
+            ) : (
+              <Loader />
+            )}
           </div>
         </div>
       </div>
