@@ -137,15 +137,13 @@ const RecordRequestPage = (props) => {
         <h1 className={styles.heading}>Сүүлд оролцсон тэмцээн нэмэх</h1>
       </div>
 
-      <div>
-        <input
-          className={styles.search}
-          placeholder="Овог/Нэр"
-          type="text"
-          value={searchValue}
-          onChange={handleSearchChange}
-        />
-      </div>
+      <input
+        className={styles.search}
+        placeholder="Овог/Нэр"
+        type="text"
+        value={searchValue}
+        onChange={handleSearchChange}
+      />
 
       <div className={styles.table}>
         <div className={styles.tableHead}>
