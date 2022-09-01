@@ -13,6 +13,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Loader from "@/components/Loader";
 
 import styles from "./ContactRequest.module.scss";
 
@@ -21,6 +22,7 @@ const ContactRequestPage = (props) => {
 
   const [isFetched, setIsFetched] = useState(false);
   const [contactRequests, setContactRequests] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -42,11 +44,27 @@ const ContactRequestPage = (props) => {
   if (status === "loading") return null;
   if (!session || !session.user.isAdmin) return null;
 
+  // Search Handler
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Contact Request</h1>
       </div>
+
+      <div className={styles.searchContainer}>
+        <input
+          className={styles.search}
+          placeholder="Овог/Нэр"
+          type="text"
+          value={searchValue}
+          onChange={handleSearchChange}
+        />
+      </div>
+
       <div className={styles.table}>
         <div className={styles.tableHead}>
           <div className={`${styles.tableHeadCol} ${styles.tableDescription}`}>
@@ -71,36 +89,50 @@ const ContactRequestPage = (props) => {
         </div>
 
         <div className={styles.tableBody}>
-          {isFetched &&
-            contactRequests.map((contactRequest) => {
-              return (
-                <div className={styles.tableRow} key={contactRequest._id}>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableDescription}`}
-                  >
-                    {contactRequest.description}
+          {isFetched ? (
+            contactRequests
+              .filter((contact) => {
+                const hasSearchValue =
+                  `${contact.firstName} ${contact.lastName}`
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+
+                return hasSearchValue;
+              })
+              .map((contactRequest) => {
+                return (
+                  <div className={styles.tableRow} key={contactRequest._id}>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableDescription}`}
+                    >
+                      {contactRequest.description}
+                    </div>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableEmail}`}
+                    >
+                      {contactRequest.email}
+                    </div>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableLastName}`}
+                    >
+                      {contactRequest.lastName}
+                    </div>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
+                    >
+                      {contactRequest.firstName}
+                    </div>
+                    <div
+                      className={`${styles.tableBodyCol} ${styles.tableTel}`}
+                    >
+                      {contactRequest.phoneNumber}
+                    </div>
                   </div>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableEmail}`}
-                  >
-                    {contactRequest.email}
-                  </div>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableLastName}`}
-                  >
-                    {contactRequest.lastName}
-                  </div>
-                  <div
-                    className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
-                  >
-                    {contactRequest.firstName}
-                  </div>
-                  <div className={`${styles.tableBodyCol} ${styles.tableTel}`}>
-                    {contactRequest.phoneNumber}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })
+          ) : (
+            <Loader />
+          )}
         </div>
       </div>
     </main>
