@@ -18,6 +18,7 @@ import DashboardLayout from "@/layouts/Dashboard";
 //import COMPOSITES from '@/composites'
 
 //import COMPONENT from '@/components'
+import Loader from "@/components/Loader";
 
 import styles from "./ProductRequest.module.scss";
 
@@ -45,6 +46,8 @@ const ProductRequestPage = (props) => {
   const [isFilteredByStatus, setIsFilteredByStatus] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [productRequests, setProductRequests] = useState([]);
+
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -104,10 +107,25 @@ const ProductRequestPage = (props) => {
     });
   };
 
+  // Search Handler
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>Захиалга</h1>
+      </div>
+
+      <div className={styles.searchContainer}>
+        <input
+          className={styles.search}
+          placeholder="Овог/Нэр"
+          type="text"
+          value={searchValue}
+          onChange={handleSearchChange}
+        />
       </div>
 
       <div className={styles.table}>
@@ -140,103 +158,117 @@ const ProductRequestPage = (props) => {
         </div>
 
         <div className={styles.tableBody}>
-          {isFetched &&
-            productRequests.map((request) => {
-              return (
-                <div
-                  className={
-                    request.status
-                      ? `${styles.tableRowContainer} ${styles.isVerified}`
-                      : `${styles.tableRowContainer}`
-                  }
-                  key={request._id}
-                >
-                  <div className={styles.tableRow}>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
-                    >
-                      {request.firstName}
-                    </div>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableLastName}`}
-                    >
-                      {request.lastName}
-                    </div>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableEmail}`}
-                    >
-                      {request.email}
-                    </div>
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableTel}`}
-                    >
-                      {request.phoneNumber}
-                    </div>
+          {isFetched ? (
+            productRequests
+              .filter((product) => {
+                const hasSearchValue =
+                  `${product.firstName} ${product.lastName}`
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
 
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableStatus}`}
-                    >
-                      {(request.status && <StyledStatusIcon />) || (
-                        <StyledNotStatusIcon />
-                      )}
-                    </div>
-
-                    <div
-                      className={`${styles.tableBodyCol} ${styles.tableAction}`}
-                    >
-                      <button
-                        className={styles.tableButton}
-                        id={request._id}
-                        onClick={toggleStatus}
+                return hasSearchValue;
+              })
+              .map((request) => {
+                return (
+                  <div
+                    className={
+                      request.status
+                        ? `${styles.tableRowContainer} ${styles.isVerified}`
+                        : `${styles.tableRowContainer}`
+                    }
+                    key={request._id}
+                  >
+                    <div className={styles.tableRow}>
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableFirstName}`}
                       >
-                        {(request.status && "Буцаах") || "Баталгаажуулах"}
-                      </button>
-                    </div>
-                  </div>
+                        {request.firstName}
+                      </div>
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableLastName}`}
+                      >
+                        {request.lastName}
+                      </div>
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableEmail}`}
+                      >
+                        {request.email}
+                      </div>
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableTel}`}
+                      >
+                        {request.phoneNumber}
+                      </div>
 
-                  <div className={styles.tableRowProduct}>
-                    <div className={styles.productNetPrice}>
-                      <span>Нийт үнэ:</span>
-                      <span>
-                        {request.productInfo.reduce((acc, product) => {
-                          return acc + product.productPrice * product.quantity;
-                        }, 0)}
-                        ₮
-                      </span>
-                    </div>
-                    {request.productInfo.map((product) => {
-                      return (
-                        <div
-                          className={styles.productInfoContainer}
-                          key={product._id}
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableStatus}`}
+                      >
+                        {(request.status && <StyledStatusIcon />) || (
+                          <StyledNotStatusIcon />
+                        )}
+                      </div>
+
+                      <div
+                        className={`${styles.tableBodyCol} ${styles.tableAction}`}
+                      >
+                        <button
+                          className={styles.tableButton}
+                          id={request._id}
+                          onClick={toggleStatus}
                         >
-                          <div className={styles.productInfo}>
-                            <span>Нэр:</span>
-                            <span>{product.productName}</span>
+                          {(request.status && "Буцаах") || "Баталгаажуулах"}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className={styles.tableRowProduct}>
+                      <div className={styles.productNetPrice}>
+                        <span>Нийт үнэ:</span>
+                        <span>
+                          {request.productInfo.reduce((acc, product) => {
+                            return (
+                              acc + product.productPrice * product.quantity
+                            );
+                          }, 0)}
+                          ₮
+                        </span>
+                      </div>
+                      {request.productInfo.map((product) => {
+                        return (
+                          <div
+                            className={styles.productInfoContainer}
+                            key={product._id}
+                          >
+                            <div className={styles.productInfo}>
+                              <span>Нэр:</span>
+                              <span>{product.productName}</span>
+                            </div>
+                            <div className={styles.productInfo}>
+                              <span>Төрөл:</span>
+                              <span>{product.type}</span>
+                            </div>
+                            <div className={styles.productInfo}>
+                              <span>Өнгө:</span>
+                              <span>{product.color}</span>
+                            </div>
+                            <div className={styles.productInfo}>
+                              <span>Тоо:</span>
+                              <span>{product.quantity}</span>
+                            </div>
+                            <div className={styles.productInfo}>
+                              <span>Үнэ:</span>
+                              <span>{product.productPrice}₮</span>
+                            </div>
                           </div>
-                          <div className={styles.productInfo}>
-                            <span>Төрөл:</span>
-                            <span>{product.type}</span>
-                          </div>
-                          <div className={styles.productInfo}>
-                            <span>Өнгө:</span>
-                            <span>{product.color}</span>
-                          </div>
-                          <div className={styles.productInfo}>
-                            <span>Тоо:</span>
-                            <span>{product.quantity}</span>
-                          </div>
-                          <div className={styles.productInfo}>
-                            <span>Үнэ:</span>
-                            <span>{product.productPrice}₮</span>
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+          ) : (
+            <Loader />
+          )}
         </div>
       </div>
     </main>
