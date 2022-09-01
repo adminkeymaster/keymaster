@@ -7,7 +7,8 @@ import axios from "axios";
 //import STORE from '@/store'
 
 //import COMPOSITES from '@/composites'
-import LeaderboardTable from "@/composites/LeaderboardTable";
+// import LeaderboardTable from "@/composites/LeaderboardTable";
+import LeaderboardTableRefactored from "@/composites/LeaderboardTableRefactored";
 // import AthleteCard from "@/composites/AthleteCard";
 import CompetitionTable from "@/composites/CompetitionTable";
 // import CompetitionCard from "@/composites/CompetitionCard";
@@ -51,7 +52,8 @@ const Feature = (props) => {
   };
   return (
     <div className={styles.container}>
-      <LeaderboardTable />
+      {/* <LeaderboardTable /> */}
+      <LeaderboardTableRefactored />
       {/* <SendVideoHome /> */}
       {/* <h2>Тэмцээний мэдээллүүд</h2> */}
       <div className={styles.content}>

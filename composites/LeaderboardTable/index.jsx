@@ -41,6 +41,8 @@ const LeaderboardTable = (props, id) => {
     axios.get("/api/competition").then(({ data }) => {
       if (data.data.length === 0) return;
 
+      console.log(data);
+
       setCompetitions(data.data);
       setSelectedCompetition(data.data[0]);
       setSelectedCompetitionType(data.data[0].type[0]);
