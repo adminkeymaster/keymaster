@@ -121,7 +121,7 @@ const ProductRequestPage = (props) => {
       <div className={styles.searchContainer}>
         <input
           className={styles.search}
-          placeholder="Овог/Нэр"
+          placeholder="Овог/Нэр/Утас"
           type="text"
           value={searchValue}
           onChange={handleSearchChange}
@@ -162,7 +162,7 @@ const ProductRequestPage = (props) => {
             productRequests
               .filter((product) => {
                 const hasSearchValue =
-                  `${product.firstName} ${product.lastName}`
+                  `${product.firstName} ${product.lastName} ${product.phoneNumber}`
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
 
